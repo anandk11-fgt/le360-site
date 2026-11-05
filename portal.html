@@ -337,6 +337,15 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
 .ccard .quote { background: none; border-left: 4px solid var(--pri-20); padding: 4px 12px; margin: 0 0 8px; color: var(--pri-100); }
 .wmark { margin: 80px auto 0; max-width: 560px; } .wmark svg { width: 100%; height: auto; display: block; }
 .rd-preview .report > section { min-height: 0; }
+.report .gtab, .report .dtab { min-width: 0; table-layout: fixed; }
+.report .gtab th, .report .dtab th, .report .gtab td, .report .dtab td { background: transparent; height: auto; white-space: normal; }
+.report .gtab tbody tr:hover td, .report .dtab tbody tr:hover td { background: transparent; }
+.report .gtab th:first-child { width: 52%; } .report .dtab th:first-child { width: 34%; }
+.report .gtab th, .report .dtab th { overflow-wrap: anywhere; }
+.report .dtab td.n, .report .gtab td.n { padding-left: 4px; padding-right: 4px; }
+.report .dtab .ring, .report .gtab .ring { width: 100%; max-width: 60px; height: auto; }
+.report .gtab .ring { max-width: 72px; }
+.report .dcard .table { overflow: visible; }
 @media (max-width: 720px) { .report .rsec { padding: 28px 18px; } .cbgrid { grid-template-columns: 1fr; } .ccard .crow { grid-template-columns: 1fr; } .report > section { min-height: 0; } }
 @media print {
   .report { max-width: none; } .report > section { box-shadow: none; margin: 0; min-height: 0; } .report .rsec { padding: 0; }
