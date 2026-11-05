@@ -328,7 +328,7 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
 .gtab th, .dtab th { text-align: left; font-size: .6875rem; letter-spacing: 1.2px; text-transform: uppercase; color: var(--pri-50); font-weight: 600; padding: 10px 12px; }
 .gtab th.n, .dtab th.n, .gtab td.n, .dtab td.n { text-align: center; }
 .gtab td { padding: 16px 12px; border-top: 1px solid var(--pri-20); border-bottom: 1px solid var(--pri-20); vertical-align: middle; } .gtab td b { display: block; } .gtab td span { display: block; color: var(--pri-70); font-size: .875rem; }
-.dcard, .ccard { border: 1px solid var(--pri-20); border-radius: 6px; overflow: hidden; margin: 0 0 24px; break-inside: avoid; }
+.dcard, .ccard { border: 1px solid var(--pri-20); border-radius: 6px; overflow: hidden; margin: 0 0 24px; }
 .dhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--pri-10); padding: 14px 18px; font-size: 1.375rem; font-weight: 300; color: var(--pri-80); border-bottom: 1px solid var(--pri-20); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .dpill { background: var(--acc-60); color: #fff; border-radius: 16px; padding: 2px 12px; font-weight: 700; font-size: 1.125rem; white-space: nowrap; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .dpill small { font-size: .75rem; font-weight: 400; }
 .dtab td { padding: 10px 12px; border-top: 1px solid var(--pri-20); color: var(--pri-80); font-size: .875rem; } .dtab td:first-child { width: 34%; }
@@ -346,6 +346,9 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
 .report .dtab .ring, .report .gtab .ring { width: 100%; max-width: 60px; height: auto; }
 .report .gtab .ring { max-width: 72px; }
 .report .dcard .table { overflow: visible; }
+.report .dtab tr, .report .gtab tr, .report .ccard .qwrap { break-inside: avoid; }
+.report .dhead { break-after: avoid; }
+@media (max-width: 720px) { .report table, .rsec.rintro .ptab, .report .rt { min-width: 0; } .report th, .report td { white-space: normal; padding-left: 4px; padding-right: 4px; overflow-wrap: anywhere; } .report .rt { table-layout: fixed; } .report .rt th:first-child { width: 30%; } .report .rt th, .report .rt td { font-size: .6875rem !important; } .report .rt .n { width: auto; } .report .prate { min-width: 0; } .report .rt th, .report .rt td { padding: 6px 4px; font-size: .75rem; white-space: normal; } .report .ptrack { display: none; } .report .dtab th, .report .gtab th { font-size: .5625rem; letter-spacing: .3px; } }
 @media (max-width: 720px) { .report .rsec { padding: 28px 18px; } .cbgrid { grid-template-columns: 1fr; } .ccard .crow { grid-template-columns: 1fr; } .report > section { min-height: 0; } }
 @media print {
   .report { max-width: none; } .report > section { box-shadow: none; margin: 0; min-height: 0; } .report .rsec { padding: 0; }
@@ -363,6 +366,7 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
   .radar { max-width: 440px; margin: 0 auto; display: block; }
   .rsec h2, .rsec h3, .rsec .lead { break-after: avoid; } .rsec h2 { break-inside: avoid; } .empty, .planitem { break-inside: avoid; }
   .pb { break-before: page; }
+  .report .dcard .table { break-inside: auto; }
   .rcov { aspect-ratio: auto; height: 250mm; break-inside: avoid; margin: 0; overflow: hidden; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .rt { min-width: 0; } .rt td.n, .rt th.n { width: 44px; padding: 6px 4px; } .rt td, .rt th { padding: 6px 8px; }
@@ -1387,14 +1391,19 @@ const heat = (x, max) => { if (x == null) return ""; const v = r1(x) / max; retu
 const heatLegend = (max) => `<p class="rnote heatkey"><span class="sw h-high"></span>${(0.8 * max).toFixed(1)} and above <span class="sw h-good"></span>${(0.7 * max).toFixed(1)}–${(0.8 * max - 0.1).toFixed(1)} <span class="sw h-mid"></span>${(0.6 * max).toFixed(1)}–${(0.7 * max - 0.1).toFixed(1)} <span class="sw h-low"></span>below ${(0.6 * max).toFixed(1)} · a dash means too few answers to show</p>`;
 function radarSVG(d, list) {
   const max = d.input.template.scale_max, comps = list || d.competencies, n = comps.length;
-  const W = 680, H = 400, cx = W / 2, cy = H / 2 + 6, R = 140;
+  const W = 680, H = 430, cx = W / 2, cy = H / 2 + 4, R = 140;
   const pt = (i, v) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / n; return [cx + Math.cos(a) * (R * v) / max, cy + Math.sin(a) * (R * v) / max]; };
   let s = `<svg class="radar" viewBox="0 0 ${W} ${H}" role="img" aria-label="Radar chart of competency scores by rater group">`;
   for (let k = 1; k <= max; k++) s += `<polygon points="${comps.map((_, i) => pt(i, k).join(",")).join(" ")}" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="1"/>`;
   comps.forEach((c, i) => {
     const [x, y] = pt(i, max), [lx, ly] = pt(i, max + 0.6);
     const anchor = Math.abs(lx - cx) < 5 ? "middle" : lx > cx ? "start" : "end";
-    s += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="currentColor" stroke-opacity=".18"/><text x="${lx}" y="${ly + 4}" text-anchor="${anchor}" font-size="12" fill="currentColor">${esc(c.name)}</text>`;
+    const words = String(c.name).split(/\s+/), lines = [];
+    words.forEach((w) => { const last = lines[lines.length - 1]; if (last != null && (last + " " + w).length <= 20) lines[lines.length - 1] = last + " " + w; else lines.push(w.length > 22 ? w.slice(0, 21) + "…" : w); });
+    if (lines.length > 4) { lines.length = 4; lines[3] = lines[3].slice(0, 19) + "…"; }
+    const top = Math.abs(lx - cx) < 5 && ly < cy, bottom = Math.abs(lx - cx) < 5 && ly > cy;
+    const y0 = ly + 4 - (top ? (lines.length - 1) * 14 : bottom ? 0 : (lines.length - 1) * 7);
+    s += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="currentColor" stroke-opacity=".18"/><text x="${lx}" y="${y0}" text-anchor="${anchor}" font-size="12" fill="currentColor"><title>${esc(c.name)}</title>${lines.map((l, k) => `<tspan x="${lx}" dy="${k ? 14 : 0}">${esc(l)}</tspan>`).join("")}</text>`;
   });
   d.groups.forEach((g) => {
     const col = GROUP_COLORS[g] || "#525252";
