@@ -297,7 +297,51 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
 .rbreak { break-before: page; height: 0; margin: 48px 0; border-top: 4px solid var(--border-subtle); }
 .planbtns { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 
+/* Report pages: each section is its own A4 page (on screen and in print) */
+.report { max-width: 840px; }
+.report > section { background: #ffffff; box-shadow: 0 1px 4px rgba(0,0,0,.12), 0 4px 18px rgba(0,0,0,.06); margin: 0 0 28px; min-height: 1150px; }
+.report .rsec { border-top: 0; padding: 56px 52px 48px; }
+.report .rsec h2 { font-size: 1.875rem; font-weight: 600; line-height: 1.25; margin: 0 0 12px; color: var(--pri-100); } .report .rsec h2::before { display: none; }
+.report .rsec h3 { font-size: 1.375rem; font-weight: 600; margin: 32px 0 6px; color: var(--pri-100); }
+.report .rsec .lead { color: var(--pri-70); font-size: .9375rem; line-height: 1.7; margin: 0 0 20px; }
+.report .rsec h3.sub { margin-top: 24px; }
+.bignum { font-size: 4rem; font-weight: 300; line-height: 1; color: var(--pri-100); margin: 4px 0 20px; font-variant-numeric: tabular-nums; } .bignum small { font-size: .875rem; color: var(--pri-70); margin-left: 4px; }
+.report .bars { gap: 14px; } .report .brow { grid-template-columns: minmax(140px, 1fr) minmax(0, 1fr) 40px; }
+.report .btrack { height: 22px; border-radius: 11px; background: var(--pri-20); } .report .bfill { border-radius: 11px; } .report .bself { top: -3px; height: 28px; }
+.cbreak { padding: 8px 0 40px; break-inside: avoid; } .report .cbreak h3 { margin-top: 0; }
+.cbgrid { display: grid; grid-template-columns: 1fr minmax(0, 1.4fr); gap: 24px; align-items: start; }
+.gbars { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 10px; align-items: center; }
+.gbars .gl { text-align: right; font-size: .875rem; color: var(--pri-100); }
+.gtrack { height: 24px; border-radius: 12px; background: var(--pri-20); overflow: hidden; display: block; }
+.gtrack span { display: flex; align-items: center; height: 100%; border-radius: 12px; color: #fff; font-size: .75rem; font-weight: 700; padding-left: 10px; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.gtrack em { font-size: .75rem; color: var(--pri-60); padding-left: 10px; line-height: 24px; }
+.chead { text-align: center; border-bottom: 1px solid var(--pri-20); padding-bottom: 24px; margin-bottom: 32px; }
+.cicon { width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; background: var(--tint, var(--pri-20)); color: var(--head, var(--pri-100)); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.cicon svg { width: 48px; height: 48px; }
+.report .chead .lead { max-width: 64ch; margin: 0 auto; }
+.rlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 26px; }
+.rlist li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 20px; align-items: center; break-inside: avoid; }
+.rlist li .ring { width: 92px; height: 92px; } .rlist b { display: block; font-size: .9375rem; color: var(--pri-100); } .rlist span { display: block; color: var(--pri-70); font-size: .875rem; }
+.ring { display: block; margin: 0 auto; } .ring-na { color: var(--pri-50); display: block; text-align: center; }
+.cempty { text-align: center; padding: 160px 0 0; } .cempty b { display: block; font-size: 1.5rem; font-weight: 700; color: var(--pri-100); margin-bottom: 6px; } .cempty span { display: block; max-width: 44ch; margin: 0 auto; font-size: 1.125rem; font-weight: 300; color: var(--pri-60); line-height: 1.5; }
+.gtab, .dtab { width: 100%; border-collapse: collapse; }
+.gtab th, .dtab th { text-align: left; font-size: .6875rem; letter-spacing: 1.2px; text-transform: uppercase; color: var(--pri-50); font-weight: 600; padding: 10px 12px; }
+.gtab th.n, .dtab th.n, .gtab td.n, .dtab td.n { text-align: center; }
+.gtab td { padding: 16px 12px; border-top: 1px solid var(--pri-20); border-bottom: 1px solid var(--pri-20); vertical-align: middle; } .gtab td b { display: block; } .gtab td span { display: block; color: var(--pri-70); font-size: .875rem; }
+.dcard, .ccard { border: 1px solid var(--pri-20); border-radius: 6px; overflow: hidden; margin: 0 0 24px; break-inside: avoid; }
+.dhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--pri-10); padding: 14px 18px; font-size: 1.375rem; font-weight: 300; color: var(--pri-80); border-bottom: 1px solid var(--pri-20); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.dpill { background: var(--acc-60); color: #fff; border-radius: 16px; padding: 2px 12px; font-weight: 700; font-size: 1.125rem; white-space: nowrap; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .dpill small { font-size: .75rem; font-weight: 400; }
+.dtab td { padding: 10px 12px; border-top: 1px solid var(--pri-20); color: var(--pri-80); font-size: .875rem; } .dtab td:first-child { width: 34%; }
+.ccard .crow { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 14px 18px 0; } .ccard .crow:last-child { padding-bottom: 16px; }
+.cwho { display: flex; gap: 8px; align-items: flex-start; font-size: .75rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; color: var(--pri-60); padding-top: 4px; }
+.ccard .quote { background: none; border-left: 4px solid var(--pri-20); padding: 4px 12px; margin: 0 0 8px; color: var(--pri-100); }
+.wmark { margin: 80px auto 0; max-width: 560px; } .wmark svg { width: 100%; height: auto; display: block; }
+.rd-preview .report > section { min-height: 0; }
+@media (max-width: 720px) { .report .rsec { padding: 28px 18px; } .cbgrid { grid-template-columns: 1fr; } .ccard .crow { grid-template-columns: 1fr; } .report > section { min-height: 0; } }
 @media print {
+  .report { max-width: none; } .report > section { box-shadow: none; margin: 0; min-height: 0; } .report .rsec { padding: 0; }
+  .report > section + section { break-before: page; }
+  .cempty { padding-top: 120px; }
   .rbreak { border: 0; margin: 0; }
   @page { size: A4; margin: 14mm 14mm 18mm; }
   body { background: #fff !important; color: #161616 !important; font-size: 11px; }
@@ -310,7 +354,7 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
   .radar { max-width: 440px; margin: 0 auto; display: block; }
   .rsec h2, .rsec h3, .rsec .lead { break-after: avoid; } .rsec h2 { break-inside: avoid; } .empty, .planitem { break-inside: avoid; }
   .pb { break-before: page; }
-  .rcov { aspect-ratio: auto; height: 268mm; break-after: page; break-inside: avoid; margin: 0; }
+  .rcov { aspect-ratio: auto; height: 250mm; break-inside: avoid; margin: 0; overflow: hidden; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .rt { min-width: 0; } .rt td.n, .rt th.n { width: 44px; padding: 6px 4px; } .rt td, .rt th { padding: 6px 8px; }
   .table { overflow: visible; }
@@ -1370,13 +1414,15 @@ const DEF_OPTS = {
   summaryTitle: "Competency summary", summaryText: "", summaryStyle: "bar", summaryHide: "", benchmark: "none", benchmarkValues: "", benchmarkLabel: "Benchmark",
   gapTitle: "Gap analysis: how each group sees you", gapText: "", radarHide: "", gapTable: "yes", gapSpread: "yes",
   strengthsTitle: "Your strengths", improveTitle: "Areas of improvement", hiddenTitle: "Hidden strengths", blindTitle: "Blind spots",
+  breakdownTitle: "Competency breakdown", breakdownText: "How each rater group scored you on every competency.",
   detailedTitle: "Detailed feedback", detailedHide: "", detailedBreak: "no", commentsTitle: "In their words", planTitle: "Personal development plan",
   planPrompts: "What surprised me in this feedback?\nThe one or two competencies I will focus on\nWhat I will do differently — specific actions\nWho will support me, and how I'll ask for feedback\nHow I'll know I'm improving (by when)",
 };
-const ico = (inner) => `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+const ico = (inner) => `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
 const SEC_ICONS = {
   intro: ico('<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>'),
   summary: ico('<path d="M5 19V11M10 19V6M15 19v-9M20 19V13"/>'),
+  breakdown: ico('<path d="M4 6h10M4 12h16M4 18h7"/>'),
   gap: ico('<path d="M12 3l8 6-3 10H7L4 9z"/><path d="M12 8l4 3-1.5 5h-5L8 11z"/>'),
   strengths: ico('<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>'),
   improve: ico('<path d="M4 18l6-6 4 4 6-8"/><path d="M15 8h5v5"/>'),
@@ -1435,7 +1481,15 @@ function reportHTML(raw) {
   const S = {};
   const hideOf = (k) => new Set(String(o[k] || "").split("|").map((x) => x.trim()).filter(Boolean));
   const yes = (k) => o[k] !== "no";
-  const head = (id, title) => `${yes("showIcons") ? `<div class="ricon" aria-hidden="true">${SEC_ICONS[id] || ""}</div>` : ""}<h2>${esc(title)}</h2>`;
+  const head = (id, title) => `<h2>${esc(title)}</h2>`;
+  const chead = (id, title, text) => `<div class="chead">${yes("showIcons") ? `<div class="cicon" aria-hidden="true">${SEC_ICONS[id] || ""}</div>` : ""}<h2>${esc(title)}</h2>${text ? `<p class="lead">${esc(text)}</p>` : ""}</div>`;
+  const toneCol = (v) => (v == null ? "var(--pri-30)" : r1(v) >= Number(o.strengthCut) ? "var(--pos-50)" : r1(v) <= Number(o.improveCut) ? "var(--neg-50)" : "var(--sec-60)");
+  const ring = (v, col, size) => {
+    if (v == null) return `<span class="ring-na" title="Too few answers to show">–</span>`;
+    const r = 26, C = 2 * Math.PI * r, f = Math.max(0, Math.min(1, (v - (input.template.scale_min ?? 1) + (input.template.scale_min === 0 ? 0 : 1)) / (max - (input.template.scale_min ?? 1) + (input.template.scale_min === 0 ? 0 : 1))));
+    return `<svg class="ring" viewBox="0 0 64 64" width="${size || 64}" height="${size || 64}" role="img" aria-label="${f1(v)} out of ${max}"><circle cx="32" cy="32" r="${r}" fill="none" style="stroke:var(--pri-20)" stroke-width="6"/><circle cx="32" cy="32" r="${r}" fill="none" style="stroke:${col || toneCol(v)}" stroke-width="6" stroke-dasharray="${(f * C).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 32 32)"/><text x="32" y="37.5" text-anchor="middle" font-size="16" font-weight="700" style="fill:var(--pri-100)">${f1(v)}</text></svg>`;
+  };
+  const emptyBig = (t, x) => `<div class="cempty"><b>${esc(t)}</b>${x ? `<span>${esc(x)}</span>` : ""}</div>`;
   const bmCustom = {};
   String(o.benchmarkValues || "").split("|").forEach((x) => { const m = x.split("="); const v = Number(m[1]); if (m.length === 2 && m[0].trim() && !isNaN(v)) bmCustom[m[0].trim()] = v; });
   const bmOf = (c) => o.benchmark === "custom" ? (bmCustom[c.name] != null ? bmCustom[c.name] : null) : o.benchmark === "programme" && input.benchmark ? (input.benchmark.values || {})[c.name] ?? null : null;
@@ -1464,52 +1518,75 @@ function reportHTML(raw) {
     ? sumComps.map((c) => `<div class="brow star${hasBm ? " wbm" : ""}"><span>${esc(c.name)}</span><span class="stars${tone(c)}" role="img" aria-label="${f1(c.overall)} out of ${max}">★★★★★<i style="width:${((c.overall ?? 0) / max) * 100}%">★★★★★</i></span><span class="bval">${f1(c.overall)}</span>${bmCell(c)}</div>`).join("")
     : sumComps.map((c) => `<div class="brow${hasBm ? " wbm" : ""}"><span>${esc(c.name)}</span><div class="btrack"><div class="bfill${tone(c)}" style="width:${((c.overall ?? 0) / max) * 100}%"></div>${c.self != null ? `<div class="bself" style="left:${(c.self / max) * 100}%"></div>` : ""}${bmOf(c) != null ? `<div class="bbench" style="left:${(bmOf(c) / max) * 100}%"></div>` : ""}</div><span class="bval">${f1(c.overall)}</span>${bmCell(c)}</div>`).join("");
   const bmNote = hasBm ? `<p class="rnote">${o.benchmark === "programme" ? `${esc(o.benchmarkLabel || "Benchmark")}: the average score from others across all ${input.benchmark.people} participant${input.benchmark.people === 1 ? "" : "s"} in this programme.` : `${esc(o.benchmarkLabel || "Benchmark")}: the target score set for each competency.`}</p>` : "";
+<<<<<<< HEAD
   S.summary = `<section class="rsec pb s-purple" data-sec="summary">${head("summary", o.summaryTitle || "Competency summary")}<p class="lead">${o.summaryText ? esc(o.summaryText) : `Based on ${d.othersCount} response${d.othersCount === 1 ? "" : "s"} from others, on a ${input.template.scale_min ?? 1}–${max} scale.`}</p>
       <div class="rgrid"><div class="big"><div class="n">${f1(d.overall)}</div><div class="rnote">overall, out of ${max}</div></div>
       <div><div class="bars">${sumRows}</div>
       <div class="rlegend"><span><i style="background:var(--pos-50)"></i>Strong</span><span><i style="background:var(--sec-60)"></i>Others</span><span><i style="background:var(--neg-50)"></i>Needs work</span>${o.summaryStyle === "star" ? "" : `<span><i style="background:var(--pri-100);width:4px;height:12px"></i>Self</span>`}${hasBm && o.summaryStyle !== "star" ? `<span><i style="background:none;border-left:2px dashed var(--acc-40);width:4px;height:12px"></i>${esc(o.benchmarkLabel || "Benchmark")}</span>` : ""}</div>${bmNote}</div></div></section>`;
+=======
+  S.summary = `<section class="rsec s-purple" data-sec="summary">${head("summary", o.summaryTitle || "Competency summary")}
+      <h3 class="sub">Overall summary</h3><p class="lead">${o.summaryText ? esc(o.summaryText) : `Based on ${d.othersCount} response${d.othersCount === 1 ? "" : "s"} from others, on a ${input.template.scale_min ?? 1}–${max} scale.`}</p>
+      <div class="bignum">${f1(d.overall)}<small>/${max}</small></div>
+      <div class="bars">${sumRows}</div>
+      <div class="rlegend"><span><i style="background:var(--pos-50)"></i>Strong</span><span><i style="background:var(--sec-60)"></i>Others</span><span><i style="background:var(--neg-50)"></i>Needs work</span>${o.summaryStyle === "star" ? "" : `<span><i style="background:var(--pri-100);width:4px;height:12px"></i>Self</span>`}${hasBm && o.summaryStyle !== "star" ? `<span><i style="background:none;border-left:2px dashed var(--acc-40);width:4px;height:12px"></i>${esc(o.benchmarkLabel || "Benchmark")}</span>` : ""}</div>${bmNote}</section>`;
+  const BG = G.filter((g) => g !== "Others combined" || G.length <= 2);
+  S.breakdown = `<section class="rsec s-purple" data-sec="breakdown">${head("breakdown", o.breakdownTitle || "Competency breakdown")}${o.breakdownText ? `<p class="lead">${esc(o.breakdownText)}</p>` : ""}
+      ${sumComps.map((c, i) => `${i && i % 3 === 0 ? `<div class="rbreak"></div>` : ""}<div class="cbreak"><h3>${esc(c.name)}</h3>${c.definition ? `<p class="lead">Definition: ${esc(c.definition)}</p>` : ""}
+        <div class="cbgrid"><div class="bignum">${f1(c.overall)}<small>/${max}</small></div><div class="gbars">${BG.map((g) => { const v = c.byGroup[g]; return `<span class="gl">${esc(gl(g))}</span><span class="gtrack">${v != null ? `<span style="width:${Math.max(8, (v / max) * 100)}%;background:${GROUP_COLORS[g] || "#525252"}">${f1(v)}</span>` : `<em>too few answers</em>`}</span>`; }).join("")}</div></div></div>`).join("")}</section>`;
+>>>>>>> 3151ced (Portal: report colour system (Carbon palette A, no purple))
   const radHide = hideOf("radarHide");
   const radComps = d.competencies.filter((c) => !radHide.has(c.name));
   S.gap = `<section class="rsec s-purple" data-sec="gap">${head("gap", o.gapTitle || "Gap analysis: how each group sees you")}${o.gapText ? `<p class="lead">${esc(o.gapText)}</p>` : ""}${radComps.length >= 3 ? radarSVG(d, radComps) : `<p class="rnote">The radar chart needs at least three competencies.</p>`}
-      <div class="rlegend" style="justify-content:center">${G.map((g) => `<span><i style="background:${GROUP_COLORS[g] || "#525252"}"></i>${gl(g)}</span>`).join("")}</div>
-      ${yes("gapTable") ? `<div class="table" style="margin-top:16px"><table class="rt"><thead><tr><th>Competency</th>${G.map((g) => `<th class="n">${gh(g)}</th>`).join("")}<th class="n">Overall</th></tr></thead><tbody>
+      <div class="rlegend" style="justify-content:center">${G.map((g) => `<span><i style="background:${GROUP_COLORS[g] || "#525252"};height:12px"></i>${gl(g)}</span>`).join("")}</div>
+      ${yes("gapTable") ? `<div class="table" style="margin-top:24px"><table class="rt"><thead><tr><th>Competency</th>${G.map((g) => `<th class="n">${gh(g)}</th>`).join("")}<th class="n">Overall</th></tr></thead><tbody>
       ${radComps.map((c) => `<tr><td>${esc(c.name)}</td>${G.map((g) => `<td class="n ${heat(c.byGroup[g], max)}">${f1(c.byGroup[g])}</td>`).join("")}<td class="n"><b>${f1(c.overall)}</b></td></tr>`).join("")}</tbody></table></div>${heatLegend(max)}` : ""}
       ${yes("gapSpread") ? `<h3>Perception gaps between rater groups</h3>${d.perceptionGaps.filter((c) => !radHide.has(c.name)).length ? d.perceptionGaps.filter((c) => !radHide.has(c.name)).map((c) => { const v = G.filter((g) => g !== "Self" && c.byGroup[g] != null).map((g) => ({ g, v: c.byGroup[g] })).sort((a, b) => b.v - a.v); return `<p><b>${esc(c.name)}</b>: spread of ${c.spread.toFixed(1)} — highest ${gl(v[0].g)} (${v[0].v.toFixed(1)}), lowest ${gl(v[v.length - 1].g)} (${v[v.length - 1].v.toFixed(1)}).</p>`; }).join("") : `<p class="rnote">Rater groups broadly agree on every competency.</p>`}` : ""}</section>`;
-  S.strengths = `<section class="rsec s-green" data-sec="strengths">${head("strengths", o.strengthsTitle || "Your strengths")}<p class="lead">${esc(o.strengthsText)}</p>
-      ${!hasData ? noData : L.strengths.length ? compTable(L.strengths, "good", false, "strengths") : empty(o.strengthsEmptyTitle, o.strengthsEmptyText)}</section>`;
-  S.improve = `<section class="rsec s-red" data-sec="improve">${head("improve", o.improveTitle || "Areas of improvement")}<p class="lead">${esc(o.improveText)}</p>
-      ${!hasData ? noData : L.improve.length ? compTable(L.improve, "dev", false, "improve") : empty(o.improveEmptyTitle, o.improveEmptyText)}</section>`;
-  S.hidden = `<section class="rsec s-teal" data-sec="hidden">${head("hidden", o.hiddenTitle || "Hidden strengths")}<p class="lead">${esc(o.hiddenText)}</p>
-      ${!hasSelf ? noSelf : !hasData ? noData : L.hidden.length ? compTable(L.hidden, "good", true, "hidden") : empty(o.hiddenEmptyTitle, o.hiddenEmptyText)}</section>`;
-  S.blind = `<section class="rsec s-magenta" data-sec="blind">${head("blind", o.blindTitle || "Blind spots")}<p class="lead">${esc(o.blindText)}</p>
-      ${!hasSelf ? noSelf : !hasData ? noData : L.blind.length ? compTable(L.blind, "dev", true, "blind") : empty(o.blindEmptyTitle, o.blindEmptyText)}</section>`;
+  const ringList = (items, k, col) => { const desc = o[k + "Desc"] !== "no", st = o[k + "By"] === "statement"; return `<ol class="rlist">${items.map((c) => `<li>${ring(c.overall, col)}<div><b>${esc(c.name)}</b>${desc && c.definition ? `<span>${st ? esc(c.definition) : `Definition: ${esc(c.definition)}`}</span>` : ""}</div></li>`).join("")}</ol>`; };
+  const gapTable = (items, k) => { const desc = o[k + "Desc"] !== "no", st = o[k + "By"] === "statement"; return `<table class="gtab"><thead><tr><th>Areas</th><th class="n">Your rating</th><th class="n">Others</th></tr></thead><tbody>${items.map((c) => `<tr><td><b>${esc(c.name)}</b>${desc && c.definition ? `<span>${st ? esc(c.definition) : `Definition: ${esc(c.definition)}`}</span>` : ""}</td><td class="n">${ring(c.self, "var(--pos-50)", 72)}</td><td class="n">${ring(c.overall, toneCol(c.overall), 72)}</td></tr>`).join("")}</tbody></table>`; };
+  S.strengths = `<section class="rsec s-green" data-sec="strengths">${chead("strengths", o.strengthsTitle || "Your strengths", o.strengthsText)}
+      ${!hasData ? noData : L.strengths.length ? ringList(L.strengths, "strengths", "var(--pos-50)") : emptyBig(o.strengthsEmptyTitle, o.strengthsEmptyText)}</section>`;
+  S.improve = `<section class="rsec s-red" data-sec="improve">${chead("improve", o.improveTitle || "Areas of improvement", o.improveText)}
+      ${!hasData ? noData : L.improve.length ? ringList(L.improve, "improve", "var(--neg-50)") : emptyBig(o.improveEmptyTitle, o.improveEmptyText)}</section>`;
+  S.hidden = `<section class="rsec s-teal" data-sec="hidden">${chead("hidden", o.hiddenTitle || "Hidden strengths", o.hiddenText)}
+      ${!hasSelf ? noSelf : !hasData ? noData : L.hidden.length ? gapTable(L.hidden, "hidden") : emptyBig(o.hiddenEmptyTitle, o.hiddenEmptyText)}</section>`;
+  S.blind = `<section class="rsec s-magenta" data-sec="blind">${chead("blind", o.blindTitle || "Blind spots", o.blindText)}
+      ${!hasSelf ? noSelf : !hasData ? noData : L.blind.length ? gapTable(L.blind, "blind") : emptyBig(o.blindEmptyTitle, o.blindEmptyText)}</section>`;
   const detHide = hideOf("detailedHide");
-  S.detailed = `<section class="rsec pb s-cyan" data-sec="detailed">${head("detailed", o.detailedTitle || "Detailed feedback")}<p class="lead">${esc(o.detailedText)}</p>${heatLegend(max)}
-      ${d.competencies.filter((c) => !detHide.has(c.name)).map((c, i) => `<div class="dcomp${o.detailedBreak === "yes" && i ? " pb" : ""}"><h3>${esc(c.name)} · ${f1(c.overall)}</h3>${c.definition ? `<p class="rnote" style="margin:-4px 0 8px">${esc(c.definition)}</p>` : ""}<div class="table"><table class="rt"><thead><tr><th>Behaviour</th>${G.map((g) => `<th class="n">${gh(g)}</th>`).join("")}<th class="n">Overall</th></tr></thead><tbody>
-        ${c.statements.map((s) => `<tr><td>${esc(s.text)}</td>${G.map((g) => `<td class="n ${heat(s.byGroup[g], max)}">${f1(s.byGroup[g])}</td>`).join("")}<td class="n"><b>${f1(s.overall)}</b></td></tr>`).join("")}</tbody></table></div></div>`).join("")}</section>`;
-  S.comments = questions.length ? `<section class="rsec pb s-magenta" data-sec="comments">${head("comments", o.commentsTitle || "In their words")}<p class="lead">${esc(o.commentsText || "Written comments, as given. Blank and \"NA\" answers are left out.")}</p>
-      ${raw.participantView ? questions.map((qq) => `<h3>${esc(qq)}</h3>${d.comments.filter((b) => b.question === qq).map((b) => `<span class="gtag" style="background:${GROUP_COLORS[b.group] || "#525252"}">${esc(LBL[b.group] || b.group)}</span>${b.comments.map((c) => `<div class="qwrap"><div class="quote">${esc(c.text)}</div></div>`).join("")}`).join("")}`).join("") : `<div class="reviewnote">Before sharing, read every comment. Click a comment to edit it (for example, to remove a name), or press Hide to leave it out. Your changes are saved for this report (the rater's original answer is kept in the Sheet). This note and the buttons don't print.</div>
-      ${questions.map((qq) => `<h3>${esc(qq)}</h3>${d.comments.filter((b) => b.question === qq).map((b) => `<span class="gtag" style="background:${GROUP_COLORS[b.group] || "#525252"}">${esc(LBL[b.group] || b.group)}</span>${b.comments.map((c) => { const e = (raw.edits || {})[c.id] || {}; const t = e.text != null ? e.text : c.text; return `<div class="qwrap${e.hidden ? " off" : ""}" data-cid="${esc(c.id)}"><div class="quote" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Comment from ${esc(b.group)}, click to edit" data-orig="${esc(c.text)}">${esc(t)}</div>${e.text != null ? `<span class="edited">Edited</span>` : ""}<button class="btn ghost qhide" type="button" aria-pressed="${e.hidden ? "true" : "false"}">${e.hidden ? "Show" : "Hide"}</button></div>`; }).join("")}`).join("")}`).join("")}`}</section>` : "";
-  S.plan = isGroup ? "" : `<section class="rsec pb s-blue" data-sec="plan">${head("plan", o.planTitle || "Personal development plan")}<p class="lead">${esc(o.planText)}</p>
+  S.detailed = `<section class="rsec s-cyan" data-sec="detailed">${head("detailed", o.detailedTitle || "Detailed feedback")}<p class="lead">${esc(o.detailedText)}</p>
+      ${d.competencies.filter((c) => !detHide.has(c.name)).map((c, i) => `${i ? `<div class="rbreak"></div>` : ""}<div class="dcard"><div class="dhead"><span>${esc(c.name)}</span><span class="dpill">${f1(c.overall)}<small>/${max}</small></span></div>
+        <div class="table"><table class="dtab"><thead><tr><th>Questions</th>${G.map((g) => `<th class="n">${esc(gl(g))}</th>`).join("")}</tr></thead><tbody>
+        ${c.statements.map((st) => `<tr><td>${esc(st.text)}</td>${G.map((g) => `<td class="n">${ring(st.byGroup[g], null, 60)}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>`).join("")}</section>`;
+  const commentRows = (b, render) => `<div class="crow"><span class="cwho"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="8" style="fill:${GROUP_COLORS[b.group] || "#525252"}"/><circle cx="8" cy="6.2" r="2.4" fill="#fff"/><path d="M3.6 12.6c.9-1.8 2.5-2.7 4.4-2.7s3.5.9 4.4 2.7" fill="#fff"/></svg>${esc(LBL[b.group] || b.group)}</span><div class="cans">${b.comments.map(render).join("")}</div></div>`;
+  S.comments = questions.length ? `<section class="rsec s-magenta" data-sec="comments">${head("comments", o.commentsTitle || "In their words")}<p class="lead">${esc(o.commentsText || "Written comments, as given. Blank and \"NA\" answers are left out.")}</p>
+      ${raw.participantView ? questions.map((qq) => `<div class="ccard"><div class="dhead"><span>${esc(qq)}</span></div>${d.comments.filter((b) => b.question === qq).map((b) => commentRows(b, (c) => `<div class="qwrap"><div class="quote">${esc(c.text)}</div></div>`)).join("")}</div>`).join("") : `<div class="reviewnote">Before sharing, read every comment. Click a comment to edit it (for example, to remove a name), or press Hide to leave it out. Your changes are saved for this report (the rater's original answer is kept in the Sheet). This note and the buttons don't print.</div>
+      ${questions.map((qq) => `<div class="ccard"><div class="dhead"><span>${esc(qq)}</span></div>${d.comments.filter((b) => b.question === qq).map((b) => commentRows(b, (c) => { const e = (raw.edits || {})[c.id] || {}; const t = e.text != null ? e.text : c.text; return `<div class="qwrap${e.hidden ? " off" : ""}" data-cid="${esc(c.id)}"><div class="quote" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Comment from ${esc(b.group)}, click to edit" data-orig="${esc(c.text)}">${esc(t)}</div>${e.text != null ? `<span class="edited">Edited</span>` : ""}<button class="btn ghost qhide" type="button" aria-pressed="${e.hidden ? "true" : "false"}">${e.hidden ? "Show" : "Hide"}</button></div>`; })).join("")}</div>`).join("")}`}</section>` : "";
+  const prompts = String(o.planPrompts || "").split(/\n+/).map((x) => x.trim()).filter(Boolean);
+  S.plan = isGroup ? "" : `<section class="rsec s-blue" data-sec="plan">${head("plan", o.planTitle || "Personal development plan")}<p class="lead">${esc(o.planText)}</p>
       ${plan && plan.items.length ? `<p class="rnote">Inputs from ${esc(plan.manager || "your manager")}, ${new Date(plan.submitted).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.</p>${plan.items.map((x) => `<h3>${esc(x.label)}</h3><div class="planitem">${esc(x.text)}</div>`).join("")}`
-        : String(o.planPrompts || DEF_OPTS.planPrompts).split(/\n+/).map((x) => x.trim()).filter(Boolean).map((l) => `<h3>${esc(l)}</h3><div class="plan"></div>`).join("")}</section>`;
+        : prompts.length ? prompts.map((l) => `<h3>${esc(l)}</h3><div class="plan"></div>`).join("")
+        : `<div class="wmark" aria-hidden="true"><svg viewBox="0 0 600 420"><line x1="110" y1="250" x2="420" y2="70" style="stroke:var(--pri-20)" stroke-width="7"/><line x1="200" y1="380" x2="510" y2="200" style="stroke:var(--pri-20)" stroke-width="7"/><text x="300" y="235" text-anchor="middle" transform="rotate(-30 300 235)" font-size="46" font-weight="700" letter-spacing="2" style="fill:var(--pri-20)">REVIEWER INPUTS</text></svg></div>`}</section>`;
   const layout = reportLayout(o.reportLayout).filter((x) => x.on && S[x.id]);
-  const titleOf = { intro: o.introTitle, summary: o.summaryTitle, gap: o.gapTitle, strengths: o.strengthsTitle, improve: o.improveTitle, hidden: o.hiddenTitle, blind: o.blindTitle, detailed: o.detailedTitle, comments: o.commentsTitle, plan: o.planTitle };
+  const titleOf = { intro: o.introTitle, summary: o.summaryTitle, breakdown: o.breakdownTitle, gap: o.gapTitle, strengths: o.strengthsTitle, improve: o.improveTitle, hidden: o.hiddenTitle, blind: o.blindTitle, detailed: o.detailedTitle, comments: o.commentsTitle, plan: o.planTitle };
   const toc = o.tocOn === "yes" ? `<section class="rsec s-blue" data-sec="toc"><h2>Contents</h2><ol class="toc">${layout.map((x) => `<li>${esc(titleOf[x.id] || REPORT_SECTIONS.find((r) => r[0] === x.id)[1])}</li>`).join("")}</ol></section>` : "";
   return `<div class="report" data-key="${esc(raw.key || "")}">${cover}${toc}${layout.map((x) => S[x.id]).join("\n")}</div>`;
 }
-const REPORT_SECTIONS = [["intro", "Introduction"], ["summary", "Competency summary"], ["gap", "Gap analysis (radar chart)"], ["strengths", "Your strengths"], ["improve", "Areas of improvement"], ["hidden", "Hidden strengths"], ["blind", "Blind spots"], ["detailed", "Detailed feedback"], ["comments", "In their words (comments)"], ["plan", "Personal development plan"]];
+const REPORT_SECTIONS = [["intro", "Introduction"], ["summary", "Competency summary"], ["breakdown", "Competency breakdown by group"], ["gap", "Gap analysis (radar chart)"], ["strengths", "Your strengths"], ["improve", "Areas of improvement"], ["hidden", "Hidden strengths"], ["blind", "Blind spots"], ["detailed", "Detailed feedback"], ["comments", "In their words (comments)"], ["plan", "Personal development plan"]];
 function reportLayout(str) {
   const ids = REPORT_SECTIONS.map((x) => x[0]), out = [], seen = {};
   String(str || "").split(",").map((t) => t.trim()).forEach((t) => { const id = t.replace(/^!/, ""); if (ids.includes(id) && !seen[id]) { seen[id] = 1; out.push({ id, on: t[0] !== "!" }); } });
-  ids.forEach((id) => { if (!seen[id]) out.push({ id, on: true }); });
+  ids.forEach((id, k) => {
+    if (seen[id]) return;
+    const prev = ids.slice(0, k).reverse().find((x) => seen[x]);
+    const at = prev ? out.findIndex((x) => x.id === prev) + 1 : 0;
+    out.splice(at, 0, { id, on: true }); seen[id] = 1;
+  });
   return out;
 }
 function setPageFooter(text) {
   let st = document.getElementById("pfootStyle");
   if (!st) { st = document.createElement("style"); st.id = "pfootStyle"; document.head.appendChild(st); }
   const css = String(text || "").replace(/[\\"]/g, "").replace(/[\r\n]+/g, " ");
-  st.textContent = css ? `@media print { @page { @bottom-center { content: "${css}"; font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 8pt; color: #6f6f6f; } } }` : "";
+  st.textContent = `@media print { @page { @bottom-center { content: counter(page); font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 9pt; color: #161616; }${css ? ` @bottom-left { content: "${css}"; font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 7pt; color: #8d8d8d; }` : ""} } }`;
 }
 function inputFor(key) {
   if (state.report && state.report.key === key) return state.report;
@@ -2369,13 +2446,14 @@ const YN = [["yes", "Yes"], ["no", "No"]];
 const RD_FIELDS = {
   cover: [["reportTitle", "Report title"], ["reportFooter", "Confidentiality line (also at the foot of every printed page)", 2], ["coverColor", "Colour shown when there is no picture", 0, "color"], ["coverLogo", "Show the client's logo next to ours", 0, "s", YN], ["coverImage", "Picture under the title", 0, "img"], ["showIcons", "Icon at the top of each section", 0, "s", YN], ["tocOn", "Contents page after the cover", 0, "s", YN]],
   intro: [["introTitle", "Heading"], ["introText", "Introduction", 4], ["purposeTitle", "Purpose heading"], ["purposeText", "Purpose (one point per line)", 4], ["introTable", "Show the table of respondents", 0, "s", YN], ["participantsTitle", "Participants heading"], ["participantsText", "Text above the table of respondents", 2]],
+  breakdown: [["breakdownTitle", "Heading"], ["breakdownText", "Description", 2]],
   summary: [["summaryTitle", "Heading"], ["summaryText", "Description (blank = number of responses)", 2], ["summaryStyle", "Show scores as", 0, "s", [["bar", "Bars"], ["star", "Stars"]]], ["strengthCut", "Green at or above", 0, "n"], ["improveCut", "Red at or below", 0, "n"], ["benchmark", "Benchmark", 0, "s", [["none", "None"], ["programme", "Average of everyone in this project"], ["custom", "Custom score per competency"]]], ["benchmarkLabel", "Benchmark name"], ["benchmarkValues", "Custom benchmarks", 0, "b"], ["summaryHide", "Competencies shown", 0, "c"]],
   gap: [["gapTitle", "Heading"], ["gapText", "Description", 2], ["gapTable", "Table of scores by group", 0, "s", YN], ["gapSpread", "Perception gaps between groups", 0, "s", YN], ["radarHide", "Competencies on the radar and table", 0, "c"]],
   strengths: [["strengthsTitle", "Heading"], ["strengthsText", "Description", 2], ["strengthsBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["strengthCut", "Score at or above", 0, "n"], ["strengthsN", "Number of results", 0, "i"], ["strengthsOrder", "Order", 0, "s", [["desc", "Highest score first"], ["asc", "Lowest score first"]]], ["strengthsDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["strengthsEmptyTitle", "Heading when none qualify"], ["strengthsEmptyText", "Message when none qualify", 2]],
   improve: [["improveTitle", "Heading"], ["improveText", "Description", 2], ["improveBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["improveCut", "Score at or below", 0, "n"], ["improveN", "Number of results", 0, "i"], ["improveOrder", "Order", 0, "s", [["asc", "Lowest score first"], ["desc", "Highest score first"]]], ["improveDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["improveEmptyTitle", "Heading when none qualify"], ["improveEmptyText", "Message when none qualify", 2]],
   hidden: [["hiddenTitle", "Heading"], ["hiddenText", "Description", 2], ["hiddenBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["hiddenGap", "Others rate at least this much higher than self", 0, "n"], ["hiddenN", "Number of results", 0, "i"], ["hiddenOrder", "Order", 0, "s", [["desc", "Biggest gap first"], ["asc", "Smallest gap first"]]], ["hiddenDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["hiddenEmptyTitle", "Heading when none qualify"], ["hiddenEmptyText", "Message when none qualify", 2]],
   blind: [["blindTitle", "Heading"], ["blindText", "Description", 2], ["blindBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["blindGap", "Self rates at least this much higher than others", 0, "n"], ["blindN", "Number of results", 0, "i"], ["blindOrder", "Order", 0, "s", [["desc", "Biggest gap first"], ["asc", "Smallest gap first"]]], ["blindDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["blindEmptyTitle", "Heading when none qualify"], ["blindEmptyText", "Message when none qualify", 2]],
-  detailed: [["detailedTitle", "Heading"], ["detailedText", "Description", 2], ["detailedBreak", "Start each competency on a new printed page", 0, "s", YN], ["detailedHide", "Competencies shown", 0, "c"]],
+  detailed: [["detailedTitle", "Heading"], ["detailedText", "Description", 2], ["detailedHide", "Competencies shown", 0, "c"]],
   comments: [["commentsTitle", "Heading"], ["commentsText", "Description", 2]],
   plan: [["planTitle", "Heading"], ["planText", "Description", 2], ["planPrompts", "Prompts when the manager hasn't filled it in (one per line)", 5]],
 };
