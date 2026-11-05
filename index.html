@@ -56,7 +56,7 @@
   --font: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
   --mono: "IBM Plex Mono", Menlo, Consolas, monospace;
 }
-html, body { height: 100%; }
+html, body { height: 100%; margin: 0; }
 body {
   background: var(--background); color: var(--text-primary); font-family: var(--font);
   font-size: 1rem; line-height: 1.5; letter-spacing: 0; -webkit-font-smoothing: antialiased; overflow: hidden;
@@ -89,11 +89,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .progress span { display: block; height: 4px; width: 0; background: var(--interactive); transition: width .24s cubic-bezier(.2, 0, .38, .9); }
 
 .stage {
-  height: 100%; display: grid; place-items: center; overflow-y: auto;
+  height: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; overflow-y: auto;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
   padding-block: 88px 96px;
 }
-.screen { width: 100%; max-width: 736px; }
+.screen { width: 100%; max-width: 736px; margin-block: auto; }
 .screen.enter { animation: rise .24s cubic-bezier(0, 0, .38, .9) both; }
 .screen.enter-back { animation: drop .24s cubic-bezier(0, 0, .38, .9) both; }
 @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
@@ -109,6 +109,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 body.th-center .screen { text-align: center; } body.th-center .actions, body.th-center .q { justify-content: center; }
 body.th-nonum .qnum { display: none; } body.th-noprog .progress { display: none; }
 body.th-img { background-size: cover; background-position: center; background-attachment: fixed; }
+body.th-bd .screen, body.th-img .screen { background: var(--background); background: color-mix(in srgb, var(--background) 96%, transparent); padding: clamp(24px, 4vw, 48px); box-shadow: 0 12px 40px rgba(0, 0, 0, .18); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 .reqmark { color: var(--support-error); margin-left: 4px; }
 .qnum { font-family: var(--mono); font-size: .875rem; color: var(--interactive); white-space: nowrap; }
 .qtext { font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem); line-height: 1.25; font-weight: 300; text-wrap: balance; margin: 0; }
@@ -123,10 +124,11 @@ body.th-img { background-size: cover; background-position: center; background-at
   font-size: 1.25rem; font-weight: 400; cursor: pointer; transition: background .11s cubic-bezier(.2, 0, .38, .9);
 }
 .opt:hover { background: var(--layer-hover); }
-.opt[aria-checked="true"] { background: var(--layer-selected); outline: 2px solid var(--border-inverse); outline-offset: -2px; font-weight: 600; }
+.opt[aria-checked="true"], .opt[aria-checked="true"]:hover { background: var(--interactive); color: #ffffff; outline: 2px solid var(--interactive); outline-offset: -2px; font-weight: 600; }
+.opt[aria-checked="true"] .olab { color: #ffffff; opacity: .9; }
 .opt[aria-checked="true"]::after {
   content: ""; position: absolute; top: 8px; right: 8px; width: 12px; height: 12px; border-radius: 50%;
-  background: var(--border-inverse) url("data:image/svg+xml,%3Csvg xmlns='http:%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 16 16'%3E%3Cpath fill='%23fff' d='M6.5 10.6 4 8.1l-.7.7 3.2 3.2 6.2-6.2-.7-.7z'/%3E%3C/svg%3E") center/10px no-repeat;
+  background: rgba(255, 255, 255, .28) url("data:image/svg+xml,%3Csvg xmlns='http:%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 16 16'%3E%3Cpath fill='%23fff' d='M6.5 10.6 4 8.1l-.7.7 3.2 3.2 6.2-6.2-.7-.7z'/%3E%3C/svg%3E") center/10px no-repeat;
 }
 .opt.blink { animation: blink .3s steps(2) 1; }
 @keyframes blink { 50% { opacity: .5; } }
@@ -136,7 +138,8 @@ body.th-img { background-size: cover; background-position: center; background-at
   min-height: 40px; padding: 0 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
 }
 .na:hover { background: var(--layer-hover); }
-.na[aria-checked="true"] { background: var(--layer-selected); outline: 2px solid var(--border-inverse); outline-offset: -2px; }
+.na[aria-checked="true"], .na[aria-checked="true"]:hover { background: var(--interactive); color: #ffffff; outline: 2px solid var(--interactive); outline-offset: -2px; }
+.na[aria-checked="true"] .key { color: #ffffff; border-color: rgba(255, 255, 255, .6); }
 .key { font-family: var(--mono); font-size: .75rem; border: 1px solid var(--border-strong); padding: 0 5px; color: var(--text-secondary); }
 
 /* Text area: Carbon text input */
@@ -164,6 +167,10 @@ textarea::placeholder { color: var(--text-helper); }
 /* Headlines (Carbon expressive: light weight) */
 .hero h1 { font-size: clamp(2rem, 1.4rem + 2.6vw, 3.375rem); line-height: 1.15; font-weight: 300; margin: 0 0 16px; text-wrap: balance; }
 .hero p { font-size: 1rem; line-height: 1.5; color: var(--text-secondary); max-width: 60ch; margin: 0 0 8px; }
+.hub h1 { font-size: clamp(1.75rem, 1.25rem + 1.6vw, 2.5rem); line-height: 1.2; margin-bottom: 12px; text-wrap: pretty; }
+.hub p { max-width: none; }
+.hub .people { margin-top: 24px; }
+.hub .press { margin-top: 12px !important; }
 .facts { display: flex; gap: 2px; flex-wrap: wrap; margin: 24px 0 0; }
 .facts span { background: var(--layer); padding: 12px 16px; font-size: .75rem; letter-spacing: .32px; color: var(--text-secondary); min-width: 120px; }
 .facts b { display: block; color: var(--text-primary); font-size: 1.25rem; font-weight: 400; letter-spacing: 0; }
@@ -367,7 +374,7 @@ function showHub(back = false) {
   const sub = left
     ? `Each takes about ${minutesFor(list[0])} minutes. Answers about peers and team members are combined with other people's and never shown with your name.${list.some((a) => a.relation === "Manager") ? " Feedback you give as someone's manager is shown in their report under “Manager”." : ""}${dueText() ? ` Please finish by ${dueText()}.` : ""}`
     : "You've given feedback for everyone on your list. If you need to change any answers, open the person below and resubmit. Otherwise you can close this page.";
-  const el = paint(`<div class="hero">
+  const el = paint(`<div class="hero hub">
     <h1>${head}</h1>
     <p>${sub}</p>
     <ul class="people">${items}</ul>
@@ -614,6 +621,13 @@ async function planInit() {
   });
 }
 
+const BACKDROPS = {
+  aurora: { name: "Aurora", css: "radial-gradient(60vmax 60vmax at 8% 12%, rgba(124,92,255,.55), transparent 60%), radial-gradient(50vmax 50vmax at 92% 18%, rgba(0,196,204,.45), transparent 60%), radial-gradient(70vmax 70vmax at 60% 105%, rgba(255,110,170,.42), transparent 60%), #f3f4ff" },
+  midnight: { name: "Midnight", css: "radial-gradient(70vmax 50vmax at 85% -5%, rgba(88,130,255,.55), transparent 60%), radial-gradient(60vmax 50vmax at -5% 105%, rgba(170,70,255,.45), transparent 60%), linear-gradient(160deg, #0a0f24, #141a3d 55%, #1f1242)" },
+  sunset: { name: "Sunset", css: "radial-gradient(60vmax 50vmax at 100% 0%, rgba(255,214,140,.7), transparent 60%), linear-gradient(135deg, #ffb27d 0%, #ff6f91 48%, #8a5cc4 100%)" },
+  ocean: { name: "Ocean", css: "radial-gradient(70vmax 60vmax at 0% 0%, rgba(80,225,255,.8), transparent 60%), radial-gradient(70vmax 60vmax at 100% 100%, rgba(40,80,255,.75), transparent 60%), linear-gradient(135deg, #0a8fd8, #6fd3c6)" },
+  brand: { name: "Brand glow", css: "radial-gradient(rgba(22,22,22,.07) 1px, transparent 1.4px) 0 0 / 22px 22px, radial-gradient(70vmax 60vmax at 100% 0%, color-mix(in srgb, var(--interactive) 50%, transparent), transparent 62%), radial-gradient(60vmax 50vmax at 0% 100%, color-mix(in srgb, var(--interactive) 28%, transparent), transparent 60%), #f6f7fb" },
+};
 const FONTS = { plex: '"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif', arial: "Arial, Helvetica, sans-serif", georgia: "Georgia, 'Times New Roman', serif", verdana: "Verdana, Geneva, sans-serif", trebuchet: "'Trebuchet MS', Helvetica, sans-serif" };
 function applyTheme(t) {
   if (!t) return;
@@ -626,6 +640,7 @@ function applyTheme(t) {
   document.body.classList.toggle("th-center", t.align === "center");
   document.body.classList.toggle("th-nonum", t.numbers === false);
   document.body.classList.toggle("th-noprog", t.progress === false);
+  if (BACKDROPS[t.backdrop]) { document.body.classList.add("th-bd"); document.body.style.background = BACKDROPS[t.backdrop].css; }
   if (/^https:\/\/\S+$/i.test(t.image || "")) { document.body.classList.add("th-img"); document.body.style.backgroundImage = `url('${String(t.image).replace(/'/g, "%27")}')`; }
 }
 (async function init() {
