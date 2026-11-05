@@ -167,6 +167,7 @@ tbody tr.detail:hover td { background: var(--background); }
 
 /* Email action strip (Carbon inline notification style) */
 .mail { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: var(--layer); border-left: 3px solid var(--interactive); padding: 12px 16px; margin: -16px 0 32px; }
+.mail[style*="flex-direction:column"] { flex-wrap: nowrap; }
 .mail .txt { flex: 1 1 280px; min-width: 0; }
 .mail .txt b { font-weight: 600; }
 .mail .acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
@@ -211,7 +212,15 @@ tbody tr.detail:hover td { background: var(--background); }
 .rcov .cv-logos { display: flex; align-items: center; gap: 20px; } .rcov .cv-le { width: 90px; height: 48px; } .rcov .rlogo { max-height: 48px; max-width: 160px; margin: 0; }
 .rcov .cv-title { font-size: 2.25rem; font-weight: 700; line-height: 1.15; margin: 8px 0 0; text-transform: uppercase; letter-spacing: 0; text-wrap: balance; }
 .rcov .cv-box { display: inline-flex; border: 1px solid var(--pri-100); text-transform: uppercase; font-size: 1.125rem; }
-.rcov .cv-box span { padding: 10px 24px; } .rcov .cv-box span + span { border-left: 1px solid var(--pri-100); }
+.rcov .cv-box span { padding: 10px 24px; } .rcov .cv-role { margin: 14px 0 0; font-size: 1rem; color: var(--pri-70); letter-spacing: .3px; }
+.pform .pfp { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 12px 0; } .pform .pfp label { min-width: 0; display: flex; flex-direction: column; gap: 4px; font-size: .75rem; color: var(--text-secondary); }
+.pform input { width: 100%; box-sizing: border-box; height: 36px; padding: 0 10px; border: 0; border-bottom: 1px solid var(--border-strong, #8d8d8d); background: var(--field, #f4f4f4); font: inherit; font-size: .875rem; color: inherit; min-width: 0; }
+.pform .pfgroups { align-items: start; grid-auto-rows: min-content; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; }
+.pform .pfg { border: 1px solid var(--border-subtle, #e0e0e0); padding: 8px 12px 10px; margin: 0; min-width: 0; } .pform .pfg legend { font-weight: 600; font-size: .875rem; padding: 0 4px; }
+.pform .pfg .pfrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto; gap: 6px; align-items: center; margin-bottom: 6px; } .pform .pferr { grid-column: 1 / -1; } .pform .pferr:empty { display: none; }
+.nomprev { margin-top: 8px; } .nomprev .ptab td.n, .nomprev .ptab th.n { text-align: center; } .nomprob ul { margin: 6px 0 0 18px; padding: 0; font-size: .8125rem; }
+@media (max-width: 720px) { .pform .pfp { grid-template-columns: 1fr 1fr; } }
+.rcov .cv-box span + span { border-left: 1px solid var(--pri-100); }
 .rcov .cv-conf { font-size: .625rem; text-transform: uppercase; letter-spacing: .3px; margin: 6px 0 0; color: #333333; }
 .rcov .cv-img { flex: 1; min-height: 160px; background-size: cover; background-position: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .rsec.rintro { background: #ffffff; border-top: 0; padding: 40px 32px; }
@@ -1322,16 +1331,65 @@ function renderProjects() {
   app.querySelectorAll("[data-open]").forEach((b) => b.addEventListener("click", () => openProject(b.dataset.open)));
 }
 
-const COLS = [["participant_name", /participant.*name|candidate.*name|subject.*name|^participant$/], ["participant_email", /participant.*mail|candidate.*mail|subject.*mail/], ["rater_name", /rater.*name|evaluator.*name|reviewer.*name|^rater$/], ["rater_email", /rater.*mail|evaluator.*mail|reviewer.*mail/], ["relation", /relation|relationship|role/]];
+const SITE_BASE = ["https:", "", "360.learningequation.co.in", ""].join("/");
+const TEMPLATE_URL = SITE_BASE + "templates/le360-nominations-template.xlsx";
+const COLS = [
+  ["participant_name", /^(participant|employee|candidate|subject|ratee|leader|appraisee|feedback receiver)( full)?( name)?$|participant.*name|employee.*name|candidate.*name|ratee.*name|leader.*name|appraisee.*name|receiver.*name/],
+  ["participant_email", /(participant|employee|candidate|subject|ratee|leader|appraisee|receiver).*(e-?mail|mail id)/],
+  ["rater_name", /^(rater|reviewer|evaluator|respondent|assessor|nominee|feedback provider|feedback giver)( full)?( name)?$|rater.*name|reviewer.*name|evaluator.*name|respondent.*name|assessor.*name|nominee.*name|provider.*name|giver.*name/],
+  ["rater_email", /(rater|reviewer|evaluator|respondent|assessor|nominee|provider|giver).*(e-?mail|mail id)/],
+  ["relation", /relation|^role$|rater.?(type|role|category|group)|reviewer.?(type|role|category)|^category$|^type$|capacity/],
+  ["department", /depart|^dept|function|division|business unit|^bu$|vertical/],
+  ["designation", /designation|job.?title|^title$|position|grade|band|level/],
+];
 function rowsFromTable(table) {
   const clean = table.map((r) => r.map((c) => String(c ?? "").trim())).filter((r) => r.some(Boolean));
   if (!clean.length) return [];
-  const head = clean[0].map((h) => h.toLowerCase());
-  const map = COLS.map(([, re]) => head.findIndex((h) => re.test(h)));
-  const hasHeader = map.filter((i) => i >= 0).length >= 3;
+  const head = clean[0].map((h) => h.toLowerCase().replace(/[_*:]+/g, " ").replace(/\s+/g, " ").trim());
+  const used = new Set();
+  const map = COLS.map(([, re]) => { const i = head.findIndex((h, j) => !used.has(j) && re.test(h)); if (i >= 0) used.add(i); return i; });
+  const hasHeader = map.slice(0, 5).filter((i) => i >= 0).length >= 3;
   const body = hasHeader ? clean.slice(1) : clean;
-  return body.map((r) => (hasHeader ? map.map((i) => (i >= 0 ? r[i] || "" : "")) : r.slice(0, 5)))
+  return body.map((r) => (hasHeader ? map.map((i) => (i >= 0 ? r[i] || "" : "")) : r.slice(0, 7).concat(["", "", "", "", "", "", ""]).slice(0, 7)))
     .filter((r) => r.some(Boolean));
+}
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+function relNorm(v) {
+  const t = String(v || "").trim().toLowerCase();
+  const L = (state.data && state.data.roleLabels) || {};
+  for (const k in L) if (String(L[k]).toLowerCase() === t) return k;
+  if (/^(self|self[ -]?assessment|self[ -]?rating)$/.test(t)) return "Self";
+  if (/^((line|reporting|direct|immediate|functional)\s+)?(manager|supervisor|boss|reporting officer|reporting to)$/.test(t) || t === "rm") return "Manager";
+  if (/^(peers?|colleagues?|co-?workers?|team ?mates?|same level)$/.test(t)) return "Peer";
+  if (/^(reportees?|subordinates?|direct reports?|team members?|juniors?|reporting staff|dr)$/.test(t)) return "Reportee";
+  return t ? "Other" : "";
+}
+function roleCaps() { const o = (state.data && state.data.settings && state.data.settings.options) || {}; const mx = roleParse(o.roleMax), out = {}; Object.keys(mx).forEach((k) => { const n = parseInt(mx[k], 10); if (!isNaN(n)) out[k] = n; }); return out; }
+/** Check upload rows before sending them: returns [{row, problem}] and a per-participant summary. */
+function checkRows(rows) {
+  const d = state.data || { participants: [] }, caps = roleCaps();
+  const have = {}, seen = {}, count = {}, sum = {}, out = [];
+  d.participants.forEach((p) => p.raters.forEach((r) => { have[p.email.toLowerCase() + "|" + (r.email || r.name).toLowerCase()] = 1; count[p.email.toLowerCase() + "|" + r.relation] = (count[p.email.toLowerCase() + "|" + r.relation] || 0) + 1; }));
+  rows.forEach((r, i) => {
+    const [pn, pe0, rn, re0, rel0, dept, desig] = r.map((x) => String(x || "").trim()), pe = pe0.toLowerCase(), re = re0.toLowerCase();
+    const rel = !rn && !re ? "Self" : relNorm(rel0) || "Other";
+    let problem = "";
+    if (/@client\.com$/.test(pe) && /^(riya\.shah|arjun\.mehta|neha\.iyer|karan\.desai)@/.test(re || pe)) problem = "This is one of the template's example rows. Delete it.";
+    else if (!pn) problem = "Participant name is missing.";
+    else if (!pe) problem = "Participant email is missing.";
+    else if (!EMAIL_RE.test(pe)) problem = `Participant email "${pe0}" doesn't look right.`;
+    else if (rel !== "Self" && !re) problem = `${rn || "This rater"} has no email.`;
+    else if (rel !== "Self" && !EMAIL_RE.test(re)) problem = `Rater email "${re0}" doesn't look right.`;
+    else if (rel !== "Self" && re === pe) problem = `${pn} is listed as their own ${rel.toLowerCase()}. Self is added automatically.`;
+    const key = pe + "|" + (re || pe);
+    if (!problem && (have[key] || seen[key])) problem = `${rn || re} is already a rater for ${pn}.`;
+    if (!problem && rel !== "Self" && caps[rel] != null) { const ck = pe + "|" + rel; count[ck] = (count[ck] || 0) + 1; if (count[ck] > caps[rel]) problem = `${pn} would have more than ${caps[rel]} ${rl(rel).toLowerCase()} reviewer${caps[rel] === 1 ? "" : "s"} (the limit in ⚙ Settings).`; }
+    seen[key] = 1;
+    const note = rel0 && relNorm(rel0) === "Other" && !/^others?$/i.test(rel0) ? `Relationship "${rel0}" will be treated as Other.` : "";
+    out.push({ i, problem, note, rel });
+    if (pe) { const g = (sum[pe] = sum[pe] || { name: pn, email: pe, dept: "", desig: "", rels: {}, bad: 0 }); if (dept) g.dept = dept; if (desig) g.desig = desig; if (problem) g.bad++; else if (rel !== "Self") g.rels[rel] = (g.rels[rel] || 0) + 1; }
+  });
+  return { checks: out, people: Object.values(sum) };
 }
 function parseDelimited(text) {
   const sep = text.includes("\t") ? "\t" : ",";
@@ -1361,15 +1419,28 @@ function loadSheetJS() {
 }
 function importPanel(first) {
   const p = state.pending;
+  let preview = "";
+  if (p) {
+    const { checks, people } = checkRows(p.rows), bad = checks.filter((c) => c.problem), good = p.rows.length - bad.length;
+    const relList = ["Manager", "Peer", "Reportee", "Other"];
+    preview = `<div class="nomprev"><div class="small"><b>${p.rows.length} row${p.rows.length === 1 ? "" : "s"}</b> read from ${esc(p.source)} · ${people.length} participant${people.length === 1 ? "" : "s"}${bad.length ? ` · <span class="danger-txt">${bad.length} with problems</span>` : " · no problems found"}</div>
+      <div class="table"><table class="ptab"><thead><tr><th>Participant</th><th>Designation · Department</th>${relList.map((r) => `<th class="n">${esc(rl(r))}</th>`).join("")}<th></th></tr></thead><tbody>
+      ${people.slice(0, 200).map((g) => `<tr><td><b>${esc(g.name)}</b><div class="small">${esc(g.email)}</div></td><td class="small">${esc([g.desig, g.dept].filter(Boolean).join(" · ") || "—")}</td>${relList.map((r) => `<td class="n">${g.rels[r] || "–"}</td>`).join("")}<td class="small">${g.bad ? `<span class="danger-txt">${g.bad} row${g.bad === 1 ? "" : "s"} to fix</span>` : ""}</td></tr>`).join("")}
+      </tbody></table></div>
+      ${bad.length ? `<details class="nomprob" open><summary><b>Rows with problems</b> (these will be skipped)</summary><ul>${bad.slice(0, 50).map((c) => `<li>Row ${c.i + 2}: ${esc(c.problem)}</li>`).join("")}${bad.length > 50 ? `<li>…and ${bad.length - 50} more.</li>` : ""}</ul></details>` : ""}
+      ${checks.some((c) => c.note) ? `<div class="small" style="margin-top:6px">${checks.filter((c) => c.note).slice(0, 5).map((c) => `Row ${c.i + 2}: ${esc(c.note)}`).join("<br>")}</div>` : ""}
+      <div class="confirm" style="margin-top:12px"><button class="btn" id="nomGo" ${good ? "" : "disabled"}>${bad.length ? `Add ${good} good row${good === 1 ? "" : "s"}, skip ${bad.length}` : `Add ${good} and create links`}</button><button class="btn ghost" id="nomClear">Clear</button></div></div>`;
+  }
   return `<section class="mail" style="flex-direction:column;align-items:stretch;margin:0 0 32px">
     <div><b>${first ? "Step 1: add the client's nominations" : "Add nominations"}</b>
-      <div class="small" style="margin-top:4px">Upload the client's nomination Excel (or CSV), or paste rows copied from Excel. Columns: participant name, participant email, rater name, rater email, relation (Manager, Peer, Reportee or Other). Self-assessments are added automatically. People already on the list are skipped.</div></div>
+      <div class="small" style="margin-top:4px">Upload the client's nomination Excel (or CSV), or paste rows copied from Excel. One row per rater, with columns <b>Participant name, Participant email, Designation, Department, Rater name, Rater email, Relationship</b> (Manager, Peer, Reportee or Other). Columns can be in any order as long as the first row has the headings. Don't list Self; it's added automatically. People already on the list are skipped.</div></div>
     <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+      <a class="btn tertiary" href="${TEMPLATE_URL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center">Download template</a>
       <label class="btn tertiary" style="display:inline-flex;align-items:center;cursor:pointer">Choose Excel or CSV file<input type="file" id="nomFile" accept=".xlsx,.xls,.csv" hidden></label>
-      <textarea id="nomPaste" class="search" rows="3" style="flex:1 1 320px;max-width:none;height:auto;padding:10px 16px;background:var(--background)" placeholder="…or paste rows from Excel here"></textarea>
+      <button class="btn tertiary" type="button" id="typeIn">Type in a participant</button>
+      <textarea id="nomPaste" class="search" rows="2" style="flex:1 1 320px;max-width:none;height:auto;min-height:0;padding:10px 16px;background:var(--background)" placeholder="…or paste rows from Excel here"></textarea>
     </div>
-    ${p ? `<div class="confirm"><span>${p.rows.length} row${p.rows.length === 1 ? "" : "s"} ready from ${esc(p.source)} (first: ${esc(p.rows[0]?.slice(0, 3).join(" · ") || "")})</span>
-      <button class="btn" id="nomGo" ${p.rows.length ? "" : "disabled"}>Add ${p.rows.length} and create links</button><button class="btn ghost" id="nomClear">Clear</button></div>` : ""}
+    ${preview}
     <div class="small" id="nomMsg" aria-live="polite"></div>
   </section>`;
 }
@@ -1381,16 +1452,18 @@ function wireImport() {
     try {
       let table;
       if (/\.csv$/i.test(file.name)) table = parseDelimited(await file.text());
-      else { await loadSheetJS(); const wb = XLSX.read(await file.arrayBuffer(), { type: "array" }); const ws = wb.Sheets[wb.SheetNames.find((n) => /nomin/i.test(n)) || wb.SheetNames[0]]; table = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" }); }
+      else { await loadSheetJS(); const wb = XLSX.read(await file.arrayBuffer(), { type: "array" }); const ws = wb.Sheets[wb.SheetNames.find((n) => /nomin/i.test(n)) || wb.SheetNames.find((n) => !/instruction|read ?me|guide|list/i.test(n)) || wb.SheetNames[0]]; table = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "", raw: false }); }
       state.pending = { rows: rowsFromTable(table), source: file.name }; render();
     } catch (err) { toast(err.message, true); }
   });
   paste.addEventListener("input", () => { const rows = rowsFromTable(parseDelimited(paste.value)); state.pending = rows.length ? { rows, source: "pasted text" } : null; const v = paste.value; render(); const p2 = document.getElementById("nomPaste"); if (p2) { p2.value = v; p2.focus(); } });
   document.getElementById("nomClear")?.addEventListener("click", () => { state.pending = null; render(); });
+  document.getElementById("typeIn")?.addEventListener("click", () => openPForm(null));
   document.getElementById("nomGo")?.addEventListener("click", async (e) => {
     const b = e.target; b.disabled = true; b.textContent = "Adding…";
     try {
-      const res = await admin("importNominations", { rows: state.pending.rows });
+      const { checks } = checkRows(state.pending.rows);
+      const res = await admin("importNominations", { rows: state.pending.rows.filter((r, i) => !checks[i].problem) });
       state.pending = null; state.importOpen = res.problemCount > 0 || res.warningCount > 0;
       state.data = await admin("dashboard"); render();
       toast(`${res.added} nomination${res.added === 1 ? "" : "s"} added${res.links ? `, ${res.links.newLinks} new rater link${res.links.newLinks === 1 ? "" : "s"}` : ""}.` + (res.problemCount ? ` ${res.problemCount} row(s) skipped — see below.` : ""), res.problemCount > 0);
@@ -1403,6 +1476,140 @@ function wireImport() {
   });
 }
 
+
+/* ---------- Type in a participant and their reviewers ---------- */
+const PF_GROUPS = ["Manager", "Peer", "Reportee", "Other"];
+function openPForm(key) {
+  const d = state.data, p = key ? d.participants.find((x) => x.key === key) : null;
+  const blank = (n) => Array.from({ length: n }, () => ({ n: "", e: "" }));
+  state.pform = { key: key || null, name: p ? p.name : "", email: p ? p.email : "", dept: p ? p.department || "" : "", desig: p ? p.designation || "" : "",
+    g: { Manager: blank(p && p.raters.some((r) => r.relation === "Manager") ? 0 : 1), Peer: blank(3), Reportee: blank(3), Other: [] }, saved: state.pform ? state.pform.saved || 0 : 0 };
+  if (p && !state.pform.g.Manager.length) state.pform.g.Manager = [];
+  state.importOpen = state.importOpen && !key; render();
+  const el = document.getElementById("pform"); if (el) { el.scrollIntoView({ block: "start" }); (el.querySelector(key ? "[data-pf-n]" : "#pfName") || el.querySelector("input"))?.focus(); }
+}
+function pfExisting() { const f = state.pform; return f && f.key ? state.data.participants.find((x) => x.key === f.key) : null; }
+/** Problems per row and for the participant, worked out from what has been typed. */
+function pfCheck() {
+  const f = state.pform, p = pfExisting(), caps = roleCaps(), errs = {}, top = [];
+  const pe = f.email.trim().toLowerCase();
+  if (!p) { if (!f.name.trim()) top.push("Add the participant's name."); if (!pe) top.push("Add the participant's email."); else if (!EMAIL_RE.test(pe)) top.push("The participant's email doesn't look right."); }
+  const seen = {}; (p ? p.raters : []).forEach((r) => r.email && (seen[r.email.toLowerCase()] = "already a reviewer of " + (p ? p.name : "")));
+  PF_GROUPS.forEach((g) => {
+    const have = p ? p.raters.filter((r) => r.relation === g).length : 0; let n = have;
+    f.g[g].forEach((r, i) => {
+      const nm = r.n.trim(), em = r.e.trim().toLowerCase(), k = g + i;
+      if (!nm && !em) return;
+      if (!em) errs[k] = "Add an email.";
+      else if (!EMAIL_RE.test(em)) errs[k] = "Email doesn't look right.";
+      else if (pe && em === pe) errs[k] = "That's the participant's own email; Self is added automatically.";
+      else if (seen[em]) errs[k] = "Same person " + seen[em] + ".";
+      else if (caps[g] != null && ++n > caps[g]) errs[k] = `More than ${caps[g]} ${rl(g).toLowerCase()} reviewer${caps[g] === 1 ? "" : "s"} (the limit in ⚙ Settings).`;
+      if (em && !seen[em]) seen[em] = "entered twice";
+    });
+  });
+  return { errs, top };
+}
+function pfRows() {
+  const f = state.pform, rows = [];
+  PF_GROUPS.forEach((g) => f.g[g].forEach((r) => { if (r.n.trim() || r.e.trim()) rows.push([f.name.trim(), f.email.trim(), r.n.trim() || r.e.trim(), r.e.trim(), g, f.dept.trim(), f.desig.trim()]); }));
+  return rows;
+}
+function pformHTML() {
+  const f = state.pform, p = pfExisting(), { errs, top } = pfCheck();
+  const caps = roleCaps();
+  const grp = (g) => {
+    const list = f.g[g], have = p ? p.raters.filter((r) => r.relation === g).length : 0;
+    if (g === "Other" && !list.length) return `<button type="button" class="qb-add" data-pf-add="Other">+ Add ${esc(rl("Other").toLowerCase())}</button>`;
+    return `<fieldset class="pfg"><legend>${esc(rl(g))}${g === "Manager" ? "" : "s"} <span class="small">${have ? `${have} already · ` : ""}${caps[g] != null ? `up to ${caps[g]}` : ""}</span></legend>
+      ${list.map((r, i) => `<div class="pfrow"><input data-pf-n="${g}:${i}" value="${esc(r.n)}" placeholder="Name" aria-label="${esc(rl(g))} ${i + 1} name"><input data-pf-e="${g}:${i}" type="email" value="${esc(r.e)}" placeholder="name@client.com" aria-label="${esc(rl(g))} ${i + 1} email">
+        <button type="button" class="btn ghost copy" data-pf-del="${g}:${i}" aria-label="Remove this row">✕</button><span class="pferr small danger-txt" data-pf-err="${g}${i}">${esc(errs[g + i] || "")}</span></div>`).join("")}
+      <button type="button" class="qb-add" data-pf-add="${g}">+ Add ${esc(rl(g).toLowerCase())}</button></fieldset>`;
+  };
+  return `<section class="mail pform" id="pform" style="flex-direction:column;align-items:stretch;margin:0 0 24px">
+    <div><b>${p ? `Add reviewers for ${esc(p.name)}` : "Type in a participant"}</b>
+      <div class="small" style="margin-top:4px">${p ? "Only new reviewers are added; existing ones stay as they are." : "Self is added automatically."} Tip: paste a list (from an email or Excel, one person per line, name and email) into any name box to fill that group at once. Press Enter in the last email box to add a row.</div></div>
+    <div class="pfrow pfp">
+      <label>Participant name<input id="pfName" value="${esc(f.name)}" ${p ? "disabled" : ""} placeholder="e.g. Riya Shah"></label>
+      <label>Participant email<input id="pfEmail" type="email" value="${esc(f.email)}" ${p ? "disabled" : ""} placeholder="riya@client.com"></label>
+      <label>Designation<input id="pfDesig" value="${esc(f.desig)}" placeholder="e.g. Senior Manager"></label>
+      <label>Department<input id="pfDept" value="${esc(f.dept)}" placeholder="e.g. Finance"></label>
+    </div>
+    <div class="pfgroups">${PF_GROUPS.filter((g) => g !== "Other" || f.g.Other.length).map(grp).join("")}</div>
+    ${f.g.Other.length ? "" : `<div><button type="button" class="qb-add" data-pf-add="Other">+ Add ${esc(rl("Other").toLowerCase())} reviewers</button></div>`}
+    <div class="small danger-txt" id="pfTop" aria-live="polite">${top.length && f.tried ? top.map(esc).join(" ") : ""}</div>
+    <div class="confirm" style="margin-top:8px">
+      <button class="btn" type="button" id="pfSave">${p ? "Add reviewers" : "Save participant"}</button>
+      ${p ? "" : `<button class="btn tertiary" type="button" id="pfNext">Save and add next</button>`}
+      <button class="btn ghost" type="button" id="pfCancel">Close</button>
+      ${f.saved ? `<span class="small">${f.saved} participant${f.saved === 1 ? "" : "s"} added in this session</span>` : ""}
+    </div>
+  </section>`;
+}
+function pfRefresh(focusSel) {
+  const el = document.getElementById("pform"); if (!el) return;
+  el.outerHTML = pformHTML(); wirePForm();
+  if (focusSel) document.querySelector(focusSel)?.focus();
+}
+function pfShowErrs() {
+  const { errs, top } = pfCheck();
+  document.querySelectorAll("[data-pf-err]").forEach((x) => (x.textContent = errs[x.dataset.pfErr] || ""));
+  const t = document.getElementById("pfTop"); if (t && state.pform.tried) t.textContent = top.join(" ");
+}
+/** "Name <email>", "Name, email", "Name<TAB>email" or just an email, one per line. */
+function pfParseList(text) {
+  return String(text).split(/\r?\n/).map((l) => l.trim()).filter(Boolean).map((l) => {
+    const m = l.match(/[^\s<>,;\t]+@[^\s<>,;\t]+\.[^\s<>,;\t]+/);
+    const e = m ? m[0] : ""; const n = l.replace(e, "").replace(/[<>"]/g, "").replace(/[,;\t]+/g, " ").replace(/\s+/g, " ").trim();
+    return { n: n || "", e };
+  }).filter((r) => r.n || r.e);
+}
+function wirePForm() {
+  const f = state.pform; if (!f || !document.getElementById("pform")) return;
+  const bind = (id, k) => document.getElementById(id)?.addEventListener("input", (e) => { f[k] = e.target.value; pfShowErrs(); });
+  bind("pfName", "name"); bind("pfEmail", "email"); bind("pfDept", "dept"); bind("pfDesig", "desig");
+  const at = (v) => { const [g, i] = v.split(":"); return [g, Number(i)]; };
+  document.querySelectorAll("[data-pf-n]").forEach((x) => {
+    x.addEventListener("input", () => { const [g, i] = at(x.dataset.pfN); f.g[g][i].n = x.value; pfShowErrs(); });
+    x.addEventListener("paste", (e) => {
+      const t = (e.clipboardData || window.clipboardData).getData("text");
+      if (!/\n/.test(t.trim()) && !/@/.test(t)) return;
+      e.preventDefault(); const [g, i] = at(x.dataset.pfN); const list = pfParseList(t);
+      const rows = f.g[g].slice(0, i).concat(list, f.g[g].slice(i + 1).filter((r) => r.n || r.e));
+      f.g[g] = rows; pfRefresh(`[data-pf-n="${g}:${Math.min(rows.length - 1, i + list.length)}"]`);
+    });
+  });
+  document.querySelectorAll("[data-pf-e]").forEach((x) => {
+    x.addEventListener("input", () => { const [g, i] = at(x.dataset.pfE); f.g[g][i].e = x.value; pfShowErrs(); });
+    x.addEventListener("keydown", (e) => { if (e.key !== "Enter") return; e.preventDefault(); const [g, i] = at(x.dataset.pfE); if (i === f.g[g].length - 1) f.g[g].push({ n: "", e: "" }); pfRefresh(`[data-pf-n="${g}:${i + 1}"]`); });
+  });
+  document.querySelectorAll("[data-pf-add]").forEach((b) => b.addEventListener("click", () => { const g = b.dataset.pfAdd; f.g[g].push({ n: "", e: "" }); pfRefresh(`[data-pf-n="${g}:${f.g[g].length - 1}"]`); }));
+  document.querySelectorAll("[data-pf-del]").forEach((b) => b.addEventListener("click", () => { const [g, i] = at(b.dataset.pfDel); f.g[g].splice(i, 1); pfRefresh(); }));
+  document.getElementById("pfCancel")?.addEventListener("click", () => { state.pform = null; render(); });
+  const save = async (btn, next) => {
+    f.tried = true; const { errs, top } = pfCheck(), p = pfExisting();
+    if (top.length || Object.keys(errs).length) { pfShowErrs(); toast("Fix the highlighted rows first.", true); return; }
+    let rows = pfRows();
+    if (!p) rows = [[f.name.trim(), f.email.trim(), "", "", "Self", f.dept.trim(), f.desig.trim()]].concat(rows);
+    const infoChanged = p && ((p.department || "") !== f.dept.trim() || (p.designation || "") !== f.desig.trim());
+    if (!rows.length && !infoChanged) { toast("Add at least one reviewer.", true); return; }
+    btn.disabled = true; const old = btn.textContent; btn.textContent = "Saving…";
+    try {
+      if (infoChanged) await admin("setParticipantInfo", { participant: p.key, department: f.dept, designation: f.desig });
+      const res = rows.length ? await admin("importNominations", { rows }) : { added: 0, problemCount: 0 };
+      if (res.problemCount) { toast(res.problems.map((x) => String(x).replace(/^Row \d+: /, "")).join(" "), true); }
+      const added = res.added || 0, name = f.name.trim();
+      state.data = await admin("dashboard");
+      if (!res.problemCount) {
+        if (next) { const saved = (f.saved || 0) + 1; state.pform = null; openPForm(null); state.pform.saved = saved; pfRefresh("#pfName"); }
+        else { state.pform = null; render(); }
+        toast(p ? `${added} reviewer${added === 1 ? "" : "s"} added for ${p.name}.` : `${name} added with ${Math.max(0, added - 1)} reviewer${added - 1 === 1 ? "" : "s"}. Send invitations when you're ready.`);
+      } else { btn.disabled = false; btn.textContent = old; render(); }
+    } catch (err) { btn.disabled = false; btn.textContent = old; toast(err.message, true); }
+  };
+  document.getElementById("pfSave")?.addEventListener("click", (e) => save(e.target, false));
+  document.getElementById("pfNext")?.addEventListener("click", (e) => save(e.target, true));
+}
 async function openReport(key, btn) {
   if (btn) { btn.disabled = true; btn.textContent = "Loading…"; }
   try {
@@ -1546,6 +1753,7 @@ function reportHTML(raw) {
       <div class="cv-top"><div class="cv-logos">${LE_LOGO}${yes("coverLogo") && logo ? logo : ""}</div>
         <h1 class="cv-title">${esc(o.reportTitle || "360 Degree Feedback Report")}${isGroup ? " · Group Report" : ""}</h1>
         <div class="cv-box"><span>${name}</span><span>${date}</span></div>
+        ${!isGroup && (input.participant.designation || input.participant.department) ? `<p class="cv-role">${esc([input.participant.designation, input.participant.department].filter(Boolean).join(" · "))}</p>` : ""}
         <p class="cv-conf">${isGroup ? "Combined scores for everyone in this programme; no individual's results or comments are shown. " : ""}${esc(o.reportFooter)}</p></div>
       <div class="cv-img" style="background-color:${coverPh};${coverPic ? `background-image:url('${esc(coverPic).replace(/'/g, "%27")}')` : ""}"></div></section>`;
   const pctOf = (p) => (p.nominated ? Math.round((100 * p.completed) / p.nominated) : 0);
@@ -2068,7 +2276,7 @@ function peopleTable(d) {
     const rmP = state.confirm === "rmp:" + p.key;
     return `<section class="pcard">
       <div class="phead"><button class="expander" data-pt="${k}" aria-expanded="${open}" aria-label="${open ? "Hide" : "Show"} reviewers of ${esc(p.name)}">${open ? "⌃" : "⌄"}</button>
-        <div class="pname"><b>${esc(p.name)}</b><span class="small">${esc(p.email)}</span></div>
+        <div class="pname"><b>${esc(p.name)}</b><span class="small">${esc(p.email)}${p.designation || p.department ? ` · ${esc([p.designation, p.department].filter(Boolean).join(", "))}` : ""}</span></div>
         <span class="small">${p.raters.length - 1} reviewer${p.raters.length === 2 ? "" : "s"} · ${p.done}/${p.total} done</span>
         ${(p.short || []).length ? `<span class="pill warn" title="Fewest reviewers per group are set in ⚙ Settings">Needs ${p.short.map((x) => `${x.need - x.have} more ${esc(rl(x.relation).toLowerCase())}`).join(", ")}</span>` : ""}
         <div class="rowbtns">${rmP ? `<span class="confirm"><span class="small">Remove ${esc(p.name)} and all their reviewers?</span><button class="btn danger copy" data-rmp="${k}">Remove</button><button class="btn ghost copy" data-cancel>Cancel</button></span>` : `<button class="btn ghost copy danger-txt" data-rmpask="${k}">Remove participant</button>`}</div></div>
@@ -2076,7 +2284,7 @@ function peopleTable(d) {
         ${adding ? `<tr class="editrow"><td><input id="adName" placeholder="Reviewer's name" aria-label="Reviewer's name"></td><td><input id="adEmail" type="email" placeholder="name@client.com" aria-label="Reviewer's email"></td>
           <td><select id="adRel" aria-label="Relationship">${relOptions("Peer")}</select></td><td></td><td class="rowbtns"><button class="btn copy" data-adsave="${k}">Add</button><button class="btn ghost copy" data-adcancel>Cancel</button></td></tr>` : ""}
         </tbody></table></div>
-        ${adding ? "" : `<button class="qb-add" data-addfor="${k}">+ Add reviewer</button>`}` : ""}
+        ${state.pform && state.pform.key === p.key ? pformHTML() : `<button class="qb-add" data-addmany="${k}">+ Add reviewers or edit details</button>`}` : ""}
       ${portalStrip(d, p)}
     </section>`;
   }).join("");
@@ -2143,7 +2351,7 @@ function emailCard(d) {
 function renderPeople(d) {
   const t = d.totals;
   return `
-    ${state.importOpen || !t.forms ? importPanel(!t.forms) : ""}
+    ${state.pform && !state.pform.key ? pformHTML() : state.importOpen || !t.forms ? importPanel(!t.forms) : ""}
     ${launchStrip(d)}
     ${t.forms ? emailCard(d) : ""}
     ${warnStrip(d)}
@@ -2152,7 +2360,7 @@ function renderPeople(d) {
       <label class="check"><input type="checkbox" id="pending" ${state.pendingOnly ? "checked" : ""}> Not finished only</label>
       ${d.notOpened ? `<label class="check"><input type="checkbox" id="notOpened" ${state.notOpenedOnly ? "checked" : ""}> Not opened only</label>` : ""}
       <div class="right"><span class="small" id="copied" aria-live="polite"></span>
-        ${t.forms ? `<button class="btn tertiary" id="addPeople">${state.importOpen ? "Close upload" : "Upload or paste people"}</button>` : ""}
+        ${t.forms ? `<button class="btn tertiary" id="addOne">Type in a participant</button><button class="btn tertiary" id="addPeople">${state.importOpen ? "Close upload" : "Upload or paste people"}</button>` : ""}
         <button class="btn ghost" id="expandAll">${state.closedP.size ? "Expand all" : "Collapse all"}</button></div>
     </div>
     <div id="list">${peopleTable(d)}</div>
@@ -2164,7 +2372,9 @@ function wirePeople() {
   const q = document.getElementById("q");
   q?.addEventListener("input", () => { state.q = q.value; document.getElementById("list").innerHTML = peopleTable(state.data); wirePeopleRows(); });
   document.getElementById("pending")?.addEventListener("change", (e) => { state.pendingOnly = e.target.checked; render(); });
-  document.getElementById("addPeople")?.addEventListener("click", () => { state.importOpen = !state.importOpen; state.pending = null; render(); });
+  document.getElementById("addPeople")?.addEventListener("click", () => { state.importOpen = !state.importOpen; state.pending = null; state.pform = null; render(); });
+  document.getElementById("addOne")?.addEventListener("click", () => openPForm(null));
+  wirePForm();
   document.getElementById("expandAll")?.addEventListener("click", () => { state.closedP = state.closedP.size ? new Set() : new Set(d.participants.map((p) => p.key)); render(); });
   document.getElementById("showNotOpened")?.addEventListener("click", () => { state.q = ""; state.notOpenedOnly = true; render(); document.getElementById("list").scrollIntoView(); });
   document.getElementById("notOpened")?.addEventListener("change", (e) => { state.notOpenedOnly = e.target.checked; render(); });
@@ -2224,6 +2434,7 @@ function wirePeopleRows() {
   app.querySelectorAll("[data-rm]").forEach((b) => b.addEventListener("click", () => peopleAction(b, "removeNomination", { pid: b.dataset.rm })));
   app.querySelectorAll("[data-rmpask]").forEach((b) => b.addEventListener("click", () => { state.confirm = "rmp:" + b.dataset.rmpask; render(); }));
   app.querySelectorAll("[data-rmp]").forEach((b) => b.addEventListener("click", () => peopleAction(b, "removeParticipant", { participant: b.dataset.rmp })));
+  app.querySelectorAll("[data-addmany]").forEach((b) => b.addEventListener("click", () => openPForm(b.dataset.addmany)));
   app.querySelectorAll("[data-addfor]").forEach((b) => b.addEventListener("click", () => { state.addFor = b.dataset.addfor; state.editPid = null; render(); document.getElementById("adName")?.focus(); }));
   app.querySelectorAll("[data-adcancel]").forEach((b) => b.addEventListener("click", () => { state.addFor = null; render(); }));
   app.querySelectorAll("[data-adsave]").forEach((b) => b.addEventListener("click", () => peopleAction(b, "addReviewer", { participant: b.dataset.adsave, name: document.getElementById("adName").value, email: document.getElementById("adEmail").value, relation: document.getElementById("adRel").value }, () => (state.addFor = null))));
