@@ -270,8 +270,8 @@ tbody tr.detail:hover td { background: var(--background); }
 .rt th .rnote { color: #e0e0e0 !important; }
 .rt td { background: var(--background); height: auto; padding: 8px 12px; border-top: 1px solid var(--border-subtle); font-size: .875rem; }
 .rt td.n, .rt th.n { text-align: center; width: 76px; }
-.h-high { background: var(--pos-20) !important; color: var(--pri-100); } .h-good { background: var(--sec-20) !important; color: var(--pri-100); }
-.h-mid { background: var(--pri-20) !important; color: var(--pri-100); } .h-low { background: var(--neg-30) !important; color: var(--pri-100); }
+.h-high { background: var(--band-high) !important; color: var(--pri-100); } .h-good { background: var(--band-good) !important; color: var(--pri-100); }
+.h-mid { background: var(--band-mid) !important; color: var(--pri-100); } .h-low { background: var(--band-low) !important; color: var(--pri-100); }
 .slist { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 .slist li { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; background: var(--background); padding: 12px 16px; align-items: start; }
 .slist .num { font-family: var(--mono); color: var(--text-secondary); }
@@ -637,13 +637,17 @@ const CARBON = {
   magenta: ["#fff0f7", "#ffd6e8", "#ffafd2", "#ff7eb6", "#ee5396", "#d02670", "#9f1853", "#740937", "#510224", "#2a0a18"],
 };
 const REPORT_PALETTE = { pri: "gray", sec: "blue", acc: "teal", pos: "green", neg: "red" };
+const GROUP_PALETTE = { Self: ["gray", 100], Manager: ["blue", 60], Peer: ["teal", 60], Reportee: ["yellow", 30] };
+const BAND_PALETTE = { high: ["green", 30], good: ["blue", 30], mid: ["yellow", 20], low: ["red", 40] };
 const pcol = (role, step) => CARBON[REPORT_PALETTE[role]][step / 10 - 1];
+const fcol = (fs) => CARBON[fs[0]][fs[1] / 10 - 1];
+const inkOn = (h) => { const c = [1, 3, 5].map((i) => { const v = parseInt(h.slice(i, i + 2), 16) / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2] > 0.3 ? "#161616" : "#ffffff"; };
 (function () {
   const st = document.createElement("style");
-  st.textContent = ":root{" + Object.keys(REPORT_PALETTE).map((r) => [10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((n) => `--${r}-${n}:${pcol(r, n)}`).join(";")).join(";") + "}";
+  st.textContent = ":root{" + Object.keys(REPORT_PALETTE).map((r) => [10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((n) => `--${r}-${n}:${pcol(r, n)}`).join(";")).join(";") + ";" + Object.keys(BAND_PALETTE).map((b) => `--band-${b}:${fcol(BAND_PALETTE[b])}`).join(";") + "}";
   document.head.appendChild(st);
 })();
-const GROUP_COLORS = { Self: pcol("pri", 100), Manager: pcol("sec", 60), Peer: pcol("acc", 50), Reportee: pcol("sec", 40), Other: pcol("acc", 30), "Others combined": pcol("pri", 50) };
+const GROUP_COLORS = { Self: fcol(GROUP_PALETTE.Self), Manager: fcol(GROUP_PALETTE.Manager), Peer: fcol(GROUP_PALETTE.Peer), Reportee: fcol(GROUP_PALETTE.Reportee), Other: pcol("pri", 40), "Others combined": pcol("pri", 50) };
 const state = { data: null, projects: null, project: (params.get("p") || "").replace(/[^A-Za-z0-9_-]/g, ""), tab: "participants", q: "", pendingOnly: false, open: new Set(), view: "projects", batch: 0, report: null, confirm: null, importOpen: false, pending: null, panel: null, notOpenedOnly: false, step: null, buildTab: "questions", qb: null, rd: null, closedP: new Set(), gate: null, editPid: null, addFor: null };
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -1518,12 +1522,6 @@ function reportHTML(raw) {
     ? sumComps.map((c) => `<div class="brow star${hasBm ? " wbm" : ""}"><span>${esc(c.name)}</span><span class="stars${tone(c)}" role="img" aria-label="${f1(c.overall)} out of ${max}">★★★★★<i style="width:${((c.overall ?? 0) / max) * 100}%">★★★★★</i></span><span class="bval">${f1(c.overall)}</span>${bmCell(c)}</div>`).join("")
     : sumComps.map((c) => `<div class="brow${hasBm ? " wbm" : ""}"><span>${esc(c.name)}</span><div class="btrack"><div class="bfill${tone(c)}" style="width:${((c.overall ?? 0) / max) * 100}%"></div>${c.self != null ? `<div class="bself" style="left:${(c.self / max) * 100}%"></div>` : ""}${bmOf(c) != null ? `<div class="bbench" style="left:${(bmOf(c) / max) * 100}%"></div>` : ""}</div><span class="bval">${f1(c.overall)}</span>${bmCell(c)}</div>`).join("");
   const bmNote = hasBm ? `<p class="rnote">${o.benchmark === "programme" ? `${esc(o.benchmarkLabel || "Benchmark")}: the average score from others across all ${input.benchmark.people} participant${input.benchmark.people === 1 ? "" : "s"} in this programme.` : `${esc(o.benchmarkLabel || "Benchmark")}: the target score set for each competency.`}</p>` : "";
-<<<<<<< HEAD
-  S.summary = `<section class="rsec pb s-purple" data-sec="summary">${head("summary", o.summaryTitle || "Competency summary")}<p class="lead">${o.summaryText ? esc(o.summaryText) : `Based on ${d.othersCount} response${d.othersCount === 1 ? "" : "s"} from others, on a ${input.template.scale_min ?? 1}–${max} scale.`}</p>
-      <div class="rgrid"><div class="big"><div class="n">${f1(d.overall)}</div><div class="rnote">overall, out of ${max}</div></div>
-      <div><div class="bars">${sumRows}</div>
-      <div class="rlegend"><span><i style="background:var(--pos-50)"></i>Strong</span><span><i style="background:var(--sec-60)"></i>Others</span><span><i style="background:var(--neg-50)"></i>Needs work</span>${o.summaryStyle === "star" ? "" : `<span><i style="background:var(--pri-100);width:4px;height:12px"></i>Self</span>`}${hasBm && o.summaryStyle !== "star" ? `<span><i style="background:none;border-left:2px dashed var(--acc-40);width:4px;height:12px"></i>${esc(o.benchmarkLabel || "Benchmark")}</span>` : ""}</div>${bmNote}</div></div></section>`;
-=======
   S.summary = `<section class="rsec s-purple" data-sec="summary">${head("summary", o.summaryTitle || "Competency summary")}
       <h3 class="sub">Overall summary</h3><p class="lead">${o.summaryText ? esc(o.summaryText) : `Based on ${d.othersCount} response${d.othersCount === 1 ? "" : "s"} from others, on a ${input.template.scale_min ?? 1}–${max} scale.`}</p>
       <div class="bignum">${f1(d.overall)}<small>/${max}</small></div>
@@ -1532,8 +1530,7 @@ function reportHTML(raw) {
   const BG = G.filter((g) => g !== "Others combined" || G.length <= 2);
   S.breakdown = `<section class="rsec s-purple" data-sec="breakdown">${head("breakdown", o.breakdownTitle || "Competency breakdown")}${o.breakdownText ? `<p class="lead">${esc(o.breakdownText)}</p>` : ""}
       ${sumComps.map((c, i) => `${i && i % 3 === 0 ? `<div class="rbreak"></div>` : ""}<div class="cbreak"><h3>${esc(c.name)}</h3>${c.definition ? `<p class="lead">Definition: ${esc(c.definition)}</p>` : ""}
-        <div class="cbgrid"><div class="bignum">${f1(c.overall)}<small>/${max}</small></div><div class="gbars">${BG.map((g) => { const v = c.byGroup[g]; return `<span class="gl">${esc(gl(g))}</span><span class="gtrack">${v != null ? `<span style="width:${Math.max(8, (v / max) * 100)}%;background:${GROUP_COLORS[g] || "#525252"}">${f1(v)}</span>` : `<em>too few answers</em>`}</span>`; }).join("")}</div></div></div>`).join("")}</section>`;
->>>>>>> 3151ced (Portal: report colour system (Carbon palette A, no purple))
+        <div class="cbgrid"><div class="bignum">${f1(c.overall)}<small>/${max}</small></div><div class="gbars">${BG.map((g) => { const v = c.byGroup[g]; return `<span class="gl">${esc(gl(g))}</span><span class="gtrack">${v != null ? `<span style="width:${Math.max(8, (v / max) * 100)}%;background:${GROUP_COLORS[g] || "#525252"};color:${inkOn(GROUP_COLORS[g] || "#525252")}">${f1(v)}</span>` : `<em>too few answers</em>`}</span>`; }).join("")}</div></div></div>`).join("")}</section>`;
   const radHide = hideOf("radarHide");
   const radComps = d.competencies.filter((c) => !radHide.has(c.name));
   S.gap = `<section class="rsec s-purple" data-sec="gap">${head("gap", o.gapTitle || "Gap analysis: how each group sees you")}${o.gapText ? `<p class="lead">${esc(o.gapText)}</p>` : ""}${radComps.length >= 3 ? radarSVG(d, radComps) : `<p class="rnote">The radar chart needs at least three competencies.</p>`}
@@ -1556,7 +1553,7 @@ function reportHTML(raw) {
       ${d.competencies.filter((c) => !detHide.has(c.name)).map((c, i) => `${i ? `<div class="rbreak"></div>` : ""}<div class="dcard"><div class="dhead"><span>${esc(c.name)}</span><span class="dpill">${f1(c.overall)}<small>/${max}</small></span></div>
         <div class="table"><table class="dtab"><thead><tr><th>Questions</th>${G.map((g) => `<th class="n">${esc(gl(g))}</th>`).join("")}</tr></thead><tbody>
         ${c.statements.map((st) => `<tr><td>${esc(st.text)}</td>${G.map((g) => `<td class="n">${ring(st.byGroup[g], null, 60)}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>`).join("")}</section>`;
-  const commentRows = (b, render) => `<div class="crow"><span class="cwho"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="8" style="fill:${GROUP_COLORS[b.group] || "#525252"}"/><circle cx="8" cy="6.2" r="2.4" fill="#fff"/><path d="M3.6 12.6c.9-1.8 2.5-2.7 4.4-2.7s3.5.9 4.4 2.7" fill="#fff"/></svg>${esc(LBL[b.group] || b.group)}</span><div class="cans">${b.comments.map(render).join("")}</div></div>`;
+  const commentRows = (b, render) => `<div class="crow"><span class="cwho"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="8" style="fill:${GROUP_COLORS[b.group] || "#525252"}"/><circle cx="8" cy="6.2" r="2.4" style="fill:${inkOn(GROUP_COLORS[b.group] || "#525252")}"/><path d="M3.6 12.6c.9-1.8 2.5-2.7 4.4-2.7s3.5.9 4.4 2.7" style="fill:${inkOn(GROUP_COLORS[b.group] || "#525252")}"/></svg>${esc(LBL[b.group] || b.group)}</span><div class="cans">${b.comments.map(render).join("")}</div></div>`;
   S.comments = questions.length ? `<section class="rsec s-magenta" data-sec="comments">${head("comments", o.commentsTitle || "In their words")}<p class="lead">${esc(o.commentsText || "Written comments, as given. Blank and \"NA\" answers are left out.")}</p>
       ${raw.participantView ? questions.map((qq) => `<div class="ccard"><div class="dhead"><span>${esc(qq)}</span></div>${d.comments.filter((b) => b.question === qq).map((b) => commentRows(b, (c) => `<div class="qwrap"><div class="quote">${esc(c.text)}</div></div>`)).join("")}</div>`).join("") : `<div class="reviewnote">Before sharing, read every comment. Click a comment to edit it (for example, to remove a name), or press Hide to leave it out. Your changes are saved for this report (the rater's original answer is kept in the Sheet). This note and the buttons don't print.</div>
       ${questions.map((qq) => `<div class="ccard"><div class="dhead"><span>${esc(qq)}</span></div>${d.comments.filter((b) => b.question === qq).map((b) => commentRows(b, (c) => { const e = (raw.edits || {})[c.id] || {}; const t = e.text != null ? e.text : c.text; return `<div class="qwrap${e.hidden ? " off" : ""}" data-cid="${esc(c.id)}"><div class="quote" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Comment from ${esc(b.group)}, click to edit" data-orig="${esc(c.text)}">${esc(t)}</div>${e.text != null ? `<span class="edited">Edited</span>` : ""}<button class="btn ghost qhide" type="button" aria-pressed="${e.hidden ? "true" : "false"}">${e.hidden ? "Show" : "Hide"}</button></div>`; })).join("")}</div>`).join("")}`}</section>` : "";
