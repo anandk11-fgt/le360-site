@@ -382,6 +382,17 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
 .ehead { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
 .ehead h2 { font-size: 1.25rem; font-weight: 400; margin: 0 0 4px; } .eacts { display: flex; gap: 8px; flex-wrap: wrap; }
 .confirm.big { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: #fcf4d6; padding: 10px 14px; }
+.sendlist { margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 12px; }
+.sendlist .slmsg { white-space: pre-wrap; font: inherit; font-size: .8125rem; background: var(--layer); padding: 8px 10px; margin: 6px 0; max-height: 160px; overflow: auto; }
+.sendlist .sl-subject { font-size: .875rem; } .sendlist td { vertical-align: top; } .sendlist .small { display: block; }
+.logopick { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+.logopick .logoprev { max-height: 48px; max-width: 200px; background: #fff; border: 1px solid var(--border-subtle); padding: 4px; }
+.logopick .logobtn { cursor: pointer; }
+.qb-starter { border: 1px solid var(--border-subtle); background: var(--layer); padding: 20px; margin: 0 0 16px; }
+.qb-starter h2 { margin: 0 0 12px; font-size: 1.25rem; font-weight: 400; }
+.qb-starts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: start; }
+.qb-start { background: var(--background); padding: 16px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.qb-start select { margin: 4px 0; }
 .emailcard details { margin-top: 12px; } .emailcard summary { cursor: pointer; color: var(--interactive); font-size: .875rem; padding: 6px 0; }
 .genwarn { border: 2px solid #f1c21b; background: #fffdf3; padding: 20px 24px; margin: 0 0 24px; }
 .genwarn h2 { font-size: 1.25rem; font-weight: 400; margin: 0 0 8px; } .genwarn h3 { font-size: .875rem; margin: 16px 0 8px; }
@@ -405,6 +416,13 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
 .pstats { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 12px; } .pstat { background: var(--layer); padding: 12px 16px; min-width: 140px; display: flex; flex-direction: column; } .pstat b { font-size: 1.25rem; font-weight: 400; } .pstat span { font-size: .75rem; color: var(--text-secondary); }
 .pmsg { background: #defbe6; border-left: 3px solid #24a148; padding: 10px 16px; margin: 0 0 16px; } .pmsg.err { background: #fff1f1; border-left-color: #da1e28; }
 .lk-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; } @media (max-width: 900px) { .lk-wrap { grid-template-columns: 1fr; } }
+.lk-bd { padding: 40px 28px; background-size: cover; background-position: center; }
+.lk-card { padding: 28px 24px; box-shadow: 0 12px 40px rgba(0,0,0,.18); }
+.bd-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; margin-top: 6px; }
+.bd-tile { border: 2px solid transparent; background: none; padding: 4px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; font: inherit; font-size: .75rem; color: var(--text-primary); text-align: left; }
+.bd-tile.on { border-color: var(--interactive); }
+.bd-sw { height: 56px; display: grid; place-items: center; border: 1px solid var(--border-subtle); }
+.bd-sw i { width: 46%; height: 40%; background: rgba(255,255,255,.92); box-shadow: 0 2px 8px rgba(0,0,0,.15); }
 .lk-prev { border: 1px solid var(--border-subtle); padding: 32px 28px 28px; position: relative; min-height: 300px; position: sticky; top: 16px; }
 .lk-bar { position: absolute; left: 0; right: 0; top: 0; height: 4px; background: #e0e0e0; } .lk-bar span { display: block; width: 40%; height: 4px; }
 .lk-eye { font-size: .75rem; opacity: .75; margin-bottom: 12px; } .lk-q { font-size: 1.5rem; font-weight: 300; line-height: 1.3; margin-bottom: 20px; }
@@ -778,9 +796,9 @@ function launchStrip(d) {
     <li><b>Build → Report</b>: check the report's sections, order and wording.</li>
     <li><b>Settings</b> (⚙ at the top): check the due date and client logo.</li>
     <li><b>Preview survey</b> and go through it as each role (self, manager, peer, reportee).</li>
-    <li><b>Send a test email</b> (under "Email wording and test email") to yourself and to the client's IT contact, and check it reached the inbox, not spam.</li>
-    <li>If the client's network filters websites, ask IT to allow <b>script.google.com</b> and <b>*.googleusercontent.com</b>.</li>
-    <li>Then click <b>Send invites</b>.</li></ol></div></section>`;
+    ${d.emailMode === "outlook" ? `<li>Check the <b>email wording</b> (under "Email wording and test email").</li>` : `<li><b>Send a test email</b> (under "Email wording and test email") to yourself and to the client's IT contact, and check it reached the inbox, not spam.</li>`}
+    <li>If the client's network filters websites, ask IT to allow <b>360.learningequation.co.in</b> and <b>script.google.com</b>.</li>
+    <li>Then click <b>${d.emailMode === "outlook" ? "Prepare invites" : "Send invites"}</b>${d.emailMode === "outlook" ? " and send them from Outlook" : ""}.</li></ol></div></section>`;
 }
 function warnStrip(d) {
   if (!d.notOpened) return "";
@@ -848,7 +866,7 @@ function panelHTML(d) {
         ${f("client", "Client", x.client)}${f("project", "Project name", x.project)}${f("due", "Due date", x.due, "date")}
         ${f("minGroup", "Minimum responses per rater group (at least 3)", x.minGroup, "number", 'min="3" max="10"')}
       </div>
-      <label class="fwide">Client logo address (an https link to a PNG or JPG; shown on emails, the survey and reports)<input id="st_logo" value="${esc(x.logo || "")}" placeholder="https:\/\/…"></label>
+      <div class="fwide small">Client logo (shown on the survey and reports)${logoPicker("st_logo", x.logo || "")}</div>
       <div class="small">Email wording is in People; report wording and scoring are in Build → Report; the welcome and thank-you screens are in Build → Questions.</div>
       ${optionsHTML(x)}
       <div class="row"><button class="btn" id="stSave">Save settings</button><button class="btn ghost" data-panel="">Close</button><span class="small" id="stMsg" role="alert"></span></div>
@@ -956,7 +974,63 @@ async function refresh(e) {
   try { state.data = await admin("dashboard"); render(); }
   catch (err) { toast(err.message, true); if (b) { b.disabled = false; b.textContent = "Refresh"; } }
 }
+const LIST_MODE = { sendInvites: "invite", sendReminders: "remind", sendOne: "one", remindSome: "some" };
+const outlook = () => !!(state.data && state.data.emailMode === "outlook");
+/** Outlook mode: fetch the emails to send by hand and show them as a list. */
+async function openSendList(btn, action, extra = {}) {
+  if (btn) btn.disabled = true;
+  try {
+    const res = await admin("sendList", Object.assign({ mode: LIST_MODE[action] }, extra));
+    state.confirm = null;
+    if (!res.items.length) { toast(res.message || "No one to email."); render(); return; }
+    state.sendList = { items: res.items, sel: new Set(res.items.map((x) => x.token)), replyTo: res.replyTo || "" };
+    state.gate = null;
+    if (state.step !== "people") { state.step = "people"; state.panel = null; }
+    render();
+    document.getElementById("sendList")?.scrollIntoView();
+  } catch (err) { if (btn) btn.disabled = false; toast(err.message, true); }
+}
+function sendListHTML() {
+  const L = state.sendList; if (!L) return "";
+  const nInv = L.items.filter((x) => !x.reminder).length, nRem = L.items.length - nInv;
+  return `<section class="sendlist" id="sendList" aria-label="Emails to send from Outlook">
+    <div class="ehead"><div><h2>Send from Outlook: ${[nInv ? `${nInv} invitation${nInv === 1 ? "" : "s"}` : "", nRem ? `${nRem} reminder${nRem === 1 ? "" : "s"}` : ""].filter(Boolean).join(" and ")}</h2>
+      <div class="small">Send each email from your Outlook, then tick the ones sent and click "Mark as sent", so reminders go only to the right people. Nothing here is sent by the system.</div></div>
+      <div class="eacts"><button class="btn" id="slMark">Mark ${L.sel.size} as sent</button><button class="btn tertiary" id="slCsv">Download list (CSV)</button><button class="btn ghost" id="slClose">Close</button></div></div>
+    <div class="table"><table><thead><tr><th style="width:40px"><input type="checkbox" id="slAll" aria-label="Select all" ${L.sel.size === L.items.length ? "checked" : ""}></th><th>To</th><th>Email</th></tr></thead><tbody>
+    ${L.items.map((x, i) => `<tr class="slrow" data-sl-row="${i}"><td><input type="checkbox" data-sl="${esc(x.token)}" aria-label="Sent to ${esc(x.name)}" ${L.sel.has(x.token) ? "checked" : ""}></td>
+      <td><span class="name">${esc(x.name)}</span><span class="email sl-to">${esc(x.email)}</span><span class="small">${x.reminder ? "Reminder" : "Invitation"}</span></td>
+      <td><div class="sl-subject"><b>Subject:</b> ${esc(x.subject)}</div><pre class="slmsg">${esc(x.text)}</pre>
+        <button class="btn ghost copy" data-sl-copy="${i}">Copy message</button> <a class="btn ghost copy" style="text-decoration:none" target="_blank" rel="noopener" href="mailto:${encodeURIComponent(x.email)}?subject=${encodeURIComponent(x.subject)}&body=${encodeURIComponent(x.text)}">Open in mail app</a></td></tr>`).join("")}
+    </tbody></table></div></section>`;
+}
+function wireSendList() {
+  const L = state.sendList; if (!L) return;
+  document.getElementById("slClose")?.addEventListener("click", () => { state.sendList = null; render(); });
+  document.getElementById("slAll")?.addEventListener("change", (e) => { L.sel = new Set(e.target.checked ? L.items.map((x) => x.token) : []); render(); });
+  app.querySelectorAll("[data-sl]").forEach((c) => c.addEventListener("change", () => { if (c.checked) L.sel.add(c.dataset.sl); else L.sel.delete(c.dataset.sl); render(); }));
+  app.querySelectorAll("[data-sl-copy]").forEach((b) => b.addEventListener("click", () => { const x = L.items[+b.dataset.slCopy]; copy(x.text, "Message copied", b); }));
+  document.getElementById("slCsv")?.addEventListener("click", () => {
+    const q = (v) => `"${String(v).replace(/"/g, '""')}"`;
+    const csv = "\ufeff" + [["Name", "Email", "Type", "Subject", "Link", "Message"].map(q).join(",")].concat(L.items.map((x) => [x.name, x.email, x.reminder ? "Reminder" : "Invitation", x.subject, x.link, x.text].map(q).join(","))).join("\r\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const a = document.createElement("a"); a.href = url; a.download = "send-list.csv"; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  });
+  document.getElementById("slMark")?.addEventListener("click", async (e) => {
+    const items = L.items.filter((x) => L.sel.has(x.token)).map((x) => ({ token: x.token, reminder: x.reminder }));
+    if (!items.length) return toast("Tick the emails you have sent first.", true);
+    e.target.disabled = true;
+    try {
+      const res = await admin("markSent", { items });
+      L.items = L.items.filter((x) => !L.sel.has(x.token)); L.sel = new Set();
+      if (!L.items.length) state.sendList = null;
+      toast(res.message); state.data = await admin("dashboard"); render();
+    } catch (err) { e.target.disabled = false; toast(err.message, true); }
+  });
+}
 async function send(btn, action, extra = {}) {
+  if (outlook() && LIST_MODE[action]) return openSendList(btn, action, extra);
   btn.disabled = true; btn.textContent = "Sending…";
   try {
     const res = await admin(action, extra);
@@ -992,6 +1066,75 @@ async function openProject(id) {
   try { state.data = await admin("dashboard"); render(); window.scrollTo(0, 0); }
   catch (err) { toast(err.message, true); openProjects(); }
 }
+/** Client logo: pick an image file; it is shrunk in the browser and saved with the project (no link needed). */
+function logoPicker(id, val) {
+  return `<div class="logopick" data-logo-box="${id}"><input type="hidden" id="${id}" value="${esc(val)}">
+    <img class="logoprev" alt="Client logo preview" ${val ? `src="${esc(val)}"` : "hidden"}>
+    <label class="btn tertiary logobtn">${val ? "Change logo" : "Upload logo"}<input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" data-logo-file="${id}" hidden></label>
+    <button type="button" class="btn ghost danger-txt" data-logo-clear="${id}" ${val ? "" : "hidden"}>Remove</button></div>`;
+}
+function shrinkLogo(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const out = (maxW, maxH, type, q) => {
+        const k = Math.min(1, maxW / (img.naturalWidth || maxW), maxH / (img.naturalHeight || maxH));
+        const c = document.createElement("canvas"); c.width = Math.max(1, Math.round((img.naturalWidth || maxW) * k)); c.height = Math.max(1, Math.round((img.naturalHeight || maxH) * k));
+        const g = c.getContext("2d"); if (type === "image/jpeg") { g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height); }
+        g.drawImage(img, 0, 0, c.width, c.height); return c.toDataURL(type, q);
+      };
+      for (const [w, h] of [[600, 240], [400, 160], [280, 112]]) {
+        let d = out(w, h, "image/png"); if (d.length <= 45000) return resolve(d);
+        d = out(w, h, "image/jpeg", 0.85); if (d.length <= 45000) return resolve(d);
+      }
+      reject(new Error("That image is too detailed to use as a logo. Try a simpler or smaller file."));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("That file isn't an image we can read. Use a PNG or JPG.")); };
+    img.src = url;
+  });
+}
+document.addEventListener("change", async (e) => {
+  const f = e.target.closest && e.target.closest("[data-logo-file]"); if (!f || !f.files[0]) return;
+  const id = f.dataset.logoFile, box = document.querySelector(`[data-logo-box="${id}"]`);
+  if (f.files[0].size > 8e6) { f.value = ""; return toast("That file is over 8 MB. Use a smaller logo.", true); }
+  try {
+    const d = await shrinkLogo(f.files[0]);
+    document.getElementById(id).value = d;
+    const im = box.querySelector(".logoprev"); im.src = d; im.hidden = false;
+    box.querySelector("[data-logo-clear]").hidden = false; box.querySelector(".logobtn").firstChild.textContent = "Change logo";
+    if (id === "st_logo") toast("Logo ready. Click Save settings to keep it.");
+  } catch (err) { toast(err.message, true); }
+  f.value = "";
+});
+document.addEventListener("click", (e) => {
+  const b = e.target.closest && e.target.closest("[data-logo-clear]"); if (!b) return;
+  const id = b.dataset.logoClear, box = document.querySelector(`[data-logo-box="${id}"]`);
+  document.getElementById(id).value = ""; const im = box.querySelector(".logoprev"); im.hidden = true; im.removeAttribute("src");
+  b.hidden = true; box.querySelector(".logobtn").firstChild.textContent = "Upload logo";
+});
+/** Build → Questions on an empty questionnaire: the three ways to start. */
+function qbStarterHTML() {
+  const b = state.qb, others = (state.projects || []).filter((p) => !p.error && !p.erased && p.id !== state.project);
+  return `<section class="qb-starter" aria-label="Choose how to start">
+    <h2>How do you want to start?</h2>
+    <div class="qb-starts">
+      <div class="qb-start"><b>Start blank</b><span class="small">Add your own competencies and statements.</span><button class="btn tertiary" data-act="secAdd">+ Add competency</button></div>
+      <div class="qb-start"><b>Standard questionnaire</b><span class="small">Learning Equation's 7 competencies and 19 statements. You can edit them after.</span><button class="btn tertiary" id="qbStd">Use standard</button></div>
+      <div class="qb-start"><b>Copy an earlier project</b><span class="small">Copies its questions, rating scale and report design. People and answers are never copied.</span>
+        ${others.length ? `<select id="qbFrom" aria-label="Project to copy from" style="width:100%;height:40px;padding:0 12px;border:0;border-bottom:1px solid var(--border-strong);background:var(--layer);font:inherit">${others.map((p) => `<option value="${esc(p.id)}">${esc(p.client)} · ${esc(p.name)}</option>`).join("")}</select><button class="btn tertiary" id="qbCopy">Copy questions and report</button>`
+        : `<span class="small"><i>${state.projects ? "No other projects yet." : "Loading projects…"}</i></span>`}</div>
+    </div></section>`;
+}
+async function qbStart(btn, action, extra) {
+  btn.disabled = true; btn.textContent = "Working…";
+  try {
+    const r = await admin(action, extra || {});
+    state.qb = qbModel(r); state.rd = null;
+    toast(action === "useStandard" ? "Standard questionnaire added." : "Questions and report design copied.");
+    state.data = await admin("dashboard"); render();
+  } catch (err) { toast(err.message, true); render(); }
+}
 function renderProjects() {
   const list = state.projects || [];
   app.innerHTML = `
@@ -999,14 +1142,10 @@ function renderProjects() {
       <div class="sub">${list.length} project${list.length === 1 ? "" : "s"}</div></div>
       <div class="right">${demo ? `<span class="demo">Demo with example data</span>` : ""}</div></header>
     <form class="mail" id="newp" style="border-left-color:var(--interactive);margin:0 0 32px;align-items:flex-end">
-      <div style="flex:1 1 100%"><b>New project</b> <span class="small">— creates its own Google Sheet. Start from the standard questionnaire, or copy the questions, settings and wording of an earlier project (people and answers are never copied).</span></div>
-      <label class="small" style="flex:1 1 200px">Client<input id="npc" required class="search" style="max-width:none;width:100%;padding-left:16px;background:var(--background);margin-top:6px" placeholder="e.g. Crompton"></label>
+      <div style="flex:1 1 100%"><b>New project</b> <span class="small">— you choose the questions next, in Build.</span></div>
       <label class="small" style="flex:1 1 220px">Project name<input id="npn" required class="search" style="max-width:none;width:100%;padding-left:16px;background:var(--background);margin-top:6px" placeholder="e.g. Senior Leaders 360 — 2027"></label>
-      <label class="small" style="flex:0 1 180px">Due date (optional)<input id="npd" type="date" class="search" style="max-width:none;width:100%;padding-left:16px;background:var(--background);margin-top:6px"></label>
-      <label class="small" style="flex:0 1 150px">Minimum per group<input id="npm" type="number" min="3" max="10" value="3" class="search" style="max-width:none;width:100%;padding-left:16px;background:var(--background);margin-top:6px"></label>
-      <label class="small" style="flex:1 1 260px">Client logo link (optional)<input id="npl" class="search" style="max-width:none;width:100%;padding-left:16px;background:var(--background);margin-top:6px" placeholder="https:\/\/…/logo.png"></label>
-      <label class="small" style="flex:1 1 260px">Start from<select id="npf" class="search" style="max-width:none;width:100%;padding-left:12px;background:var(--background);margin-top:6px">
-        <option value="">The standard questionnaire</option>${list.filter((p) => !p.error).map((p) => `<option value="${esc(p.id)}">A copy of: ${esc(p.client)} · ${esc(p.name)}</option>`).join("")}</select></label>
+      <label class="small" style="flex:1 1 200px">Client name<input id="npc" required class="search" style="max-width:none;width:100%;padding-left:16px;background:var(--background);margin-top:6px" placeholder="e.g. Crompton"></label>
+      <div class="small" style="flex:1 1 260px">Client logo (optional)${logoPicker("npl", "")}</div>
       <button class="btn" id="npgo">Create project</button>
     </form>
     ${list.length ? `<div class="table"><table><thead><tr><th>Project</th><th>Client</th><th class="c">Participants</th><th>Forms completed</th><th>Due</th><th></th></tr></thead><tbody>
@@ -1030,7 +1169,7 @@ function renderProjects() {
     e.preventDefault();
     const b = document.getElementById("npgo"); b.disabled = true; b.textContent = "Creating…";
     try {
-      const res = await admin("createProject", { client: document.getElementById("npc").value, name: document.getElementById("npn").value, due: document.getElementById("npd").value, minGroup: document.getElementById("npm").value, logo: document.getElementById("npl").value, copyFrom: document.getElementById("npf").value });
+      const res = await admin("createProject", { client: document.getElementById("npc").value, name: document.getElementById("npn").value, logo: document.getElementById("npl").value, copyFrom: "blank" });
       toast(`Project created: ${res.project.name}`);
       openProject(res.project.id);
     } catch (err) { b.disabled = false; b.textContent = "Create project"; toast(err.message, true); }
@@ -1396,15 +1535,18 @@ function renderBuilder() {
         </ol>
         ${L ? "" : `<button class="qb-add" data-act="qAdd:${si}">+ Add statement</button>`}
       </div>`).join("")}
+    ${b.sections.length ? "" : `<div class="qb-empty small" style="padding:16px 12px">No competencies yet. Click <b>+ Add competency</b>, then add its statements, or pick ready-made ones from the question library.</div>`}
     ${L ? "" : `<div class="qb-addrow"><button class="btn tertiary" data-act="secAdd">+ Add competency</button><button class="btn ghost" data-sel="library">Question library</button></div>`}
     <button class="qb-card ${isSel("thanks") ? "on" : ""}" data-sel="thanks"><span class="qb-ico" aria-hidden="true">✓</span><span class="qb-tx"><b>Thank-you screen</b><span>${esc(b.thankYouText ? b.thankYouText.slice(0, 90) : "Standard message")}</span></span></button>`;
   app.innerHTML = projectChrome(state.data) + `<div class="stepbody">
     <div class="qb-toolbar">
       <span class="qb-status ${b.dirty ? "dirty" : ""}" id="qbStatus" aria-live="polite">${b.dirty ? "Unsaved changes" : "All changes saved"}</span>
       <span class="qb-meta small">${b.sections.length} competencies · ${qbCount(b)} statements</span>
+      ${L ? "" : `<button class="btn tertiary" data-act="secAdd">+ Add competency</button>${b.sections.length ? `<button class="btn ghost danger-txt" data-act="clearAll">Clear all</button>` : ""}`}
       <a class="btn ghost" style="display:inline-flex;align-items:center;text-decoration:none" href="${esc(b.previewLink || "#")}" target="_blank" rel="noopener">Preview survey ↗</a>
       <button class="btn" id="qbSave">Save</button>
     </div>
+    ${!L && !b.sections.length ? qbStarterHTML() : ""}
     ${L ? `<section class="mail warnbox" style="margin:0 0 16px"><div class="txt"><b>Raters have started answering.</b> You can still fix wording (statements, competency names and definitions, labels and screens), but statements can't be added, removed, moved or retyped, so every saved answer stays with its statement.</div></section>` : ""}
     <div class="qb">
       <aside class="qb-outline" aria-label="Questionnaire outline">${outline}</aside>
@@ -1512,9 +1654,13 @@ function qbClone(x) { return JSON.parse(JSON.stringify(x)); }
 async function qbAct(a) {
   const b = state.qb, p = a.split(":"), op = p[0], si = +p[1], qi = +p[2];
   const S = b.sections;
-  const structural = ["secUp", "secDown", "secDup", "secDel", "secAdd", "qUp", "qDown", "qDup", "qDel", "qAdd", "qAddAfter", "libAddSec", "libAddQ"];
+  const structural = ["clearAll", "secUp", "secDown", "secDup", "secDel", "secAdd", "qUp", "qDown", "qDup", "qDel", "qAdd", "qAddAfter", "libAddSec", "libAddQ"];
   if (b.locked && structural.includes(op)) return toast("Raters have started answering, so statements can't be added, removed or moved now.", true);
-  if (op === "secAdd") { S.push({ name: "New competency", definition: "", items: [] }); b.sel = { k: "section", s: S.length - 1 }; }
+  if (op === "clearAll") {
+    if (b.armed !== a) { b.armed = a; toast(`Click "Clear all" again to remove all ${S.length} competencies and ${qbCount(b)} statements. Nothing is saved until you click Save.`); return; }
+    S.splice(0, S.length); b.sel = { k: "welcome" };
+  }
+  else if (op === "secAdd") { S.push({ name: "New competency", definition: "", items: [] }); b.sel = { k: "section", s: S.length - 1 }; }
   else if (op === "secUp" && si > 0) { [S[si - 1], S[si]] = [S[si], S[si - 1]]; b.sel = { k: "section", s: si - 1 }; }
   else if (op === "secDown" && si < S.length - 1) { [S[si + 1], S[si]] = [S[si], S[si + 1]]; b.sel = { k: "section", s: si + 1 }; }
   else if (op === "secDup") { const c = qbClone(S[si]); c.name = c.name + " (copy)"; c.items.forEach((q) => (q.id = "")); S.splice(si + 1, 0, c); b.sel = { k: "section", s: si + 1 }; }
@@ -1590,6 +1736,12 @@ async function qbSave(btn) {
 function wireBuilder() {
   const b = state.qb;
   document.getElementById("qbSave").addEventListener("click", (e) => qbSave(e.target));
+  document.getElementById("qbStd")?.addEventListener("click", (e) => qbStart(e.target, "useStandard"));
+  document.getElementById("qbCopy")?.addEventListener("click", (e) => qbStart(e.target, "copyQuestions", { from: document.getElementById("qbFrom").value }));
+  if (!state.projects && !b.locked && !b.sections.length && !state.loadingProjects) {
+    state.loadingProjects = true;
+    admin("projects").then((r) => { state.projects = r.projects; state.loadingProjects = false; if (state.qb && !state.qb.sections.length) render(); }).catch(() => { state.loadingProjects = false; });
+  }
   app.querySelectorAll("[data-sel]").forEach((x) => x.addEventListener("click", () => qbSelect(x.dataset.sel)));
   app.querySelectorAll("[data-act]").forEach((x) => x.addEventListener("click", (e) => { e.stopPropagation(); qbAct(x.dataset.act); }));
   const on = (id, ev, fn) => { const el = document.getElementById(id); if (el) el.addEventListener(ev, fn); };
@@ -1768,13 +1920,17 @@ function emailCard(d) {
     const n = c === "sendInvites" ? d.toInvite : d.toRemind;
     acts = `<div class="confirm big"><span>${c === "sendInvites" ? `This will email <b>${n}</b> reviewer${n === 1 ? "" : "s"}. Each gets one personal link covering everyone they rate.` : `Send a reminder to <b>${n}</b> reviewer${n === 1 ? "" : "s"} with forms left?`}</span>
       <button class="btn" data-send="${c}">Send ${n} email${n === 1 ? "" : "s"}</button><button class="btn ghost" data-cancel>Cancel</button></div>`;
-  } else acts = `<button class="btn" data-ask="sendInvites" ${d.toInvite ? "" : "disabled"}>Send invites (${d.toInvite})</button>
+  } else if (d.emailMode === "outlook") acts = `<button class="btn" data-ask="sendInvites" ${d.toInvite ? "" : "disabled"}>Prepare invites (${d.toInvite})</button>
+      <button class="btn tertiary" data-ask="sendReminders" ${d.toRemind ? "" : "disabled"}>Prepare reminders (${d.toRemind})</button>`;
+  else acts = `<button class="btn" data-ask="sendInvites" ${d.toInvite ? "" : "disabled"}>Send invites (${d.toInvite})</button>
       <button class="btn tertiary" data-ask="sendReminders" ${d.toRemind ? "" : "disabled"}>Send reminders (${d.toRemind})</button>
       <button class="btn tertiary" id="pinvAll" ${d.portalToInvite ? "" : "disabled"} title="Each participant gets their own page: self-assessment, choosing reviewers if that's on, and progress">Send participant pages (${d.portalToInvite || 0})</button>`;
   return `<section class="emailcard">
-    <div class="ehead"><div><h2>Invitations</h2><div class="small">${d.toInvite} not yet invited · ${d.toRemind} due a reminder${d.remindWaiting ? ` · ${d.remindWaiting} not due yet` : ""}${quota ? " · " + quota : ""}${d.autoRemind ? ` · automatic reminders on (from day ${d.autoRemind.start})` : ""}</div></div>
+    <div class="ehead"><div><h2>Invitations</h2><div class="small">${d.toInvite} not yet invited · ${d.toRemind} due a reminder${d.remindWaiting ? ` · ${d.remindWaiting} not due yet` : ""}${d.emailMode === "outlook" ? " · you send emails from Outlook" : (quota ? " · " + quota : "") + (d.autoRemind ? ` · automatic reminders on (from day ${d.autoRemind.start})` : "")}</div></div>
       <div class="eacts">${acts}</div></div>
+    ${sendListHTML()}
     <details ${state.emailOpen ? "open" : ""} id="emailDetails"><summary>Email wording and test email</summary>
+      <div class="fgrid"><label>How emails go out<select id="eo_emailMode"><option value="outlook" ${d.emailMode === "outlook" ? "selected" : ""}>I send them from Outlook (the system sends nothing)</option><option value="gmail" ${d.emailMode === "gmail" ? "selected" : ""}>The system sends them from Gmail</option></select></label></div>
       <div class="fgrid">
         <label>Sender name<input id="em_sender" value="${esc(x.sender || "")}"></label>
         <label>Reply-to email (optional)<input id="em_replyTo" type="email" value="${esc(x.replyTo || "")}"></label>
@@ -1796,7 +1952,7 @@ function emailCard(d) {
         <p class="small">The development-plan email is in ⚙ Settings. Emails use the button colour from Build → Survey look. Thank-you and report-ready emails count towards the daily email limit.</p></details>`; })()}
       <div class="row"><button class="btn tertiary" id="emSave">Save email wording</button></div>
       <div class="row"><input id="testTo" type="email" class="search" style="max-width:320px;padding-left:16px;background:var(--background)" placeholder="your.name@gmail.com" aria-label="Email address for the test">
-        <button class="btn ghost" id="testGo">Send test email</button>
+        ${d.emailMode === "outlook" ? "" : `<button class="btn ghost" id="testGo">Send test email</button>`}
         <a class="btn ghost" style="display:inline-flex;align-items:center;text-decoration:none" href="${esc(d.previewLink || "#")}" target="_blank" rel="noopener">Preview survey ↗</a>
         <button class="btn ghost" id="exportLinks">Download links (CSV)</button></div>
     </details></section>`;
@@ -1831,9 +1987,10 @@ function wirePeople() {
   document.getElementById("notOpened")?.addEventListener("change", (e) => { state.notOpenedOnly = e.target.checked; render(); });
   document.getElementById("emailDetails")?.addEventListener("toggle", (e) => (state.emailOpen = e.target.open));
   document.getElementById("moreMail")?.addEventListener("toggle", (e) => (state.moreMail = e.target.open));
-  app.querySelectorAll("[data-ask]").forEach((b) => b.addEventListener("click", () => { state.confirm = b.dataset.ask; render(); }));
+  app.querySelectorAll("[data-ask]").forEach((b) => b.addEventListener("click", () => { if (outlook() && LIST_MODE[b.dataset.ask]) return openSendList(b, b.dataset.ask); state.confirm = b.dataset.ask; render(); }));
   app.querySelectorAll("[data-send]").forEach((b) => b.addEventListener("click", () => send(b, b.dataset.send)));
   document.getElementById("pinvAll")?.addEventListener("click", (e) => peopleAction(e.target, "portalInvite", {}));
+  wireSendList();
   document.getElementById("emSave")?.addEventListener("click", async (e) => {
     const b = e.target, s = Object.assign({}, d.settings);
     ["sender", "replyTo", "reminderCap", "reminderGap", "subject", "reminderSubject", "message"].forEach((k) => (s[k] = document.getElementById("em_" + k).value));
@@ -2059,13 +2216,21 @@ async function portalDo(btn, action, extra) {
   if (portal.err) { const f = document.getElementById("pName"); if (f && extra && extra.name) { f.value = extra.name; document.getElementById("pEmail").value = extra.email; document.getElementById("pRel").value = extra.relation; } }
 }
 async function portalInit() {
+  const sub = document.querySelector("header.shell .sub2"); if (sub) sub.textContent = "My 360°";
   app.innerHTML = `<p class="note">Loading…</p>`;
   try { portal.data = await portalCall("load"); portalTheme(portal.data.theme); renderPortal(); }
   catch (err) { app.innerHTML = `<section class="panel"><h2>This link isn't working</h2><p>${esc(err.message)} Please check you used the full link from your email.</p></section>`; }
 }
 
 /* Survey look */
-const LOOK_DEF = { themeColor: "#0f62fe", themeBg: "#ffffff", themeText: "#161616", themeFont: "plex", themeAlign: "left", themeImage: "", showProgress: "yes", showNumbers: "yes", showRequired: "no", closedTitle: "This survey has closed", closedText: "" };
+const BACKDROPS = {
+  aurora: { name: "Aurora", css: "radial-gradient(60vmax 60vmax at 8% 12%, rgba(124,92,255,.55), transparent 60%), radial-gradient(50vmax 50vmax at 92% 18%, rgba(0,196,204,.45), transparent 60%), radial-gradient(70vmax 70vmax at 60% 105%, rgba(255,110,170,.42), transparent 60%), #f3f4ff" },
+  midnight: { name: "Midnight", css: "radial-gradient(70vmax 50vmax at 85% -5%, rgba(88,130,255,.55), transparent 60%), radial-gradient(60vmax 50vmax at -5% 105%, rgba(170,70,255,.45), transparent 60%), linear-gradient(160deg, #0a0f24, #141a3d 55%, #1f1242)" },
+  sunset: { name: "Sunset", css: "radial-gradient(60vmax 50vmax at 100% 0%, rgba(255,214,140,.7), transparent 60%), linear-gradient(135deg, #ffb27d 0%, #ff6f91 48%, #8a5cc4 100%)" },
+  ocean: { name: "Ocean", css: "radial-gradient(70vmax 60vmax at 0% 0%, rgba(80,225,255,.8), transparent 60%), radial-gradient(70vmax 60vmax at 100% 100%, rgba(40,80,255,.75), transparent 60%), linear-gradient(135deg, #0a8fd8, #6fd3c6)" },
+  brand: { name: "Brand glow", css: "radial-gradient(rgba(22,22,22,.07) 1px, transparent 1.4px) 0 0 / 22px 22px, radial-gradient(70vmax 60vmax at 100% 0%, color-mix(in srgb, var(--interactive) 50%, transparent), transparent 62%), radial-gradient(60vmax 50vmax at 0% 100%, color-mix(in srgb, var(--interactive) 28%, transparent), transparent 60%), #f6f7fb" },
+};
+const LOOK_DEF = { themeColor: "#0f62fe", themeBg: "#ffffff", themeText: "#161616", themeFont: "plex", themeAlign: "left", themeImage: "", themeBackdrop: "none", showProgress: "yes", showNumbers: "yes", showRequired: "no", closedTitle: "This survey has closed", closedText: "" };
 const LOOK_FONTS = { plex: '"IBM Plex Sans", Arial, sans-serif', arial: "Arial, Helvetica, sans-serif", georgia: "Georgia, serif", verdana: "Verdana, Geneva, sans-serif", trebuchet: "'Trebuchet MS', Helvetica, sans-serif" };
 function lookVals(d) {
   if (!state.look) { const o = d.settings.options || {}; state.look = {}; Object.keys(LOOK_DEF).forEach((k) => (state.look[k] = o[k] != null ? String(o[k]) : LOOK_DEF[k])); }
@@ -2074,12 +2239,21 @@ function lookVals(d) {
 function lookPreview(v) {
   const font = LOOK_FONTS[v.themeFont] || LOOK_FONTS.plex, center = v.themeAlign === "center";
   const img = /^https:\/\/\S+$/i.test(v.themeImage) ? `background-image:url('${esc(v.themeImage).replace(/'/g, "%27")}');background-size:cover;background-position:center;` : "";
-  return `<div class="lk-prev" style="background-color:${esc(v.themeBg)};${img}color:${esc(v.themeText)};font-family:${esc(font)};text-align:${center ? "center" : "left"}">
+  const bd = BACKDROPS[v.themeBackdrop];
+  if (bd || img) return `<div class="lk-prev lk-bd" style="background:${bd ? bd.css.replace(/var\(--interactive\)/g, esc(v.themeColor)) : esc(v.themeBg)};${img}--interactive:${esc(v.themeColor)}"><div class="lk-card" style="background:${esc(v.themeBg)};color:${esc(v.themeText)};font-family:${esc(font)};text-align:${center ? "center" : "left"}">${lookInner(v, center)}</div></div>`;
+  return `<div class="lk-prev" style="background-color:${esc(v.themeBg)};color:${esc(v.themeText)};font-family:${esc(font)};text-align:${center ? "center" : "left"}">${lookInner(v, center)}</div>`;
+}
+function lookInner(v, center) {
+  return `
     ${v.showProgress === "yes" ? `<div class="lk-bar"><span style="background:${esc(v.themeColor)}"></span></div>` : ""}
     <div class="lk-eye">Driving Results · about Sample</div>
     <div class="lk-q">${v.showNumbers === "yes" ? `<span style="color:${esc(v.themeColor)}">3 →</span> ` : ""}Holds self and team to a high level of accountability.${v.showRequired === "yes" ? '<span style="color:#da1e28"> *</span>' : ""}</div>
     <div class="lk-scale" style="justify-content:${center ? "center" : "flex-start"}">${[1, 2, 3, 4, 5].map((k) => `<span style="${k === 4 ? `background:${esc(v.themeColor)};color:#fff` : ""}">${k}</span>`).join("")}</div>
-    <div style="margin-top:16px"><span class="lk-btn" style="background:${esc(v.themeColor)}">OK</span></div></div>`;
+    <div style="margin-top:16px"><span class="lk-btn" style="background:${esc(v.themeColor)}">OK</span></div>`;
+}
+function backdropPicker(v) {
+  const tiles = [["none", "Plain", esc(v.themeBg)]].concat(Object.keys(BACKDROPS).map((k) => [k, BACKDROPS[k].name, BACKDROPS[k].css.replace(/var\(--interactive\)/g, esc(v.themeColor))]));
+  return `<div class="bd-pick" role="radiogroup" aria-label="Background style">${tiles.map(([k, n, css]) => `<button type="button" class="bd-tile ${v.themeBackdrop === k ? "on" : ""}" data-bd="${k}" role="radio" aria-checked="${v.themeBackdrop === k}"><span class="bd-sw" style="background:${css}"><i></i></span><span>${esc(n)}</span></button>`).join("")}</div>`;
 }
 function renderLook(d) {
   const v = lookVals(d), sel = (k, opts) => `<select data-lk="${k}">${opts.map(([a, b]) => `<option value="${a}" ${v[k] === a ? "selected" : ""}>${esc(b)}</option>`).join("")}</select>`;
@@ -2093,7 +2267,8 @@ function renderLook(d) {
       <label class="qb-field"><span>Question text</span><input type="color" data-lk="themeText" value="${esc(v.themeText)}"></label>
       <label class="qb-field"><span>Font</span>${sel("themeFont", [["plex", "IBM Plex Sans"], ["arial", "Arial"], ["georgia", "Georgia"], ["verdana", "Verdana"], ["trebuchet", "Trebuchet"]])}</label>
       <label class="qb-field"><span>Alignment</span>${sel("themeAlign", [["left", "Left"], ["center", "Centre"]])}</label>
-      <label class="qb-field fwide"><span>Background picture (https link, optional)</span><input data-lk="themeImage" value="${esc(v.themeImage)}" placeholder="https:\/\/…/background.jpg"></label>
+      <div class="qb-field fwide"><span>Background style</span>${backdropPicker(v)}</div>
+      <label class="qb-field fwide"><span>Background picture (https link, optional; overrides the style)</span><input data-lk="themeImage" value="${esc(v.themeImage)}" placeholder="https:\/\/…/background.jpg"></label>
       <label class="qb-field"><span>Progress bar</span>${sel("showProgress", yn)}</label>
       <label class="qb-field"><span>Question numbers</span>${sel("showNumbers", yn)}</label>
       <label class="qb-field"><span>Mark required with *</span>${sel("showRequired", yn)}</label></div>
@@ -2107,6 +2282,12 @@ function wireLook() {
   const v = state.look;
   app.querySelectorAll("[data-lk]").forEach((f) => f.addEventListener(f.tagName === "SELECT" ? "change" : "input", () => {
     v[f.dataset.lk] = f.value; state.lookDirty = true;
+    document.getElementById("lkPrev").innerHTML = lookPreview(v);
+    const st = document.getElementById("lkStatus"); st.textContent = "Unsaved changes"; st.className = "qb-status dirty";
+  }));
+  app.querySelectorAll("[data-bd]").forEach((t) => t.addEventListener("click", () => {
+    v.themeBackdrop = t.dataset.bd; state.lookDirty = true;
+    app.querySelectorAll("[data-bd]").forEach((x) => { x.classList.toggle("on", x === t); x.setAttribute("aria-checked", x === t); });
     document.getElementById("lkPrev").innerHTML = lookPreview(v);
     const st = document.getElementById("lkStatus"); st.textContent = "Unsaved changes"; st.className = "qb-status dirty";
   }));
