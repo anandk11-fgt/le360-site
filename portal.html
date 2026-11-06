@@ -211,8 +211,29 @@ tbody tr.detail:hover td { background: var(--background); }
 .rcov.left .cv-top { text-align: left; align-items: flex-start; }
 .rcov .cv-logos { display: flex; align-items: center; gap: 20px; } .rcov .cv-le { width: 90px; height: 48px; } .rcov .rlogo { max-height: 48px; max-width: 160px; margin: 0; }
 .rcov .cv-title { font-size: 2.25rem; font-weight: 700; line-height: 1.15; margin: 8px 0 0; text-transform: uppercase; letter-spacing: 0; text-wrap: balance; }
-.rcov .cv-box { display: inline-flex; border: 1px solid var(--pri-100); text-transform: uppercase; font-size: 1.125rem; }
-.rcov .cv-box span { padding: 10px 24px; } .rcov .cv-role { margin: 14px 0 0; font-size: 1rem; color: var(--pri-70); letter-spacing: .3px; }
+.rcov .cv-box { display: inline-grid; grid-auto-flow: column; align-items: stretch; border: 1px solid var(--pri-100); text-transform: uppercase; font-size: .9375rem; }
+.rcov .cv-box span { display: flex; align-items: center; justify-content: center; max-width: 230px; text-align: center; text-wrap: balance; line-height: 1.3; }
+.rcov .cv-box span { padding: 10px 20px; } .rwho { display: block; padding: 0; min-height: 0; height: auto; margin-top: 4px; font-size: .75rem; }
+tr.whorow > td { padding: 0; background: var(--background); } tr.whorow .table { margin: 0; } tr.whorow:hover > td { background: var(--background); }
+.gbar { display: flex; width: 64px; height: 10px; margin: 0 auto; gap: 2px; cursor: default; }
+.gbar > span, .sw { display: inline-block; border-radius: 2px; }
+.gbar .s-done, .sw.s-done { background: #24a148; } .gbar .s-start, .sw.s-start { background: #f1c21b; } .gbar .s-none, .sw.s-none { background: #c6c6c6; }
+.sw { width: 14px; height: 10px; }
+tr.rrow { cursor: pointer; } tr.rrow:hover > td { background: var(--layer-hover, #e8e8e8); }
+.rpart { display: flex; align-items: center; gap: 8px; } .rpart .expander { flex: none; }
+.dotn { display: block; font-size: .75rem; color: var(--text-helper); margin-top: 2px; }
+.rtabs { display: flex; border-bottom: 1px solid var(--border-subtle); margin: 8px 0 16px; }
+.rtabs .cnt { display: inline-block; margin-left: 6px; padding: 0 8px; border-radius: 12px; background: var(--tag-gray-bg); font-size: .75rem; }
+.pfbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 12px; }
+.pfbar label { display: flex; flex-direction: column; font-size: .75rem; color: var(--text-secondary); gap: 4px; }
+.pfbar select { height: 40px; }
+.pfsum { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 12px; font-size: .875rem; }
+.pfsum b { font-size: 1.25rem; margin-right: 4px; }
+.late { color: #a2191f; font-weight: 600; }
+.rvtab { table-layout: fixed; } .rvtab th:nth-child(1) { width: 26%; } .rvtab th:nth-child(2) { width: 13%; } .rvtab th:nth-child(3) { width: 17%; } .rvtab th:nth-child(4) { width: 12%; } .rvtab th:nth-child(5) { width: 13%; }
+@media (max-width: 640px) { .rvtab { table-layout: auto; } .rvtab th:nth-child(4), .rvtab td:nth-child(4), .rvtab th:nth-child(5), .rvtab td:nth-child(5) { display: none; } }
+@media (max-width: 640px) { .pftab td:nth-child(5), .pftab th:nth-child(5), .pftab td:nth-child(6), .pftab th:nth-child(6) { display: none; } }
+.rcov .cv-sub { margin: 6px 0 0; font-size: 1.125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--pri-70); }
 .pform .pfp { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 12px 0; } .pform .pfp label { min-width: 0; display: flex; flex-direction: column; gap: 4px; font-size: .75rem; color: var(--text-secondary); }
 .pform input { width: 100%; box-sizing: border-box; height: 36px; padding: 0 10px; border: 0; border-bottom: 1px solid var(--border-strong, #8d8d8d); background: var(--field, #f4f4f4); font: inherit; font-size: .875rem; color: inherit; min-width: 0; }
 .pform .pfgroups { align-items: start; grid-auto-rows: min-content; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; }
@@ -498,7 +519,7 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
 .sendlist .sl-subject { font-size: .875rem; } .sendlist td { vertical-align: top; } .sendlist .small { display: block; }
 .logopick { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
 .logopick .logoprev { max-height: 48px; max-width: 200px; background: #fff; border: 1px solid var(--border-subtle); padding: 4px; }
-.logopick .logobtn { cursor: pointer; }
+.logopick .logobtn { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: .875rem; letter-spacing: normal; }
 .qb-starter { border: 1px solid var(--border-subtle); background: var(--layer); padding: 20px; margin: 0 0 16px; }
 .qb-starter h2 { margin: 0 0 12px; font-size: 1.25rem; font-weight: 400; }
 .qb-starts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: start; }
@@ -543,6 +564,8 @@ tr.dev td { background: #ffffff; } tr.dev td:first-child { box-shadow: inset 6px
 .rd-checks label { display: flex; flex-direction: row; align-items: center; gap: 8px; font-size: .875rem; color: var(--text-primary); } .rd-checks input[type=checkbox] { width: 16px; height: 16px; padding: 0; margin: 0; flex: none; } .rd-checks .rd-bm { flex: 1 1 100%; } .rd-bm span { min-width: 200px; } .rd-bm input { width: 90px; }
 .rd-fields input[type=color] { width: 64px; height: 40px; padding: 2px; border: 0; background: none; }
 .rd-fields textarea { min-height: 0; height: auto; border: 0; border-bottom: 1px solid var(--border-strong); background: var(--background); padding: 8px 12px; font: inherit; font-size: .875rem; resize: vertical; }
+.samplebar { max-width: 960px; margin: 0 auto 16px; padding: 8px 16px; background: #fff1f1; color: #a2191f; font-weight: 600; font-size: .875rem; border-left: 3px solid #da1e28; }
+@media print { .samplebar { display: none; } }
 .rd-preview { margin-top: 16px; max-height: 70vh; overflow: auto; border: 1px solid var(--border-subtle); background: var(--layer); padding: 16px; position: relative; }
 .rd-preview .report { zoom: .8; }
 .rd-preview .reviewnote, .rd-preview .qhide { display: none; }
@@ -580,7 +603,6 @@ const LE360Compute = (() => {
     const groups = [];
     RELATIONS.forEach((rel) => { const g = groupOf(rel); if (g && !groups.includes(g)) groups.push(g); });
     groups.sort((a, b) => (a === "Others combined" ? 1 : b === "Others combined" ? -1 : 0));
-    const inOverall = (rel) => rel !== "Self" || project.include_self_in_overall;
 
     const competencies = [...tpl.competencies].sort((a, b) => a.position - b.position).map((c) => {
       const statements = [...c.statements].sort((a, b) => a.position - b.position).map((st) => {
@@ -594,22 +616,32 @@ const LE360Compute = (() => {
         const W = project.weights || {};
         const wOf = (g) => { if (g === "Others combined") { const ws = small.map((rel) => Number(W[rel])).filter((x) => !isNaN(x)); return ws.length ? ws.reduce((a, b) => a + b, 0) / ws.length : 1; } const w = Number(W[g]); return isNaN(w) || W[g] == null ? 1 : w; };
         const weighted = Object.keys(W).length > 0 && groups.some((g) => g !== "Self" && wOf(g) !== 1);
-        let wsum = 0, wtot = 0;
-        if (weighted) groups.forEach((g) => { if (g !== "Self" && byGroup[g] != null && wOf(g) > 0) { wsum += wOf(g) * byGroup[g]; wtot += wOf(g); } });
+        const poolOf = (withSelf) => ratingsOf(done.filter((r) => (withSelf || r.relation !== "Self") && shown(r)));
+        const calc = (withSelf) => {
+          if (!weighted) return mean(poolOf(withSelf));
+          let wsum = 0, wtot = 0;
+          groups.forEach((g) => { if ((withSelf || g !== "Self") && byGroup[g] != null && wOf(g) > 0) { wsum += wOf(g) * byGroup[g]; wtot += wOf(g); } });
+          return wtot ? wsum / wtot : null;
+        };
         return {
           id: st.id, text: st.text, competency: c.name,
-          overall: weighted ? (wtot ? wsum / wtot : null) : mean(ratingsOf(done.filter((r) => inOverall(r.relation) && shown(r)))),
+          overall: calc(!!project.include_self_in_overall), others: calc(false),
+          _p: { overall: weighted ? null : poolOf(!!project.include_self_in_overall), others: weighted ? null : poolOf(false), self: ratingsOf(done.filter((r) => r.relation === "Self")),
+            byGroup: Object.fromEntries(groups.map((g) => [g, byGroup[g] == null ? [] : ratingsOf(done.filter((r) => groupOf(r.relation) === g))])) },
           self: mean(ratingsOf(done.filter((r) => r.relation === "Self"))),
           byGroup,
         };
       });
       const avgOf = (pick) => mean(nums(statements.map(pick)));
+      /* Competency scores pool every rating in the competency (as SurveySparrow does), so a skipped statement doesn't change the weight of the others. */
+      const pool = (pick, fallback) => { const lists = statements.map(pick); return lists.some((l) => l == null) ? avgOf(fallback) : mean(lists.flat()); };
       const byGroup = {};
-      groups.forEach((g) => (byGroup[g] = avgOf((s) => s.byGroup[g])));
+      groups.forEach((g) => (byGroup[g] = pool((s) => s._p.byGroup[g], (s) => s.byGroup[g])));
       const nonSelf = nums(groups.filter((g) => g !== "Self").map((g) => byGroup[g]));
       return {
         id: c.id, name: c.name, definition: c.definition,
-        overall: avgOf((s) => s.overall), self: avgOf((s) => s.self), byGroup, statements,
+        overall: pool((s) => s._p.overall, (s) => s.overall), others: pool((s) => s._p.others, (s) => s.others), self: pool((s) => s._p.self, (s) => s.self), byGroup,
+        statements: statements.map(({ _p, ...s }) => s),
         spread: nonSelf.length >= 2 ? Math.max(...nonSelf) - Math.min(...nonSelf) : null,
       };
     });
@@ -646,7 +678,7 @@ const LE360Compute = (() => {
     if (m > 1) notes.push(`Any score based on fewer than ${m} answers is left blank, and overall scores use only the groups shown, so no one's individual rating can be worked out.`);
     if (pool && !dropped.length) notes.push("Written comments from peers, reportees and others are shown together, so no single comment can be traced to a small group.");
     if (dropped.length) notes.push(`Written comments from ${dropped.map((g) => (g === "Others combined" ? "peers, reportees and others" : g.toLowerCase() + "s")).join(" and ")} are not shown, because fewer than ${m} people wrote in that group.`);
-    if (!project.include_self_in_overall) notes.push("Overall scores reflect others' ratings only; your self-rating is shown separately.");
+    notes.push(project.include_self_in_overall ? "Overall scores include your self-rating along with everyone else's ratings." : "Overall scores reflect your reviewers' ratings only; your self-rating is shown separately.");
     const W = project.weights || {};
     if (Object.keys(W).some((k) => Number(W[k]) !== 1)) notes.push("Overall scores give each rater group a set weight: " + Object.keys(W).map((k) => `${(project.labels || {})[k] || k} ×${W[k]}`).join(", ") + ".");
     return {
@@ -1051,12 +1083,13 @@ function renderView() {
   if (state.view === "projects") return renderProjects();
   if (state.view !== "projects" && state.data && (state.step || "build") === "build" && state.buildTab === "questions" && state.qb && state.step) return renderBuilder();
   const d = state.data;
-  if (!state.step) state.step = !d.neverInvited ? "results" : d.totals.forms ? "people" : "build";
+  if (!state.step) state.step = !d.neverInvited ? (d.totals.completed < d.totals.forms ? "invite" : "results") : d.totals.forms ? "people" : "build";
   if (state.step === "build" && state.buildTab === "report" && !state.rd) state.rd = rdModel(d.settings.options || {});
-  const body = state.step === "people" ? renderPeople(d) : state.step === "results" ? renderResults(d) : state.step === "build" && state.buildTab === "report" ? renderReportDesigner() : state.step === "build" && state.buildTab === "look" ? renderLook(d) : `<p class="note">Loading questionnaire…</p>`;
+  const body = state.step === "people" ? renderPeople(d) : state.step === "invite" ? renderInvite(d) : state.step === "results" ? renderResults(d) : state.step === "build" && state.buildTab === "report" ? renderReportDesigner() : state.step === "build" && state.buildTab === "look" ? renderLook(d) : `<p class="note">Loading questionnaire…</p>`;
   app.innerHTML = projectChrome(d) + `<div class="stepbody">${body}</div>`;
   wireChrome();
   if (state.step === "people") wirePeople();
+  else if (state.step === "invite") wireInvite();
   else if (state.step === "results") wireResults();
   else if (state.buildTab === "report") wireReportDesigner();
   else if (state.buildTab === "look") wireLook();
@@ -1120,7 +1153,7 @@ async function openSendList(btn, action, extra = {}) {
     if (!res.items.length) { toast(res.message || "No one to email."); render(); return; }
     state.sendList = { items: res.items, sel: new Set(res.items.map((x) => x.token)), replyTo: res.replyTo || "" };
     state.gate = null;
-    if (state.step !== "people") { state.step = "people"; state.panel = null; }
+    if (state.step !== "invite") { state.step = "invite"; state.panel = null; }
     render();
     document.getElementById("sendList")?.scrollIntoView();
   } catch (err) { if (btn) btn.disabled = false; toast(err.message, true); }
@@ -1652,15 +1685,15 @@ function radarSVG(d, list) {
 const DEF_OPTS = {
   reportTitle: "360 Degree Feedback Report", reportFooter: "This report is confidential and should not be distributed without permission.",
   introText: "", purposeText: "", participantsText: "The following is a summary of the group of respondents who were invited to participate and provide feedback for you.",
-  strengthCut: 3.5, improveCut: 2.5,
+  strengthCut: 3.5, improveCut: 2.5, selfInOverall: "yes",
   strengthsBy: "competency", strengthsOrder: "desc", strengthsN: 5, strengthsDesc: "yes",
   improveBy: "competency", improveOrder: "asc", improveN: 5, improveDesc: "yes",
   hiddenBy: "competency", hiddenGap: 1, hiddenOrder: "desc", hiddenN: 5, hiddenDesc: "yes",
   blindBy: "competency", blindGap: 1, blindOrder: "desc", blindN: 5, blindDesc: "yes",
   strengthsText: "Below are the competencies where you received the highest ratings.", strengthsEmptyTitle: "No competency reached the strengths cutoff", strengthsEmptyText: "",
   improveText: "Below are the competencies where you received the lowest ratings.", improveEmptyTitle: "Keep up the good work!", improveEmptyText: "No competency fell below the cutoff.",
-  hiddenText: "Competencies where you rated yourself lower than others did.", hiddenEmptyTitle: "You know yourself well!", hiddenEmptyText: "Others' ratings are mostly in line with your own.",
-  blindText: "Competencies where you rated yourself higher than others did.", blindEmptyTitle: "You know yourself well!", blindEmptyText: "Others' ratings are mostly in line with your own.",
+  hiddenText: "Competencies where you rated yourself lower than your reviewers did.", hiddenEmptyTitle: "You know yourself well!", hiddenEmptyText: "Others' ratings are mostly in line with your own.",
+  blindText: "Competencies where you rated yourself higher than your reviewers did.", blindEmptyTitle: "You know yourself well!", blindEmptyText: "Others' ratings are mostly in line with your own.",
   detailedText: "Every behaviour, by rater group.", planText: "Complete this with your coach or manager.",
   coverColor: "#d9d9d9", coverAlign: "center", coverLogo: "yes", coverImage: "", showIcons: "yes", tocOn: "no",
   introTitle: "Introduction", purposeTitle: "Purpose", participantsTitle: "Participants", introTable: "yes",
@@ -1687,7 +1720,7 @@ const SEC_ICONS = {
 };
 const r1 = (x) => Math.round(x * 10) / 10;
 function listItems(d, by) {
-  if (by === "statement") return d.competencies.flatMap((c) => c.statements.map((st) => ({ name: st.text, definition: c.name, overall: st.overall, self: st.self, kind: "statement" })));
+  if (by === "statement") return d.competencies.flatMap((c) => c.statements.map((st) => ({ name: st.text, definition: c.name, overall: st.overall, others: st.others, self: st.self, kind: "statement" })));
   return d.competencies.map((c) => Object.assign({}, c, { kind: "competency" }));
 }
 function compLists(d, o) {
@@ -1700,7 +1733,7 @@ function compLists(d, o) {
   const pick = (k, list, best, def) => { const top = list.sort(best).slice(0, count(k)); return flip(k, def) === 1 ? top : top.reverse(); };
   const strengths = pick("strengths", rated("strengths").filter((c) => r1(c.overall) >= Number(o.strengthCut)), (a, b) => b.overall - a.overall, "desc");
   const improve = pick("improve", rated("improve").filter((c) => r1(c.overall) <= Number(o.improveCut)), (a, b) => a.overall - b.overall, "asc");
-  const gapped = (k) => rated(k).filter((c) => c.self != null).map((c) => Object.assign({}, c, { gap: r1(r1(c.self) - r1(c.overall)) }));
+  const gapped = (k) => rated(k).filter((c) => c.self != null).map((c) => Object.assign({}, c, { gap: r1(r1(c.self) - r1(c.others ?? c.overall)) }));
   const hidden = pick("hidden", gapped("hidden").filter((c) => -c.gap >= gapOf("hidden")), (a, b) => a.gap - b.gap, "desc");
   const blind = pick("blind", gapped("blind").filter((c) => c.gap >= gapOf("blind")), (a, b) => b.gap - a.gap, "desc");
   return { strengths, improve, hidden, blind };
@@ -1722,8 +1755,8 @@ function reportHTML(raw) {
   const hasSelf = d.participation.some((p) => p.relation === "Self" && p.completed > 0);
   const L = compLists(d, o);
   const empty = (t, x) => `<div class="empty"><b>${esc(t)}</b>${x ? esc(x) : ""}</div>`;
-  const compTable = (items, cls, withGap, k) => { const st = o[k + "By"] === "statement", desc = o[k + "Desc"] !== "no"; return `<div class="table"><table class="rt"><thead><tr><th>${st ? "Statement" : "Competency"}</th><th class="n">Others</th><th class="n">Self</th>${withGap ? '<th class="n">Gap</th>' : ""}</tr></thead><tbody>${items.map((c) =>
-    `<tr class="${cls}"><td>${st ? esc(c.name) : `<b>${esc(c.name)}</b>`}${desc && c.definition ? `<span class="rnote" style="display:block">${esc(c.definition)}</span>` : ""}</td><td class="n">${f1(c.overall)}</td><td class="n">${f1(c.self)}</td>${withGap ? `<td class="n"><b>${c.gap > 0 ? "+" : "−"}${Math.abs(c.gap).toFixed(1)}</b></td>` : ""}</tr>`).join("")}</tbody></table></div>`; };
+  const compTable = (items, cls, withGap, k) => { const st = o[k + "By"] === "statement", desc = o[k + "Desc"] !== "no"; return `<div class="table"><table class="rt"><thead><tr><th>${st ? "Statement" : "Competency"}</th><th class="n">${withGap ? "Reviewers" : "Overall"}</th><th class="n">Self</th>${withGap ? '<th class="n">Gap</th>' : ""}</tr></thead><tbody>${items.map((c) =>
+    `<tr class="${cls}"><td>${st ? esc(c.name) : `<b>${esc(c.name)}</b>`}${desc && c.definition ? `<span class="rnote" style="display:block">${esc(c.definition)}</span>` : ""}</td><td class="n">${f1(withGap ? c.others ?? c.overall : c.overall)}</td><td class="n">${f1(c.self)}</td>${withGap ? `<td class="n"><b>${c.gap > 0 ? "+" : "−"}${Math.abs(c.gap).toFixed(1)}</b></td>` : ""}</tr>`).join("")}</tbody></table></div>`; };
   const noSelf = `<p class="rnote">No self-assessment was completed.</p>`;
   const hasData = d.competencies.some((c) => c.overall != null);
   const noData = `<p class="rnote">Not enough responses yet to show this section.</p>`;
@@ -1751,9 +1784,9 @@ function reportHTML(raw) {
   const coverPh = /^#[0-9a-f]{6}$/i.test(o.coverColor || "") && !["#0043ce", "#d9d9d9"].includes(o.coverColor.toLowerCase()) ? o.coverColor : "var(--pri-20)";
   const cover = `<section class="rcov" data-sec="cover">
       <div class="cv-top"><div class="cv-logos">${LE_LOGO}${yes("coverLogo") && logo ? logo : ""}</div>
-        <h1 class="cv-title">${esc(o.reportTitle || "360 Degree Feedback Report")}${isGroup ? " · Group Report" : ""}</h1>
-        <div class="cv-box"><span>${name}</span><span>${date}</span></div>
-        ${!isGroup && (input.participant.designation || input.participant.department) ? `<p class="cv-role">${esc([input.participant.designation, input.participant.department].filter(Boolean).join(" · "))}</p>` : ""}
+        <h1 class="cv-title">${name}</h1>
+        <div class="cv-box">${(isGroup ? [] : [input.participant.designation, input.participant.department]).filter(Boolean).map((x) => `<span>${esc(x)}</span>`).join("")}<span>${date}</span></div>
+        <p class="cv-sub">${esc(o.reportTitle || "360 Degree Feedback Report")}${isGroup ? " · Group Report" : ""}</p>
         <p class="cv-conf">${isGroup ? "Combined scores for everyone in this programme; no individual's results or comments are shown. " : ""}${esc(o.reportFooter)}</p></div>
       <div class="cv-img" style="background-color:${coverPh};${coverPic ? `background-image:url('${esc(coverPic).replace(/'/g, "%27")}')` : ""}"></div></section>`;
   const pctOf = (p) => (p.nominated ? Math.round((100 * p.completed) / p.nominated) : 0);
@@ -1771,11 +1804,11 @@ function reportHTML(raw) {
   const sumRows = o.summaryStyle === "star"
     ? sumComps.map((c) => `<div class="brow star${hasBm ? " wbm" : ""}"><span>${esc(c.name)}</span><span class="stars${tone(c)}" role="img" aria-label="${f1(c.overall)} out of ${max}">★★★★★<i style="width:${((c.overall ?? 0) / max) * 100}%">★★★★★</i></span><span class="bval">${f1(c.overall)}</span>${bmCell(c)}</div>`).join("")
     : sumComps.map((c) => `<div class="brow${hasBm ? " wbm" : ""}"><span>${esc(c.name)}</span><div class="btrack"><div class="bfill${tone(c)}" style="width:${((c.overall ?? 0) / max) * 100}%"></div>${c.self != null ? `<div class="bself" style="left:${(c.self / max) * 100}%"></div>` : ""}${bmOf(c) != null ? `<div class="bbench" style="left:${(bmOf(c) / max) * 100}%"></div>` : ""}</div><span class="bval">${f1(c.overall)}</span>${bmCell(c)}</div>`).join("");
-  const bmNote = hasBm ? `<p class="rnote">${o.benchmark === "programme" ? `${esc(o.benchmarkLabel || "Benchmark")}: the average score from others across all ${input.benchmark.people} participant${input.benchmark.people === 1 ? "" : "s"} in this programme.` : `${esc(o.benchmarkLabel || "Benchmark")}: the target score set for each competency.`}</p>` : "";
+  const bmNote = hasBm ? `<p class="rnote">${o.benchmark === "programme" ? `${esc(o.benchmarkLabel || "Benchmark")}: the average score from reviewers across all ${input.benchmark.people} participant${input.benchmark.people === 1 ? "" : "s"} in this programme.` : `${esc(o.benchmarkLabel || "Benchmark")}: the target score set for each competency.`}</p>` : "";
   S.summary = `<section class="rsec s-purple" data-sec="summary">${head("summary", o.summaryTitle || "Competency summary")}
-      <h3 class="sub">Overall summary</h3><p class="lead">${o.summaryText ? esc(o.summaryText) : `Based on ${d.othersCount} response${d.othersCount === 1 ? "" : "s"} from others, on a ${input.template.scale_min ?? 1}–${max} scale.`}</p>
+      <h3 class="sub">Overall summary</h3><p class="lead">${o.summaryText ? esc(o.summaryText) : `Based on ${d.othersCount} response${d.othersCount === 1 ? "" : "s"} from reviewers, on a ${input.template.scale_min ?? 1}–${max} scale.`}</p>
       <div class="bignum">${f1(d.overall)}<small>/${max}</small></div>
-      <p class="rnote">${o.summaryStyle === "star" ? "Stars" : "Bars"} show the average rating from all your raters, excluding your self-rating.</p>
+      <p class="rnote">${o.summaryStyle === "star" ? "Stars" : "Bars"} show the average rating from all your raters, ${input.project && input.project.include_self_in_overall ? "including" : "excluding"} your self-rating.</p>
       <div class="bars">${sumRows}</div>
       <div class="rlegend"><span><i style="background:var(--pos-50)"></i>Strength (${f1(Number(o.strengthCut))} and above)</span><span><i style="background:var(--sec-60)"></i>Moderate (${f1(Number(o.improveCut) + 0.1)}–${f1(Number(o.strengthCut) - 0.1)})</span><span><i style="background:var(--neg-50)"></i>Needs work (${f1(Number(o.improveCut))} and below)</span>${o.summaryStyle === "star" ? "" : `<span><i style="background:var(--pri-100);width:4px;height:12px"></i>Your self-rating</span>`}${hasBm && o.summaryStyle !== "star" ? `<span><i style="background:none;border-left:2px dashed var(--acc-40);width:4px;height:12px"></i>${esc(o.benchmarkLabel || "Benchmark")}</span>` : ""}</div>${bmNote}</section>`;
   const BG = G.filter((g) => g !== "Others combined" || G.length <= 2);
@@ -1790,7 +1823,7 @@ function reportHTML(raw) {
       ${radComps.map((c) => `<tr><td>${esc(c.name)}</td>${G.map((g) => `<td class="n ${heat(c.byGroup[g], max)}">${f1(c.byGroup[g])}</td>`).join("")}<td class="n"><b>${f1(c.overall)}</b></td></tr>`).join("")}</tbody></table></div>${heatLegend(max)}` : ""}
       ${yes("gapSpread") ? `<h3>Perception gaps between rater groups</h3>${d.perceptionGaps.filter((c) => !radHide.has(c.name)).length ? d.perceptionGaps.filter((c) => !radHide.has(c.name)).map((c) => { const v = G.filter((g) => g !== "Self" && c.byGroup[g] != null).map((g) => ({ g, v: c.byGroup[g] })).sort((a, b) => b.v - a.v); return `<p><b>${esc(c.name)}</b>: spread of ${c.spread.toFixed(1)} — highest ${gl(v[0].g)} (${v[0].v.toFixed(1)}), lowest ${gl(v[v.length - 1].g)} (${v[v.length - 1].v.toFixed(1)}).</p>`; }).join("") : `<p class="rnote">Rater groups broadly agree on every competency.</p>`}` : ""}</section>`;
   const ringList = (items, k, col) => { const desc = o[k + "Desc"] !== "no", st = o[k + "By"] === "statement"; return `<ol class="rlist">${items.map((c) => `<li>${ring(c.overall, col)}<div><b>${esc(c.name)}</b>${desc && c.definition ? `<span>${st ? esc(c.definition) : `Definition: ${esc(c.definition)}`}</span>` : ""}</div></li>`).join("")}</ol>`; };
-  const gapTable = (items, k) => { const desc = o[k + "Desc"] !== "no", st = o[k + "By"] === "statement"; return `<table class="gtab"><thead><tr><th>Areas</th><th class="n">Your rating</th><th class="n">Others</th></tr></thead><tbody>${items.map((c) => `<tr><td><b>${esc(c.name)}</b>${desc && c.definition ? `<span>${st ? esc(c.definition) : `Definition: ${esc(c.definition)}`}</span>` : ""}</td><td class="n">${ring(c.self, "var(--pos-50)", 72)}</td><td class="n">${ring(c.overall, toneCol(c.overall), 72)}</td></tr>`).join("")}</tbody></table>`; };
+  const gapTable = (items, k) => { const desc = o[k + "Desc"] !== "no", st = o[k + "By"] === "statement"; return `<table class="gtab"><thead><tr><th>Areas</th><th class="n">Your rating</th><th class="n">Reviewers</th></tr></thead><tbody>${items.map((c) => `<tr><td><b>${esc(c.name)}</b>${desc && c.definition ? `<span>${st ? esc(c.definition) : `Definition: ${esc(c.definition)}`}</span>` : ""}</td><td class="n">${ring(c.self, "var(--pos-50)", 72)}</td><td class="n">${ring(c.others ?? c.overall, toneCol(c.others ?? c.overall), 72)}</td></tr>`).join("")}</tbody></table>`; };
   S.strengths = `<section class="rsec s-green" data-sec="strengths">${chead("strengths", o.strengthsTitle || "Your strengths", o.strengthsText)}
       ${!hasData ? noData : L.strengths.length ? ringList(L.strengths, "strengths", "var(--pos-50)") : emptyBig(o.strengthsEmptyTitle, o.strengthsEmptyText)}</section>`;
   S.improve = `<section class="rsec s-red" data-sec="improve">${chead("improve", o.improveTitle || "Areas of improvement", o.improveText)}
@@ -1830,11 +1863,11 @@ function reportLayout(str) {
   });
   return out;
 }
-function setPageFooter(text) {
+function setPageFooter(text, mark) {
   let st = document.getElementById("pfootStyle");
   if (!st) { st = document.createElement("style"); st.id = "pfootStyle"; document.head.appendChild(st); }
   const css = String(text || "").replace(/[\\"]/g, "").replace(/[\r\n]+/g, " ");
-  st.textContent = `@media print { @page { @bottom-center { content: counter(page); font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 9pt; color: #161616; }${css ? ` @bottom-left { content: "${css}"; font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 7pt; color: #8d8d8d; }` : ""} } }`;
+  st.textContent = `@media print { @page { @bottom-center { content: counter(page); font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 9pt; color: #161616; }${css ? ` @bottom-left { content: "${css}"; font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 7pt; color: #8d8d8d; }` : ""}${mark ? ` @top-right { content: "${String(mark).replace(/[\\"]/g, "")}"; font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 9pt; font-weight: 600; color: #da1e28; }` : ""} } }`;
 }
 function inputFor(key) {
   if (state.report && state.report.key === key) return state.report;
@@ -2181,7 +2214,7 @@ function wireBuilder() {
 }
 document.addEventListener("dragend", () => { state.qbDrag = null; state.rdDrag = null; document.querySelectorAll(".dragging, .dropover").forEach((x) => x.classList.remove("dragging", "dropover")); });
 
-const STEPS = [["build", "Build"], ["people", "People"], ["results", "Results"]];
+const STEPS = [["build", "Build"], ["people", "People"], ["invite", "Invite & track"], ["results", "Results"]];
 function stepGuard(go) {
   const dirty = (state.qb && state.qb.dirty) || (state.rd && state.rd.dirty) || state.lookDirty;
   if (dirty && !state.leaveArmed) { state.leaveArmed = true; toast("You have unsaved changes. Click Save, or click again to leave without saving."); return; }
@@ -2206,6 +2239,7 @@ function projectChrome(d) {
   const sub = {
     build: `${d.questionCount || 0} statements · report`,
     people: t.participants ? `${t.participants} participant${t.participants === 1 ? "" : "s"} · ${t.raters} reviewer${t.raters === 1 ? "" : "s"}` : "Add the client's nominations",
+    invite: !t.forms ? "Add people first" : d.neverInvited ? "Not sent yet" : `${d.toInvite ? d.toInvite + " not invited · " : ""}${t.forms - t.completed} form${t.forms - t.completed === 1 ? "" : "s"} still open`,
     results: t.forms ? `${t.completed} of ${t.forms} forms done · ${t.ready} report${t.ready === 1 ? "" : "s"} ready` : "Nothing yet",
   };
   return `
@@ -2252,12 +2286,11 @@ function peopleTable(d) {
   const q = state.q.toLowerCase();
   const order = (r) => ["Self", "Manager", "Peer", "Reportee", "Other"].indexOf(r.relation);
   const list = d.participants.filter((p) => !q || p.name.toLowerCase().includes(q) || p.email.toLowerCase().includes(q) || p.raters.some((r) => r.name.toLowerCase().includes(q) || r.email.toLowerCase().includes(q)))
-    .filter((p) => !state.pendingOnly || p.done < p.total)
-    .filter((p) => !state.notOpenedOnly || p.raters.some(rNotOpened));
+
   if (!list.length) return `<p class="note">${d.participants.length ? "No one matches." : "No people yet. Add the client's nominations above."}</p>`;
   return list.map((p) => {
     const open = !state.closedP.has(p.key), k = esc(p.key);
-    const rows = [...p.raters].filter((r) => !state.notOpenedOnly || rNotOpened(r)).sort((a, b) => order(a) - order(b)).map((r) => {
+    const rows = [...p.raters].sort((a, b) => order(a) - order(b)).map((r) => {
       const editing = state.editPid === r.pid;
       if (editing) return `<tr class="editrow"><td><input id="edName" value="${esc(r.name)}" aria-label="Name"></td><td><input id="edEmail" type="email" value="${esc(r.email)}" aria-label="Email"></td>
         <td><select id="edRel" aria-label="Relationship">${relOptions(r.relation)}</select></td><td></td>
@@ -2266,8 +2299,6 @@ function peopleTable(d) {
       return `<tr><td><span class="name">${r.relation === "Self" ? esc(p.name) : esc(r.name)}</span></td><td class="small">${esc(r.email || "no email")}</td>
         <td><span class="rel rel-${r.relation}">${esc(rl(r.relation))}</span></td><td>${personStatus(r)}</td>
         <td><div class="rowbtns">
-          ${r.status !== "completed" && r.link ? `<button class="btn ghost copy" data-copy="${esc(r.link)}">Copy link</button>` : ""}
-          ${r.status !== "completed" && r.email && r.token ? `<button class="btn ghost copy" data-send-one-direct="${esc(r.token)}">${r.invited ? "Remind" : "Invite"}</button>` : ""}
           ${r.relation !== "Self" && r.status === "pending" ? `<button class="btn ghost copy" data-edit="${esc(r.pid)}">Edit</button>` : ""}
           ${r.relation !== "Self" ? (rm ? `<span class="confirm"><button class="btn danger copy" data-rm="${esc(r.pid)}">Remove${r.status !== "pending" ? " (answers left out)" : ""}</button><button class="btn ghost copy" data-cancel>Cancel</button></span>` : `<button class="btn ghost copy danger-txt" data-rmask="${esc(r.pid)}" aria-label="Remove ${esc(r.name)}">Remove</button>`) : ""}
         </div></td></tr>`;
@@ -2297,10 +2328,10 @@ function portalStrip(d, p) {
   const editing = state.apprFor === p.key;
   const appr = editing ? `<span class="confirm"><input id="apName" placeholder="Approver's name" value="${esc(po.approver ? po.approver.name : "")}" aria-label="Approver's name"><input id="apEmail" type="email" placeholder="approver@client.com" value="${esc(po.approver ? po.approver.email : "")}" aria-label="Approver's email"><button class="btn copy" data-apsave="${k}">Save</button><button class="btn ghost copy" data-apcancel>Cancel</button></span>`
     : `<span class="small">Approver: ${po.approver ? `${esc(po.approver.name)} (${esc(po.approver.email)})` : "you"}</span><button class="btn ghost copy" data-apedit="${k}">Change</button>${po.approver && po.approver.link ? `<button class="btn ghost copy" data-copy="${esc(po.approver.link)}">Copy approver link</button>` : ""}`;
+  const showAppr = o.selfNominate === "yes" && o.nominationApproval === "yes";
+  if (!props && !showAppr) return "";
   return `<div class="pportal">${props ? `<div class="table"><table class="ptab"><thead><tr><th>Waiting for approval</th><th>Email</th><th>Relationship</th><th></th><th></th></tr></thead><tbody>${props}</tbody></table></div>` : ""}
-    <div class="rowbtns"><span class="small">Their 360° page: ${po.sent ? `emailed ${day(po.sent)}` : "not emailed"}${po.opened ? `, opened ${day(po.opened)}` : ""}${po.submitted ? ` · list sent ${day(po.submitted)}` : ""}</span>
-      <button class="btn ghost copy" data-copy="${esc(po.link)}">Copy page link</button><button class="btn ghost copy" data-pinv="${esc(po.token)}">${po.sent ? "Email again" : "Email page"}</button>
-      ${o.selfNominate === "yes" && o.nominationApproval === "yes" ? appr : ""}</div></div>`;
+    ${showAppr ? `<div class="rowbtns">${appr}</div>` : ""}</div>`;
 }
 function emailCard(d) {
   const x = d.settings || {};
@@ -2352,13 +2383,9 @@ function renderPeople(d) {
   const t = d.totals;
   return `
     ${state.pform && !state.pform.key ? pformHTML() : state.importOpen || !t.forms ? importPanel(!t.forms) : ""}
-    ${launchStrip(d)}
-    ${t.forms ? emailCard(d) : ""}
-    ${warnStrip(d)}
+    ${t.forms && d.toInvite ? `<section class="mail" style="margin:0 0 24px"><div class="txt"><b>${d.toInvite} reviewer${d.toInvite === 1 ? " has" : "s have"} not been invited yet.</b> ${d.neverInvited ? "When the list is ready, send the invitations from Invite & track." : "Send their invitations from Invite & track."}</div><div class="acts"><button class="btn tertiary" id="goInvite">Go to Invite & track →</button></div></section>` : ""}
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="Search names or emails" value="${esc(state.q)}" aria-label="Search people">
-      <label class="check"><input type="checkbox" id="pending" ${state.pendingOnly ? "checked" : ""}> Not finished only</label>
-      ${d.notOpened ? `<label class="check"><input type="checkbox" id="notOpened" ${state.notOpenedOnly ? "checked" : ""}> Not opened only</label>` : ""}
       <div class="right"><span class="small" id="copied" aria-live="polite"></span>
         ${t.forms ? `<button class="btn tertiary" id="addOne">Type in a participant</button><button class="btn tertiary" id="addPeople">${state.importOpen ? "Close upload" : "Upload or paste people"}</button>` : ""}
         <button class="btn ghost" id="expandAll">${state.closedP.size ? "Expand all" : "Collapse all"}</button></div>
@@ -2376,8 +2403,77 @@ function wirePeople() {
   document.getElementById("addOne")?.addEventListener("click", () => openPForm(null));
   wirePForm();
   document.getElementById("expandAll")?.addEventListener("click", () => { state.closedP = state.closedP.size ? new Set() : new Set(d.participants.map((p) => p.key)); render(); });
-  document.getElementById("showNotOpened")?.addEventListener("click", () => { state.q = ""; state.notOpenedOnly = true; render(); document.getElementById("list").scrollIntoView(); });
-  document.getElementById("notOpened")?.addEventListener("change", (e) => { state.notOpenedOnly = e.target.checked; render(); });
+  document.getElementById("goInvite")?.addEventListener("click", () => goStep("invite"));
+  wirePeopleRows();
+}
+/* Invite & track */
+function renderInvite(d) {
+  if (!d.totals.forms) return `<p class="note">No reviewers yet. Add them in People first.</p>`;
+  return `${launchStrip(d)}
+    ${emailCard(d)}
+    ${warnStrip(d)}
+    <div class="tools"><input class="search" id="q" type="search" placeholder="Search names or emails" value="${esc(state.q)}" aria-label="Search reviewers">
+      <div class="right"><span class="small" id="copied" aria-live="polite"></span></div></div>
+    <div class="rtabs tabs" role="tablist" aria-label="View"><button role="tab" data-iview="part" aria-selected="${state.iview !== "rev"}">By participant</button><button role="tab" data-iview="rev" aria-selected="${state.iview === "rev"}">By reviewer<span class="cnt">${todoRows(d).length} open</span></button></div>
+    ${state.iview === "rev" ? `<section id="todo">${todoHTML(d)}</section>` : `<section id="byp">${byPartHTML(d)}</section>`}
+    ${pagesHTML(d)}`;
+}
+/** One participant's reviewers: the same table in Invite & track and Results (Remind only in Invite & track). */
+function reviewerTable(p, rs, withRemind) {
+  return `<div class="table"><table class="ptab rvtab"><thead><tr><th>Reviewer</th><th>Relationship</th><th>Status</th><th>Invited</th><th>Last reminder</th><th></th></tr></thead><tbody>
+    ${rs.map((r) => { const w = daysSince(r.invited), done = r.status === "completed"; return `<tr><td><span class="name">${esc(r.relation === "Self" ? p.name : r.name)}</span><span class="email">${esc(r.email || "no email")}</span></td>
+      <td><span class="rel rel-${esc(r.relation)}">${esc(rl(r.relation))}</span></td>
+      <td>${personStatus(r)}${done && r.submitted ? `<span class="small" style="display:block;margin-top:2px">on ${esc(day(r.submitted))}</span>` : ""}</td>
+      <td class="small">${r.invited ? `${esc(day(r.invited))}${done ? "" : `<br><span class="${w >= 5 ? "late" : ""}">${w === 0 ? "today" : w + " day" + (w === 1 ? "" : "s") + " ago"}</span>`}` : "Not invited"}</td>
+      <td class="small">${r.reminders ? `${esc(day(r.reminded))}<br>${r.reminders}× so far` : done ? "—" : "None yet"}</td>
+      <td><div class="rowbtns">${!done && r.link ? `<button class="btn ghost copy" data-copy="${esc(r.link)}">Copy link</button>` : ""}${withRemind && !done && r.email && r.token && r.invited ? `<button class="btn ghost copy" data-tone="${esc(r.token)}">Remind</button>` : ""}</div></td></tr>`; }).join("")}
+    </tbody></table></div>`;
+}
+/** Invite & track, by participant: each participant with all their reviewers and where each one is. */
+function byPartHTML(d) {
+  const f = (state.pf = state.pf || { status: "all", role: "all", sort: "open", hideDone: false });
+  const ord = (r) => ["Self", "Manager", "Peer", "Reportee", "Other"].indexOf(r);
+  const q = state.q.toLowerCase();
+  const keep = (r) => (!f.hideDone || r.status !== "completed") && (f.role === "all" || r.relation === f.role) &&
+    (f.status === "all" || (f.status === "done" ? r.status === "completed" : f.status === "start" ? r.status === "in_progress" : f.status === "none" ? r.status !== "completed" && r.status !== "in_progress" && !!r.invited : f.status === "unopened" ? rNotOpened(r) : !r.invited));
+  let ps = d.participants.map((p) => ({ p, rs: p.raters.filter(keep).filter((r) => !q || p.name.toLowerCase().includes(q) || (r.name || "").toLowerCase().includes(q) || (r.email || "").toLowerCase().includes(q)).sort((a, b) => ord(a.relation) - ord(b.relation)) }))
+    .filter((x) => x.rs.length);
+  const left = (p) => p.total - p.done;
+  ps.sort((a, b) => f.sort === "name" ? a.p.name.localeCompare(b.p.name) : f.sort === "pct" ? a.p.done / a.p.total - b.p.done / b.p.total || a.p.name.localeCompare(b.p.name) : left(b.p) - left(a.p) || a.p.name.localeCompare(b.p.name));
+  const opt = (k, v, l) => `<option value="${v}" ${f[k] === v ? "selected" : ""}>${l}</option>`;
+  const def = d.participants.length <= 10, isOpen = (k) => (state.ipo && k in state.ipo ? state.ipo[k] : def);
+  const allOpen = ps.length && ps.every((x) => isOpen(x.p.key));
+  const t = d.totals, nDone = d.participants.filter((p) => p.done === p.total).length;
+  return `<div class="pfsum"><span><b>${d.participants.length}</b>participant${d.participants.length === 1 ? "" : "s"}</span><span><b>${t.completed}</b>of ${t.forms} forms finished</span><span><b>${nDone}</b>participant${nDone === 1 ? "" : "s"} with every form in</span></div>
+    <div class="pfbar">
+      <label>Status<select data-pf="status">${opt("status", "all", "All reviewers")}${opt("status", "done", "Finished")}${opt("status", "start", "Started")}${opt("status", "none", "Not started")}${opt("status", "unopened", "Not opened after a day")}${opt("status", "inv", "Not invited")}</select></label>
+      <label>Relationship<select data-pf="role">${opt("role", "all", "All")}${["Self", "Manager", "Peer", "Reportee", "Other"].filter((k) => d.participants.some((p) => p.raters.some((r) => r.relation === k))).map((k) => opt("role", k, esc(rl(k)))).join("")}</select></label>
+      <label>Sort by<select data-pf="sort">${opt("sort", "open", "Most still to finish")}${opt("sort", "pct", "Least progress")}${opt("sort", "name", "Participant name")}</select></label>
+      <label class="check" style="flex-direction:row;align-self:center;margin-top:16px"><input type="checkbox" data-pfhide ${f.hideDone ? "checked" : ""}> Hide finished reviewers</label>
+      <button class="btn ghost" id="ipAll" data-open="${allOpen ? 0 : 1}" style="margin-left:auto" ${ps.length ? "" : "disabled"}>${allOpen ? "Collapse all" : "Expand all"}</button>
+    </div>
+    ${ps.length ? ps.map(({ p, rs }) => { const op = isOpen(p.key), k = esc(p.key); return `<section class="pcard">
+      <div class="phead" data-iprow="${k}" style="cursor:pointer"><button class="expander" type="button" data-ip="${k}" aria-expanded="${op}" aria-label="${op ? "Hide" : "Show"} reviewers of ${esc(p.name)}">${op ? "⌃" : "⌄"}</button>
+        <div class="pname"><b>${esc(p.name)}</b><span class="small">${esc(p.email)}${p.designation || p.department ? ` · ${esc([p.designation, p.department].filter(Boolean).join(", "))}` : ""}</span></div>
+        <div class="prog" style="min-width:220px"><div class="meter"><span style="width:${pct(p.done, p.total)}%"></span></div><b>${p.done} of ${p.total} finished</b></div></div>
+      ${op ? reviewerTable(p, rs, true) : ""}</section>`; }).join("") : `<p class="note">No one matches these filters.</p>`}
+    <p class="small">A reminder goes to the reviewer once and covers everyone they still have to review.</p>`;
+}
+/** Participants' own 360° pages (when that option is on): send and copy their links here. */
+function pagesHTML(d) {
+  const o = d.settings.options || {};
+  if (o.selfNominate !== "yes" && o.portalReports !== "yes") return "";
+  const ps = d.participants.filter((p) => p.portal);
+  if (!ps.length) return "";
+  return `<section style="margin-top:32px"><h2 style="margin:0 0 12px">Participant pages</h2><div class="table"><table class="ptab"><thead><tr><th>Participant</th><th>Page</th><th></th></tr></thead><tbody>
+    ${ps.map((p) => { const po = p.portal; return `<tr><td><span class="name">${esc(p.name)}</span><span class="email">${esc(p.email)}</span></td>
+      <td class="small">${po.sent ? `Emailed ${day(po.sent)}` : "Not emailed"}${po.opened ? `, opened ${day(po.opened)}` : ""}${po.submitted ? ` · list sent ${day(po.submitted)}` : ""}</td>
+      <td><div class="rowbtns"><button class="btn ghost copy" data-copy="${esc(po.link)}">Copy page link</button>${outlook() ? "" : `<button class="btn ghost copy" data-pinv="${esc(po.token)}">${po.sent ? "Email again" : "Email page"}</button>`}</div></td></tr>`; }).join("")}
+    </tbody></table></div></section>`;
+}
+function wireInvite() {
+  const d = state.data;
+  document.getElementById("showNotOpened")?.addEventListener("click", () => { state.q = ""; state.tf = Object.assign(state.tf || { role: "all", sort: "late" }, { status: "unopened" }); state.iview = "rev"; render(); document.getElementById("todo")?.scrollIntoView(); });
   document.getElementById("emailDetails")?.addEventListener("toggle", (e) => (state.emailOpen = e.target.open));
   document.getElementById("moreMail")?.addEventListener("toggle", (e) => (state.moreMail = e.target.open));
   app.querySelectorAll("[data-ask]").forEach((b) => b.addEventListener("click", () => { if (outlook() && LIST_MODE[b.dataset.ask]) return openSendList(b, b.dataset.ask); state.confirm = b.dataset.ask; render(); }));
@@ -2410,7 +2506,18 @@ function wirePeople() {
     } catch (err) { toast(err.message, true); }
     b.disabled = false;
   });
-  wirePeopleRows();
+  const q = document.getElementById("q");
+  q?.addEventListener("input", () => { state.q = q.value; const v = q.value; render(); const n = document.getElementById("q"); n.focus(); n.setSelectionRange(v.length, v.length); });
+  app.querySelectorAll("[data-cancel]").forEach((b) => b.addEventListener("click", () => { state.confirm = null; render(); }));
+  app.querySelectorAll("[data-pinv]").forEach((b) => b.addEventListener("click", () => peopleAction(b, "portalInvite", { token: b.dataset.pinv })));
+  app.querySelectorAll("[data-iview]").forEach((b) => b.addEventListener("click", () => { state.iview = b.dataset.iview; render(); }));
+  app.querySelectorAll("[data-pf]").forEach((x) => x.addEventListener("change", () => { state.pf[x.dataset.pf] = x.value; render(); }));
+  app.querySelector("[data-pfhide]")?.addEventListener("change", (e) => { state.pf.hideDone = e.target.checked; render(); });
+  const ipTog = (k) => { const def = state.data.participants.length <= 10; state.ipo = state.ipo || {}; state.ipo[k] = !(k in state.ipo ? state.ipo[k] : def); render(); };
+  app.querySelectorAll("[data-iprow]").forEach((h) => h.addEventListener("click", (e) => { if (e.target.closest("button:not([data-ip]), a, input")) return; ipTog(h.dataset.iprow); }));
+  document.getElementById("ipAll")?.addEventListener("click", (e) => { state.ipo = state.ipo || {}; const on = e.target.dataset.open === "1"; app.querySelectorAll("[data-iprow]").forEach((h) => (state.ipo[h.dataset.iprow] = on)); render(); });
+  app.querySelectorAll("section:not(#todo) > .table [data-copy]").forEach((b) => b.addEventListener("click", () => copy(b.dataset.copy, "Link copied", b)));
+  wireTodo();
 }
 async function peopleAction(btn, action, extra, after) {
   btn.disabled = true;
@@ -2452,7 +2559,7 @@ function distHTML(d) {
   return `<section class="rsec dist"><h2>Score distribution</h2>
     ${scored.length ? `<div class="dstats"><div><b>${f1(mean)}</b><span>average overall score (out of ${smax}) across ${scored.length} ready report${scored.length === 1 ? "" : "s"}</span></div>
       <div><b>${hi}</b><span>at or above ${esc(o.strengthCut ?? 3.5)} (strength cutoff)</span></div><div><b>${scored.length - hi - lo}</b><span>in between</span></div><div><b>${lo}</b><span>at or below ${esc(o.improveCut ?? 2.5)}</span></div></div>
-      ${histSVG(scored.map((x) => x.v), smin, smax)}<p class="rnote">Each bar counts participants whose overall score from others falls in that range. Only reports that are ready are included.</p>`
+      ${histSVG(scored.map((x) => x.v), smin, smax)}<p class="rnote">Each bar counts participants whose overall score from reviewers falls in that range. Only reports that are ready are included.</p>`
       : `<p class="rnote">No reports are ready yet.</p>`}</section>`;
 }
 function renderResults(d) {
@@ -2471,21 +2578,80 @@ function renderResults(d) {
       <button class="btn ghost" id="overview" ${t.completed ? "" : "disabled"}>Overview and downloads</button>
       <button class="btn ghost" id="groupReport" ${t.completed ? "" : "disabled"}>Group report</button>
       <button class="btn ghost" id="distBtn" aria-expanded="${!!state.dist}" ${t.completed ? "" : "disabled"}>${state.dist ? "Hide score distribution" : "Score distribution"}</button>
+      ${!rows.length ? "" : (() => { const allOpen = rows.every((p) => (state.who || {})[p.key]); return `<button class="btn ghost" id="whoAll" data-open="${allOpen ? 0 : 1}">${allOpen ? "Collapse all" : "Expand all"}</button>`; })()}
       <input class="search" id="q" type="search" placeholder="Search participants" value="${esc(state.q)}" aria-label="Search participants" style="margin-left:auto">
     </div>
     ${state.dist ? distHTML(d) : ""}
     ${gate ? gateHTML(d, gate) : ""}
     ${rows.length ? `<div class="table"><table>
       <thead><tr><th>Participant</th>${GROUPS.map(([, l]) => `<th class="c">${l}</th>`).join("")}<th>Completed</th><th>Report</th><th>Development plan</th></tr></thead>
-      <tbody>${rows.map((p) => `<tr>
-        <td><span class="name">${esc(p.name)}</span><span class="email">${esc(p.email)}</span></td>
-        ${GROUPS.map(([k]) => `<td class="c">${groupCell(p.groups[k])}</td>`).join("")}
+      <tbody>${rows.map((p) => { const op = !!(state.who || {})[p.key]; return `<tr class="rrow" data-rowwho="${esc(p.key)}">
+        <td><div class="rpart"><button class="expander" type="button" data-who="${esc(p.key)}" aria-expanded="${op}" aria-label="${op ? "Hide" : "Show"} reviewers of ${esc(p.name)}">${op ? "⌃" : "⌄"}</button><div><span class="name">${esc(p.name)}</span><span class="email">${esc(p.email)}</span></div></div></td>
+        ${GROUPS.map(([k]) => `<td class="c">${dotCell(p, k)}</td>`).join("")}
         <td><div class="prog"><div class="meter"><span style="width:${pct(p.done, p.total)}%"></span></div><b>${p.done}/${p.total}</b></div></td>
         <td><button class="btn ${p.ready ? "" : "tertiary"} copy" data-gen="${esc(p.key)}">Generate report</button>${p.ready ? "" : `<span class="email">${needMore(d, p)} more needed</span>`}
           ${(d.settings.options || {}).portalReports === "yes" && p.portal ? (p.portal.released ? `<span class="email">Shared with ${esc(p.name.split(" ")[0])} ${day(p.portal.released)} · <button class="btn ghost copy" data-rel="0" data-key="${esc(p.key)}">Stop sharing</button></span>` : state.confirm === "rel:" + p.key ? `<span class="confirm"><button class="btn copy" data-rel="1" data-mail="1" data-key="${esc(p.key)}">Share and email</button><button class="btn ghost copy" data-rel="1" data-key="${esc(p.key)}">Share only</button><button class="btn ghost copy" data-relcancel>Cancel</button></span>` : `<button class="btn ghost copy" data-relask="${esc(p.key)}">Share with participant</button>`) : ""}</td>
-        <td>${planCell(p)}</td></tr>`).join("")}</tbody></table></div>` : `<p class="note">No participants yet. Add them in People.</p>`}
-    <div class="legend small"><span><span class="cell full">2/2</span> all done</span><span><span class="cell part">1/3</span> some done</span><span><span class="cell zero">0/2</span> none yet</span>
-      <span>A report is ready when at least ${d.minGroup} people other than the participant and their manager have finished.</span></div>`;
+        <td>${planCell(p)}</td></tr>${op ? whoRow(p) : ""}`; }).join("")}</tbody></table></div>` : `<p class="note">No participants yet. Add them in People.</p>`}
+    ${`<div class="legend small"><span><span class="sw s-done"></span> finished</span><span><span class="sw s-start"></span> started</span><span><span class="sw s-none"></span> not started</span><span>Hover over a bar to see names. Click a row to see everyone.</span>
+      <span>A report is ready when at least ${d.minGroup} people other than the participant and their manager have finished.</span></div>`}`;
+}
+const dotState = (r) => (r.status === "completed" ? "s-done" : r.status === "in_progress" ? "s-start" : "s-none");
+const dotWord = (r) => (r.status === "completed" ? `finished${r.submitted ? " " + day(r.submitted) : ""}` : r.status === "in_progress" ? "started, not finished" : !r.invited ? "not invited yet" : r.opened ? "opened, not started" : "not started");
+/** One fixed-size bar per group: green finished, amber started, grey not started; names on hover. */
+function dotCell(p, k) {
+  const rs = p.raters.filter((r) => r.relation === k);
+  if (!rs.length) return `<span class="cell na">—</span>`;
+  const nm = (r) => (r.relation === "Self" ? p.name : r.name);
+  const by = { done: rs.filter((r) => r.status === "completed"), start: rs.filter((r) => r.status === "in_progress") };
+  by.none = rs.filter((r) => r.status !== "completed" && r.status !== "in_progress");
+  const tip = [["Finished", by.done], ["Started", by.start], ["Not started", by.none]].filter(([, l]) => l.length).map(([t, l]) => `${t}: ${l.map(nm).join(", ")}`).join("\n");
+  const seg = (c, n) => (n ? `<span class="${c}" style="flex:${n}"></span>` : "");
+  return `<span class="gbar" title="${esc(tip)}" role="img" aria-label="${esc(tip.replace(/\n/g, ". "))}">${seg("s-done", by.done.length)}${seg("s-start", by.start.length)}${seg("s-none", by.none.length)}</span><span class="dotn">${by.done.length}/${rs.length}</span>`;
+}
+const daysSince = (iso) => (iso ? Math.floor((Date.now() - new Date(iso).getTime()) / 864e5) : null);
+/** Every unfinished reviewer-participant pair, across the project. */
+function todoRows(d) {
+  const out = [];
+  d.participants.forEach((p) => p.raters.forEach((r) => { if (r.status !== "completed") out.push({ p, r }); }));
+  return out;
+}
+function todoHTML(d) {
+  const f = (state.tf = state.tf || { status: "all", role: "all", sort: "late" });
+  const all = todoRows(d);
+  const ord = (r) => ["Self", "Manager", "Peer", "Reportee", "Other"].indexOf(r);
+  let rows = all.filter(({ r }) => (f.status === "all" || (f.status === "start" ? r.status === "in_progress" : f.status === "none" ? r.status !== "in_progress" && !!r.invited : f.status === "unopened" ? rNotOpened(r) : !r.invited)) && (f.role === "all" || r.relation === f.role));
+  const q = state.q.toLowerCase();
+  if (q) rows = rows.filter(({ p, r }) => p.name.toLowerCase().includes(q) || (r.name || "").toLowerCase().includes(q) || (r.email || "").toLowerCase().includes(q));
+  rows.sort((a, b) => f.sort === "late" ? (daysSince(b.r.invited) ?? -1) - (daysSince(a.r.invited) ?? -1) : f.sort === "rev" ? (a.r.relation === "Self" ? a.p.name : a.r.name).localeCompare(b.r.relation === "Self" ? b.p.name : b.r.name) : a.p.name.localeCompare(b.p.name) || ord(a.r.relation) - ord(b.r.relation));
+  const sel = (state.tsel = state.tsel || new Set());
+  const canRemind = (r) => !!(r.email && r.token && r.invited);
+  const people = new Set(all.map(({ r }) => r.token || r.email)).size;
+  const started = all.filter(({ r }) => r.status === "in_progress").length, notInv = all.filter(({ r }) => !r.invited).length;
+  const opt = (k, v, l) => `<option value="${v}" ${f[k] === v ? "selected" : ""}>${l}</option>`;
+  const tokens = [...sel].filter((t) => rows.some(({ r }) => r.token === t));
+  if (!all.length) return `<p class="note">Everyone has finished.</p>`;
+  return `<div class="pfsum"><span><b>${all.length}</b>forms still open</span><span><b>${people}</b>reviewer${people === 1 ? "" : "s"}</span><span><b>${started}</b>started</span><span><b>${all.length - started - notInv}</b>not started</span>${notInv ? `<span><b>${notInv}</b>not invited</span>` : ""}</div>
+    <div class="pfbar">
+      <label>Status<select data-tf="status">${opt("status", "all", "All not finished")}${opt("status", "start", "Started")}${opt("status", "none", "Not started")}${opt("status", "unopened", "Not opened after a day")}${opt("status", "inv", "Not invited")}</select></label>
+      <label>Relationship<select data-tf="role">${opt("role", "all", "All")}${["Self", "Manager", "Peer", "Reportee", "Other"].filter((k) => all.some(({ r }) => r.relation === k)).map((k) => opt("role", k, esc(rl(k)))).join("")}</select></label>
+      <label>Sort by<select data-tf="sort">${opt("sort", "late", "Waiting longest")}${opt("sort", "part", "Participant")}${opt("sort", "rev", "Reviewer")}</select></label>
+      <button class="btn tertiary" id="tRemind" ${tokens.length ? "" : "disabled"} data-tokens="${esc(tokens.join(","))}" style="margin-left:auto">Remind selected (${tokens.length})</button>
+    </div>
+    ${rows.length ? `<div class="table"><table class="pftab"><thead><tr><th style="width:40px"><input type="checkbox" id="tAll" aria-label="Select all" ${rows.filter(({ r }) => canRemind(r)).length && rows.filter(({ r }) => canRemind(r)).every(({ r }) => sel.has(r.token)) ? "checked" : ""}></th><th>Reviewer</th><th>Reviewing</th><th>Relationship</th><th>Invited</th><th>Last reminder</th><th>Status</th><th></th></tr></thead><tbody>
+      ${rows.map(({ p, r }) => { const w = daysSince(r.invited); return `<tr>
+        <td>${canRemind(r) ? `<input type="checkbox" data-tsel="${esc(r.token)}" aria-label="Select ${esc(r.name || p.name)}" ${sel.has(r.token) ? "checked" : ""}>` : ""}</td>
+        <td><span class="name">${esc(r.relation === "Self" ? p.name : r.name)}</span><span class="email">${esc(r.email || "no email")}</span></td>
+        <td>${r.relation === "Self" ? "Themselves" : esc(p.name)}</td><td>${esc(rl(r.relation))}</td>
+        <td class="small">${r.invited ? `${esc(day(r.invited))}<br><span class="${w >= 5 ? "late" : ""}">${w === 0 ? "today" : w + " day" + (w === 1 ? "" : "s") + " ago"}</span>` : "—"}</td>
+        <td class="small">${r.reminders ? `${esc(day(r.reminded))}<br>${r.reminders}× so far` : "None yet"}</td>
+        <td>${personStatus(r)}</td>
+        <td><div class="rowbtns">${r.link ? `<button class="btn ghost copy" data-copy="${esc(r.link)}">Copy link</button>` : ""}${canRemind(r) ? `<button class="btn ghost copy" data-tone="${esc(r.token)}">Remind</button>` : ""}</div></td></tr>`; }).join("")}
+    </tbody></table></div><p class="small">A reminder goes to the reviewer once and covers everyone they still have to review.</p>` : `<p class="note">No one matches these filters.</p>`}`;
+}
+/** Each reviewer's status for one participant: finished first, then the rest. */
+function whoRow(p) {
+  const ord = (r) => ["Self", "Manager", "Peer", "Reportee", "Other"].indexOf(r);
+  return `<tr class="whorow"><td colspan="${GROUPS.length + 4}">${reviewerTable(p, p.raters.slice().sort((a, b) => ord(a.relation) - ord(b.relation)), false)}</td></tr>`;
 }
 function gateHTML(d, p) {
   const left = p.raters.filter((r) => r.status !== "completed");
@@ -2499,7 +2665,7 @@ function gateHTML(d, p) {
       ${left.map((r) => `<tr><td>${r.relation === "Self" ? esc(p.name) : esc(r.name)}</td><td>${esc(rl(r.relation))}</td><td class="small">${esc(r.email || "no email")}</td><td>${personStatus(r)}</td></tr>`).join("")}</tbody></table></div>
     <div class="row">
       <button class="btn ghost" id="gateCancel">Cancel</button>
-      <button class="btn tertiary" id="gateRemind" ${tokens.length ? "" : "disabled"} data-tokens="${esc(tokens.join(","))}">Send them a reminder (${tokens.length})</button>
+      <button class="btn tertiary" id="gateInvite">Remind them in Invite & track</button>
       <button class="btn" id="gateGo" data-key="${esc(p.key)}">Still generate report</button></div>
   </section>`;
 }
@@ -2509,6 +2675,22 @@ function wireResults() {
   app.querySelectorAll("[data-rel]").forEach((b) => b.addEventListener("click", () => peopleAction(b, "releaseReport", { participant: b.dataset.key, release: b.dataset.rel === "1", send: !!b.dataset.mail })));
   const q = document.getElementById("q");
   q?.addEventListener("input", () => { state.q = q.value; const v = q.value; render(); const n = document.getElementById("q"); n.focus(); n.setSelectionRange(v.length, v.length); });
+  const tog = (k) => { state.who = state.who || {}; state.who[k] = !state.who[k]; render(); };
+  app.querySelectorAll("[data-rowwho]").forEach((tr) => tr.addEventListener("click", (e) => { if (e.target.closest("a, input, select, .rowbtns, .confirm") || (e.target.closest("button") && !e.target.closest("[data-who]"))) return; tog(tr.dataset.rowwho); }));
+  document.getElementById("whoAll")?.addEventListener("click", (e) => { state.who = state.who || {}; const on = e.target.dataset.open === "1"; app.querySelectorAll("[data-rowwho]").forEach((tr) => (state.who[tr.dataset.rowwho] = on)); render(); });
+  app.querySelectorAll(".whorow [data-copy]").forEach((b) => b.addEventListener("click", () => copy(b.dataset.copy, "Link copied", b)));
+  wireTodo(); wireResultsRest();
+}
+function wireTodo() {
+  app.querySelectorAll("[data-tf]").forEach((s) => s.addEventListener("change", () => { state.tf[s.dataset.tf] = s.value; render(); }));
+  app.querySelectorAll("[data-tsel]").forEach((c) => c.addEventListener("change", () => { c.checked ? state.tsel.add(c.dataset.tsel) : state.tsel.delete(c.dataset.tsel); render(); }));
+  document.getElementById("tAll")?.addEventListener("change", (e) => { app.querySelectorAll("[data-tsel]").forEach((c) => (e.target.checked ? state.tsel.add(c.dataset.tsel) : state.tsel.delete(c.dataset.tsel))); render(); });
+  const remind = (b, tokens) => send(b, "remindSome", { tokens }).then(() => { state.tsel = new Set(); });
+  document.getElementById("tRemind")?.addEventListener("click", (e) => remind(e.target, e.target.dataset.tokens.split(",").filter(Boolean)));
+  app.querySelectorAll("[data-tone]").forEach((b) => b.addEventListener("click", () => remind(b, [b.dataset.tone])));
+  app.querySelectorAll("#todo [data-copy]").forEach((b) => b.addEventListener("click", () => copy(b.dataset.copy, "Link copied", b)));
+}
+function wireResultsRest() {
   app.querySelectorAll("[data-gen]").forEach((b) => b.addEventListener("click", () => {
     const p = state.data.participants.find((x) => x.key === b.dataset.gen);
     if (p && p.ready) return openReport(p.key, b);
@@ -2516,7 +2698,7 @@ function wireResults() {
   }));
   document.getElementById("gateCancel")?.addEventListener("click", () => { state.gate = null; render(); });
   document.getElementById("gateGo")?.addEventListener("click", (e) => { const k = e.target.dataset.key; state.gate = null; openReport(k, e.target); });
-  document.getElementById("gateRemind")?.addEventListener("click", (e) => { const tokens = e.target.dataset.tokens.split(",").filter(Boolean); send(e.target, "remindSome", { tokens }).then(() => (state.gate = null)); });
+  document.getElementById("gateInvite")?.addEventListener("click", () => { state.gate = null; goStep("invite"); });
   document.getElementById("overview")?.addEventListener("click", (e) => openOverview(e.target));
   document.getElementById("distBtn")?.addEventListener("click", async () => {
     if (state.dist) { state.dist = null; return render(); }
@@ -2699,12 +2881,12 @@ const RD_FIELDS = {
   cover: [["reportTitle", "Report title"], ["reportFooter", "Confidentiality line (also at the foot of every printed page)", 2], ["coverColor", "Colour shown when there is no picture", 0, "color"], ["coverLogo", "Show the client's logo next to ours", 0, "s", YN], ["coverImage", "Picture under the title", 0, "img"], ["showIcons", "Icon at the top of each section", 0, "s", YN], ["tocOn", "Contents page after the cover", 0, "s", YN]],
   intro: [["introTitle", "Heading"], ["introText", "Introduction", 4], ["purposeTitle", "Purpose heading"], ["purposeText", "Purpose (one point per line)", 4], ["introTable", "Show the table of respondents", 0, "s", YN], ["participantsTitle", "Participants heading"], ["participantsText", "Text above the table of respondents", 2]],
   breakdown: [["breakdownTitle", "Heading"], ["breakdownText", "Description", 2]],
-  summary: [["summaryTitle", "Heading"], ["summaryText", "Description (blank = number of responses)", 2], ["summaryStyle", "Show scores as", 0, "s", [["bar", "Bars"], ["star", "Stars"]]], ["strengthCut", "Green at or above", 0, "n"], ["improveCut", "Red at or below", 0, "n"], ["benchmark", "Benchmark", 0, "s", [["none", "None"], ["programme", "Average of everyone in this project"], ["custom", "Custom score per competency"]]], ["benchmarkLabel", "Benchmark name"], ["benchmarkValues", "Custom benchmarks", 0, "b"], ["summaryHide", "Competencies shown", 0, "c"]],
+  summary: [["summaryTitle", "Heading"], ["summaryText", "Description (blank = number of responses)", 2], ["summaryStyle", "Show scores as", 0, "s", [["bar", "Bars"], ["star", "Stars"]]], ["selfInOverall", "Overall scores include the self-rating", 0, "s", [["yes", "Yes (as SurveySparrow)"], ["no", "No, reviewers only"]]], ["strengthCut", "Green at or above", 0, "n"], ["improveCut", "Red at or below", 0, "n"], ["benchmark", "Benchmark", 0, "s", [["none", "None"], ["programme", "Average of everyone in this project"], ["custom", "Custom score per competency"]]], ["benchmarkLabel", "Benchmark name"], ["benchmarkValues", "Custom benchmarks", 0, "b"], ["summaryHide", "Competencies shown", 0, "c"]],
   gap: [["gapTitle", "Heading"], ["gapText", "Description", 2], ["gapTable", "Table of scores by group", 0, "s", YN], ["gapSpread", "Perception gaps between groups", 0, "s", YN], ["radarHide", "Competencies on the radar and table", 0, "c"]],
   strengths: [["strengthsTitle", "Heading"], ["strengthsText", "Description", 2], ["strengthsBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["strengthCut", "Score at or above", 0, "n"], ["strengthsN", "Number of results", 0, "i"], ["strengthsOrder", "Order", 0, "s", [["desc", "Highest score first"], ["asc", "Lowest score first"]]], ["strengthsDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["strengthsEmptyTitle", "Heading when none qualify"], ["strengthsEmptyText", "Message when none qualify", 2]],
   improve: [["improveTitle", "Heading"], ["improveText", "Description", 2], ["improveBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["improveCut", "Score at or below", 0, "n"], ["improveN", "Number of results", 0, "i"], ["improveOrder", "Order", 0, "s", [["asc", "Lowest score first"], ["desc", "Highest score first"]]], ["improveDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["improveEmptyTitle", "Heading when none qualify"], ["improveEmptyText", "Message when none qualify", 2]],
-  hidden: [["hiddenTitle", "Heading"], ["hiddenText", "Description", 2], ["hiddenBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["hiddenGap", "Others rate at least this much higher than self", 0, "n"], ["hiddenN", "Number of results", 0, "i"], ["hiddenOrder", "Order", 0, "s", [["desc", "Biggest gap first"], ["asc", "Smallest gap first"]]], ["hiddenDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["hiddenEmptyTitle", "Heading when none qualify"], ["hiddenEmptyText", "Message when none qualify", 2]],
-  blind: [["blindTitle", "Heading"], ["blindText", "Description", 2], ["blindBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["blindGap", "Self rates at least this much higher than others", 0, "n"], ["blindN", "Number of results", 0, "i"], ["blindOrder", "Order", 0, "s", [["desc", "Biggest gap first"], ["asc", "Smallest gap first"]]], ["blindDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["blindEmptyTitle", "Heading when none qualify"], ["blindEmptyText", "Message when none qualify", 2]],
+  hidden: [["hiddenTitle", "Heading"], ["hiddenText", "Description", 2], ["hiddenBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["hiddenGap", "Reviewers rate at least this much higher than self", 0, "n"], ["hiddenN", "Number of results", 0, "i"], ["hiddenOrder", "Order", 0, "s", [["desc", "Biggest gap first"], ["asc", "Smallest gap first"]]], ["hiddenDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["hiddenEmptyTitle", "Heading when none qualify"], ["hiddenEmptyText", "Message when none qualify", 2]],
+  blind: [["blindTitle", "Heading"], ["blindText", "Description", 2], ["blindBy", "List", 0, "s", [["competency", "Competencies"], ["statement", "Statements"]]], ["blindGap", "Self rates at least this much higher than reviewers", 0, "n"], ["blindN", "Number of results", 0, "i"], ["blindOrder", "Order", 0, "s", [["desc", "Biggest gap first"], ["asc", "Smallest gap first"]]], ["blindDesc", "Show definition / competency", 0, "s", [["yes", "Yes"], ["no", "No"]]], ["blindEmptyTitle", "Heading when none qualify"], ["blindEmptyText", "Message when none qualify", 2]],
   detailed: [["detailedTitle", "Heading"], ["detailedText", "Description", 2], ["detailedHide", "Competencies shown", 0, "c"]],
   comments: [["commentsTitle", "Heading"], ["commentsText", "Description", 2]],
   plan: [["planTitle", "Heading"], ["planText", "Description", 2], ["planPrompts", "Prompts when the manager hasn't filled it in (one per line)", 5]],
@@ -2716,7 +2898,9 @@ function rdModel(o) {
   return { vals, layout: reportLayout(o.reportLayout), sel: "cover", dirty: false };
 }
 function rdLayoutStr(r) { return r.layout.map((x) => (x.on ? "" : "!") + x.id).join(","); }
-function rdPreviewHTML(r) {
+function rdPreviewHTML(r) { return reportHTML(sampleReportInput(r)); }
+/** The report as currently built in Build, filled with sample scores and comments (for the preview and the sample PDF). */
+function sampleReportInput(r) {
   const input = demoReportInput("surya pillai");
   const qs = (state.data && state.data.ratingQuestions) || [];
   if (qs.length) {
@@ -2732,10 +2916,17 @@ function rdPreviewHTML(r) {
     input.raters.forEach((rt) => { rt.ratings = Object.fromEntries(qs.map((_, i) => ["p" + i, Math.max(1, Math.min(5, Math.round(3.7 + (bias[rt.relation] || 0) + (i % 5 === 1 ? -0.8 : 0) + (rnd() - 0.5) * 1.6)))])); });
   }
   input.benchmark = { people: 12, values: Object.fromEntries(rdCompNames().map((n, i) => [n, 3.6 + (i % 3) * 0.2])) };
-  input.participant = { name: "Sample Participant", email: "" };
+  input.participant = { name: "Sample Participant", email: "", designation: "Designation", department: "Department" };
   input.project = Object.assign({}, input.project, { name: state.data.project, client: state.data.client, logo: state.data.logo || "" });
+  const tq = (state.data && state.data.textQuestions) || [];
+  if (tq.length) {
+    input.template.open_questions = tq.map((t, i) => ({ id: "o" + i, text: t, position: i }));
+    input.raters.forEach((rt, j) => { rt.answers = Object.fromEntries(tq.map((_, i) => ["o" + i, DEMO_COMMENTS[(j + i) % DEMO_COMMENTS.length]])); });
+  }
+  input.project.include_self_in_overall = r.vals.selfInOverall !== "no";
+  if (state.data && state.data.roleLabels) input.project.labels = state.data.roleLabels;
   input.options = Object.assign({}, r.vals, { reportLayout: rdLayoutStr(r), coverImageData: state.coverData || "" });
-  return reportHTML(input);
+  return input;
 }
 function rdCompNames() {
   const qs = (state.data && state.data.ratingQuestions) || [];
@@ -2768,6 +2959,7 @@ function renderReportDesigner() {
   return `
     <div class="qb-toolbar"><span class="qb-status ${r.dirty ? "dirty" : ""}" id="rdStatus" aria-live="polite">${r.dirty ? "Unsaved changes" : "All changes saved"}</span>
       <span class="small">${r.layout.filter((x) => x.on).length + 1} of ${r.layout.length + 1} sections switched on · preview uses sample data</span>
+      <button class="btn tertiary" id="rdSample" title="The report as it is set up now, with sample scores, to send to the client for approval">Download sample report</button>
       <button class="btn" id="rdSave">Save</button></div>
     <div class="qb rd">
       <aside class="qb-outline" aria-label="Report sections">
@@ -2781,7 +2973,7 @@ function renderReportDesigner() {
       <section class="qb-edit">
         <div class="qb-panel" style="border-top:1px solid var(--border-subtle)"><div class="qb-ptitle">${esc(name(r.sel))}</div>
           ${fields.length ? `<div class="rd-fields">${fields.map((f) => rdFieldHTML(r, f)).join("")}</div>` : `<p class="small">This section has no wording to edit. Its charts come from the scores.</p>`}
-          ${["hidden", "blind"].includes(r.sel) ? `<p class="small">Gap = self rating minus others' average, each rounded to one decimal. ${r.sel === "hidden" ? "A hidden strength is where others rate you at least the gap above your own rating." : "A blind spot is where you rate yourself at least the gap above others' rating."} With <b>Statements</b>, each statement is checked on its own; with <b>Competencies</b>, the average of a competency's statements is used.</p>` : ""}
+          ${["hidden", "blind"].includes(r.sel) ? `<p class="small">Gap = self rating minus reviewers' average, each rounded to one decimal. ${r.sel === "hidden" ? "A hidden strength is where reviewers rate you at least the gap above your own rating." : "A blind spot is where you rate yourself at least the gap above reviewers' rating."} With <b>Statements</b>, each statement is checked on its own; with <b>Competencies</b>, the average of a competency's statements is used.</p>` : ""}
           ${r.sel === "comments" ? `<p class="small">Comments are shown only for groups with at least the minimum number of writers.</p>` : ""}
         </div>
         <div class="rd-preview" id="rdPreview" aria-label="Report preview">${rdPreviewHTML(r)}</div>
@@ -2842,6 +3034,9 @@ function wireReportDesigner() {
   document.getElementById("rdCoverDel")?.addEventListener("click", async () => {
     try { const res = await admin("saveCoverImage", { data: "" }); state.coverData = ""; r.vals.coverImage = ""; render(); toast(res.message); } catch (err) { toast(err.message, true); }
   });
+  document.getElementById("rdSample").addEventListener("click", () => {
+    state.report = Object.assign(sampleReportInput(r), { sample: true }); state.view = "report"; render(); window.scrollTo(0, 0);
+  });
   document.getElementById("rdSave").addEventListener("click", async (e) => {
     const b = e.target; b.disabled = true; b.textContent = "Saving…";
     try {
@@ -2853,11 +3048,14 @@ function wireReportDesigner() {
 }
 
 function renderReport() {
-  app.innerHTML = `<div class="rtools" style="max-width:960px;margin:0 auto 24px"><button class="btn ghost" id="back">← Back to results</button>
-      <div class="right"><button class="btn" id="print">Print or save as PDF</button></div></div>${reportHTML(state.report)}`;
-  document.getElementById("back").addEventListener("click", () => { state.view = "dash"; state.report = null; render(); });
-  document.getElementById("print").addEventListener("click", () => window.print());
-  setPageFooter((state.report.options || {}).reportFooter || DEF_OPTS.reportFooter);
+  const sample = !!state.report.sample;
+  app.innerHTML = `<div class="rtools" style="max-width:960px;margin:0 auto 24px"><button class="btn ghost" id="back">${sample ? "← Back to report design" : "← Back to results"}</button>
+      <div class="right">${sample ? `<span class="small" style="margin-right:12px">Sample scores and comments. Every page is marked "SAMPLE – for approval".</span>` : ""}<button class="btn" id="print">${sample ? "Save as PDF" : "Print or save as PDF"}</button></div></div>
+    ${sample ? `<div class="samplebar" role="note">SAMPLE – for approval · scores and comments are illustrative</div>` : ""}${reportHTML(state.report)}`;
+  document.getElementById("back").addEventListener("click", () => { state.view = "dash"; state.report = null; render(); if (sample) window.scrollTo(0, 0); });
+  const title = document.title;
+  document.getElementById("print").addEventListener("click", () => { if (sample) document.title = `${state.data.client || ""} ${state.data.project || ""} - sample report`.trim(); window.print(); document.title = title; });
+  setPageFooter((state.report.options || {}).reportFooter || DEF_OPTS.reportFooter, sample ? "SAMPLE – for approval" : "");
   wireReportBits();
 }
 
@@ -2899,7 +3097,7 @@ function renderOverview() {
   const compAvg = compNames.map((n) => {
     const o = scored.map((x) => x.r.competencies.find((c) => c.name === n)).filter((c) => c && c.overall != null);
     const s = o.filter((c) => c.self != null);
-    return { name: n, others: o.length ? avg(o.map((c) => c.overall)) : null, self: s.length ? avg(s.map((c) => c.self)) : null };
+    return { name: n, others: o.length ? avg(o.map((c) => c.others ?? c.overall)) : null, self: s.length ? avg(s.map((c) => c.self)) : null };
   });
   const ready = rows.filter((x) => x.ready);
   app.innerHTML = `<div class="overview">
@@ -2921,7 +3119,7 @@ function renderOverview() {
     </section>
     <section class="rsec"><h2>How overall scores are spread</h2><p class="lead">Number of participants at each overall score.</p>${scored.length ? histSVG(scored.map((x) => x.overall), smin, smax) : `<p class="rnote">No reports are ready yet.</p>`}</section>
     <section class="rsec"><h2>Competencies across the group</h2>
-      <div class="table"><table class="rt"><thead><tr><th>Competency</th><th class="n">Others</th><th class="n">Self</th></tr></thead><tbody>
+      <div class="table"><table class="rt"><thead><tr><th>Competency</th><th class="n">Reviewers</th><th class="n">Self</th></tr></thead><tbody>
       ${compAvg.map((c) => `<tr><td>${esc(c.name)}</td><td class="n ${heat(c.others, smax)}">${f1(c.others)}</td><td class="n">${f1(c.self)}</td></tr>`).join("")}</tbody></table></div></section>
     <section class="rsec"><h2>Participants</h2>
       <div class="table"><table class="rt"><thead><tr><th>Participant</th><th class="n">Overall</th><th class="n">Self</th><th>Highest competency</th><th>Lowest competency</th><th>Report</th></tr></thead><tbody>
