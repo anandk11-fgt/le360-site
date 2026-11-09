@@ -715,7 +715,7 @@ const CARBON = {
   magenta: ["#fff0f7", "#ffd6e8", "#ffafd2", "#ff7eb6", "#ee5396", "#d02670", "#9f1853", "#740937", "#510224", "#2a0a18"],
 };
 const REPORT_PALETTE = { pri: "gray", sec: "blue", acc: "teal", pos: "green", neg: "red" };
-const GROUP_PALETTE = { Self: ["gray", 100], Manager: ["blue", 60], Peer: ["teal", 60], Reportee: ["yellow", 30] };
+const GROUP_PALETTE = { Self: ["yellow", 30], Manager: ["blue", 60], Peer: ["teal", 60], Reportee: ["gray", 60] };
 const BAND_PALETTE = { high: ["green", 30], good: ["blue", 30], mid: ["yellow", 20], low: ["red", 40] };
 const pcol = (role, step) => CARBON[REPORT_PALETTE[role]][step / 10 - 1];
 const fcol = (fs) => CARBON[fs[0]][fs[1] / 10 - 1];
